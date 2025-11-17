@@ -1,0 +1,356 @@
+﻿**********************
+Начало записи сценария Windows PowerShell
+Время начала: 20251117162815
+Имя пользователя: BERS\artae
+Запуск от имени пользователя: BERS\artae
+Имя конфигурации: 
+Компьютер: BERS (Microsoft Windows NT 10.0.26200.0)
+Ведущее приложение: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe
+ИД процесса: 27920
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Транскрибирование запущено, выходной файл D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\diag_yolo_state_v2_20251117_162815.txt
+=== GM Landmarking-YOLO: diagnostic state v2 ===
+LM_ROOT = D:\GM\tools\2_Landmarking-Yolo_v1.0
+
+=== git status ===
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        add_yolo_training_step1.ps1
+        diag_yolo_state_v2.ps1
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+=== Top-level files ===
+
+Name                                       Length LastWriteTime
+----                                       ------ -------------
+.gitattributes                                128 12.11.2025 19:28:51
+.gitignore                                    423 17.11.2025 1:23:01
+0_INSTALL_ENV.ps1                            1803 17.11.2025 12:57:47
+0_INSTALL_ENV.ps1.bak_20251117_125747        1328 17.11.2025 12:54:26
+1_ANNOTATOR.bat                              4033 17.11.2025 1:48:44
+1_ANNOTATOR.bat.bak_20251117_014844          4026 15.11.2025 11:46:48
+2_TRAIN-INFER_YOLO.bat                       2028 17.11.2025 13:17:54
+2_TRAIN-INFER_YOLO.bat.bak_20251117_024523   1961 17.11.2025 2:03:33
+2_TRAIN-INFER_YOLO.bat.bak_20251117_124632   2048 17.11.2025 2:45:23
+2_TRAIN-INFER_YOLO.bat.bak_20251117_130224   2001 17.11.2025 12:46:32
+2_TRAIN-INFER_YOLO.bat.bak_20251117_131401   1946 17.11.2025 13:02:24
+2_TRAIN-INFER_YOLO.bat.bak_20251117_131754   1909 17.11.2025 13:14:01
+add_yolo_training_step1.ps1                 30689 17.11.2025 16:27:34
+annot_gui_custom.py                         27423 13.11.2025 3:03:51
+BASE_LOCALITIES                                 0 17.11.2025 2:46:29
+cleanup_yolo_hrnet.ps1                       2646 17.11.2025 1:05:02
+diag_yolo_state_v2.ps1                       1960 17.11.2025 16:28:07
+LM_number.txt                                   4 14.11.2025 13:23:50
+starting                                       57 17.11.2025 2:46:17
+step01_yolo_init_structure.ps1               4871 17.11.2025 1:48:44
+sync_repo_yolo_v3.ps1                        3589 17.11.2025 1:12:14
+ТЗ-YOLO.docx                                53892 17.11.2025 0:34:22
+
+
+
+=== scripts/ ===
+
+Name                                    Length LastWriteTime
+----                                    ------ -------------
+annotator_wrapper.py                      4907 15.11.2025 11:46:48
+choose_localities.ps1                     2024 14.11.2025 1:11:00
+hrnet_config_utils.py                     5372 15.11.2025 23:26:50
+infer_hrnet.py                           14096 16.11.2025 14:57:20
+init_structure.py                         3008 17.11.2025 1:48:44
+init_structure.py.bak_20251117_014844     2234 14.11.2025 23:37:37
+menu_list.py                              3900 14.11.2025 1:17:10
+photos_diag.py                             864 12.11.2025 20:36:39
+PickFolder.ps1                             789 13.11.2025 21:35:48
+rebuild_localities_status.py              4558 14.11.2025 20:55:30
+start_annotator.ps1                       5152 13.11.2025 22:55:03
+start_annotator.ps1.bak_20251113_215022   4549 13.11.2025 21:40:20
+trainer_menu.py                          12979 17.11.2025 16:19:28
+trainer_menu.py.bak_20251117_020358      23059 16.11.2025 11:59:57
+train_hrnet.py                           32203 16.11.2025 16:49:39
+train_yolo.py                            25889 17.11.2025 16:19:28
+
+
+
+=== scripts\\train_yolo.py (first lines) ===
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import os
+import random
+import shutil
+import sys
+import time
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+import math
+
+import numpy as np
+from PIL import Image
+
+try:
+    import yaml  # type: ignore
+except Exception:  # pragma: no cover
+    yaml = None
+
+try:
+    import torch  # type: ignore
+except Exception:  # pragma: no cover
+    torch = None
+
+try:
+    from ultralytics import YOLO  # type: ignore
+except Exception:  # pragma: no cover
+    YOLO = None
+
+
+STATUS_FILE = "status/localities_status.csv"
+YOLO_CONFIG_FILE = "config/yolo_config.yaml"
+LOGS_DIR = "logs"
+TRAIN_LOG_NAME = "train_yolo_last.log"
+
+
+# -----------------------------
+# Логирование
+# -----------------------------
+def _open_log(root: Path) -> Tuple[Any, Path]:
+    logs_dir = root / LOGS_DIR
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    log_path = logs_dir / TRAIN_LOG_NAME
+    f = log_path.open("w", encoding="utf-8")
+    return f, log_path
+
+
+def _log(msg: str, log_file: Any) -> None:
+    ts = time.strftime("%Y-%m-%d %H:%M:%S")
+    line = f"[{ts}] {msg}"
+    print(line)
+    try:
+        log_file.write(line + "\n")
+        log_file.flush()
+    except Exception:
+        pass
+
+
+# -----------------------------
+# Конфиг YOLO
+# -----------------------------
+@dataclass
+class YoloResizeConfig:
+    enabled: bool = True
+    long_side: int = 1280
+    stride_multiple: int = 32
+
+
+@dataclass
+class YoloTrainConfig:
+    train_val_split: float = 0.9
+    max_epochs: int = 100
+    batch_size: int = 8
+    learning_rate: float = 5e-4
+    weight_decay: float = 1e-4
+
+=== scripts\\trainer_menu.py (first lines) ===
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import os
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+STATUS_FILE = "status/localities_status.csv"
+QUALITY_FILE = "models/current/quality.json"
+YOLO_CONFIG = "config/yolo_config.yaml"
+
+
+@dataclass
+class LocalityStatus:
+    name: str
+    status: str = ""
+    auto_quality: str = ""
+    last_model_run: str = ""
+    last_update: str = ""
+    n_images: int = 0
+    n_labeled: int = 0
+
+
+def get_root(arg_root: Optional[str]) -> Path:
+    if arg_root:
+        return Path(arg_root).resolve()
+    # scripts/ -> parent = 2_Landmarking-Yolo_v1.0
+    return Path(__file__).resolve().parent.parent
+
+
+def load_status(root: Path) -> List[LocalityStatus]:
+    status_path = root / STATUS_FILE
+    rows: List[LocalityStatus] = []
+    if not status_path.exists():
+        return rows
+
+    with status_path.open("r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            try:
+                rows.append(
+                    LocalityStatus(
+                        name=row.get("locality", "").strip(),
+                        status=row.get("status", "").strip(),
+                        auto_quality=row.get("auto_quality", "").strip(),
+                        last_model_run=row.get("last_model_run", "").strip(),
+                        last_update=row.get("last_update", "").strip(),
+                        n_images=int(row.get("n_images", "0") or 0),
+                        n_labeled=int(row.get("n_labeled", "0") or 0),
+                    )
+                )
+            except Exception:
+                continue
+    return rows
+
+
+def format_locality_row(idx: int, loc: LocalityStatus) -> str:
+    if loc.n_images > 0:
+        pct = int(round(100.0 * loc.n_labeled / loc.n_images))
+        count_str = f"[{loc.n_labeled}/{loc.n_images}] {pct:3d}%"
+    else:
+        count_str = "[0/0]   0%"
+
+    status = loc.status or "(no status)"
+    aq = f" {loc.auto_quality}" if loc.auto_quality else ""
+    return f"[{idx}] {loc.name:<30s} {count_str}  {status}{aq}"
+
+
+def print_localities_block(localities: List[LocalityStatus]) -> None:
+    print()
+    print("Localities (from status/localities_status.csv):")
+    print()
+    if not localities:
+        print("  (no localities found)")
+        print()
+        return
+
+    for i, loc in enumerate(localities, start=1):
+        print(" ", format_locality_row(i, loc))
+    print()
+    print("[0] Back to main menu")
+    print()
+
+
+def pick_locality(localities: List[LocalityStatus]) -> Optional[LocalityStatus]:
+    if not localities:
+        print("No localities found.")
+        return None
+    print_localities_block(localities)
+    choice = input("Select locality (0 = cancel): ").strip()
+    if choice == "0":
+        return None
+    try:
+        idx = int(choice)
+    except ValueError:
+        print("Invalid selection.")
+        return None
+    if idx < 1 or idx > len(localities):
+        print("Invalid selection.")
+        return None
+    return localities[idx - 1]
+
+
+def load_yolo_config(root: Path) -> Dict[str, Any]:
+    cfg_path = root / YOLO_CONFIG
+    if not cfg_path.exists():
+        return {}
+    try:
+        import yaml  # type: ignore
+
+        with cfg_path.open("r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+        if not isinstance(data, dict):
+            return {}
+        return data
+    except Exception as exc:
+
+=== 2_TRAIN-INFER_YOLO.bat ===
+@echo off
+setlocal EnableExtensions EnableDelayedExpansion
+chcp 65001 >nul
+
+rem Landmarking-YOLO trainer launcher (see ’‡-YOLO)
+
+rem LM_ROOT = folder containing this .bat (with trailing backslash)
+set "LM_ROOT=%~dp0"
+
+rem Logs directory
+set "LOG_DIR=%LM_ROOT%logs"
+if not exist "%LOG_DIR%" mkdir "%LOG_DIR%" >nul 2>&1
+
+rem 1) Ask for base_localities via Windows dialog
+powershell -NoProfile -ExecutionPolicy Bypass -File "%LM_ROOT%scripts\choose_localities.ps1"
+if errorlevel 1 (
+    echo [WARN] Localities base picker failed or was cancelled.>>"%LOG_DIR%\trainer_menu_last.log"
+)
+
+rem 2) Read cfg\last_base.txt -> BASE_LOCALITIES (ЎҐ§ бЄ®Ў®Є ў®ЄагЈ set /p)
+set "CFG_DIR=%LM_ROOT%cfg"
+set "LAST_BASE=%CFG_DIR%\last_base.txt"
+set "BASE_LOCALITIES="
+
+if not exist "%LAST_BASE%" goto NoBase
+
+:ReadBase
+set /p BASE_LOCALITIES=<"%LAST_BASE%"
+if not defined BASE_LOCALITIES goto NoBase
+
+echo [OK] Localities base: %BASE_LOCALITIES%>>"%LOG_DIR%\trainer_menu_last.log"
+
+rem 3) Python from local venv
+set "PY=%LM_ROOT%.venv_lm\Scripts\python.exe"
+if not exist "%PY%" (
+    echo [ERR] Landmarking YOLO environment not found: "%PY%">>"%LOG_DIR%\trainer_menu_last.log"
+    echo [ERR] Landmarking YOLO environment not found: "%PY%"
+    echo Run 0_INSTALL_ENV.ps1 in the module root.
+    pause
+    exit /b 1
+)
+
+title === GM Landmarking: YOLO Trainer (v1.0) ===
+echo === GM Landmarking: YOLO Trainer (v1.0) ===
+
+rem 4) init_structure + rebuild_localities_status
+"%PY%" "%LM_ROOT%scripts\init_structure.py" 1>>"%LOG_DIR%\init_trainer_last.log" 2>&1
+"%PY%" "%LM_ROOT%scripts\rebuild_localities_status.py" 1>>"%LOG_DIR%\status_trainer_last.log" 2>&1
+
+rem 5) Run trainer menu (interactive)
+set "GM_BASE_LOCALITIES=%BASE_LOCALITIES%"
+"%PY%" "%LM_ROOT%scripts\trainer_menu.py" --base-localities "%BASE_LOCALITIES%"
+
+endlocal
+goto :eof
+
+:NoBase
+echo [ERR] Base localities not selected (cfg\last_base.txt missing or empty).>>"%LOG_DIR%\trainer_menu_last.log"
+echo [ERR] Base localities not selected. Please run 1_ANNOTATOR.bat first.
+pause
+exit /b 1
+
+**********************
+Конец записи протокола Windows PowerShell
+Время окончания: 20251117162815
+**********************

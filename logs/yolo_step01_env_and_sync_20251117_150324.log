@@ -1,0 +1,166 @@
+﻿**********************
+Начало записи сценария Windows PowerShell
+Время начала: 20251117150324
+Имя пользователя: BERS\artae
+Запуск от имени пользователя: BERS\artae
+Имя конфигурации: 
+Компьютер: BERS (Microsoft Windows NT 10.0.26200.0)
+Ведущее приложение: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe
+ИД процесса: 33324
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Транскрибирование запущено, выходной файл D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\yolo_step01_env_and_sync_20251117_150324.log
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host "[DIAG] LM_ROOT = $(Get-Location)"
+[DIAG] LM_ROOT = D:\GM\tools\2_Landmarking-Yolo_v1.0
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host "[DIAG] Timestamp = $timestamp"
+[DIAG] Timestamp = 20251117_150324
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 4. Диагностика git (без изменений)
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> if (Test-Path ".git") {
+    Write-Host "[DIAG] .git directory found."
+
+    git status
+    git remote -v
+
+    try {
+        Write-Host "[INFO] Running 'git pull origin main' (no history rewrite)."
+        git pull origin main
+    }
+    catch {
+        Write-Host "[ERR] git pull failed. See details above in transcript."
+    }
+}
+[DIAG] .git directory found.
+
+
+[INFO] Running 'git pull origin main' (no history rewrite).
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> else {
+    Write-Host "[WARN] .git directory not found in LM_ROOT."
+}
+else : Имя "else" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правиль
+ность написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+else : Имя "else" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правил
+ьность написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 5. Проверяем виртуальное окружение (.venv*)
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> $venv = Get-ChildItem -Directory -Filter ".venv*" -ErrorAction SilentlyContinue | Select-Object -First 1
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> if ($null -eq $venv) {
+    Write-Host "[INFO] No .venv* directory found. Trying to run 0_INSTALL_ENV.ps1..."
+
+    if (Test-Path ".\0_INSTALL_ENV.ps1") {
+        try {
+            .\0_INSTALL_ENV.ps1
+            Write-Host "[INFO] 0_INSTALL_ENV.ps1 finished (check for errors above)."
+        }
+        catch {
+            Write-Host "[ERR] 0_INSTALL_ENV.ps1 threw an exception. See transcript for details."
+        }
+    }
+    else {
+        Write-Host "[ERR] 0_INSTALL_ENV.ps1 not found in LM_ROOT."
+    }
+}
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> else {
+    Write-Host "[DIAG] Existing virtual environment found: $($venv.Name)"
+}
+else : Имя "else" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правиль
+ность написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+else : Имя "else" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правил
+ьность написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 6. Запускаем твой sync-скрипт (если он есть)
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> if (Test-Path ".\sync_repo_yolo_v3.ps1") {
+    Write-Host "[INFO] Running sync_repo_yolo_v3.ps1 (wrapper, no extra git commands here)..."
+
+    try {
+        .\sync_repo_yolo_v3.ps1
+        Write-Host "[INFO] sync_repo_yolo_v3.ps1 finished. Check its own output inside this transcript."
+    }
+    catch {
+        Write-Host "[ERR] sync_repo_yolo_v3.ps1 threw an exception. See transcript for details."
+    }
+}
+[INFO] Running sync_repo_yolo_v3.ps1 (wrapper, no extra git commands here)...
+Транскрибирование запущено, выходной файл D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\sync_repo_yolo_20251117_150325.log
+Root: D:\GM\tools\2_Landmarking-Yolo_v1.0
+.git folder already exists, using existing repo.
+Origin already set correctly.
+.gitignore already exists, not touching it.
+Tree saved to: D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\tree_20251117_150325.txt
+
+
+Committed local changes.
+=== git push origin main ===
+branch 'main' set up to track 'origin/main'.
+>> TerminatingError(cmd.exe): "Выполнение команды остановлено, так как привилегированной переменной "ErrorActionPreference" или общему параметру присвоено значение Stop: To https://github.com/photoarchive2004-beep/2_Landmarking-Yolo_v1.0.git"
+Транскрибирование остановлено, выходной файл D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\sync_repo_yolo_20251117_150325.log
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> TerminatingError(cmd.exe): "Выполнение команды остановлено, так как привилегированной переменной "ErrorActionPreference" или общему параметру присвоено значение Stop: To https://github.com/photoarchive2004-beep/2_Landmarking-Yolo_v1.0.git"
+[ERR] sync_repo_yolo_v3.ps1 threw an exception. See transcript for details.
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> else {
+    Write-Host "[WARN] sync_repo_yolo_v3.ps1 not found in LM_ROOT."
+}
+else : Имя "else" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правиль
+ность написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+else : Имя "else" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правил
+ьность написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 7. Снимок дерева файлов проекта
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> $treePath = Join-Path $logDir ("tree_yolo_{0}.txt" -f $timestamp)
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host "[INFO] Saving project file tree to $treePath"
+[INFO] Saving project file tree to D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\tree_yolo_20251117_150324.txt
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> try {
+    Get-ChildItem -Recurse -Force |
+        Where-Object { $_.FullName -notmatch "\\\.git(\\|$)" } |
+        Sort-Object FullName |
+        Format-Table FullName, Length, LastWriteTime -AutoSize |
+        Out-String |
+        Set-Content -Path $treePath -Encoding UTF8
+
+    Write-Host "[INFO] Tree saved."
+}
+catch {
+    Write-Host "[ERR] Failed to generate tree. See transcript for details."
+}
+[INFO] Tree saved.
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Stop-Transcript
+**********************
+Конец записи протокола Windows PowerShell
+Время окончания: 20251117150338
+**********************

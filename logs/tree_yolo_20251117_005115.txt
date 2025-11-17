@@ -1,0 +1,168 @@
+﻿
+FullName                                                                             Length
+--------                                                                             ------
+D:\GM\tools\2_Landmarking-Yolo_v1.0\.gitattributes                                      128
+D:\GM\tools\2_Landmarking-Yolo_v1.0\.gitignore                                          182
+D:\GM\tools\2_Landmarking-Yolo_v1.0\1_ANNOTATOR.bat                                    4026
+D:\GM\tools\2_Landmarking-Yolo_v1.0\annot_gui_custom.py                               27423
+D:\GM\tools\2_Landmarking-Yolo_v1.0\cfg                                                    
+D:\GM\tools\2_Landmarking-Yolo_v1.0\cfg\last_base.txt                                    38
+D:\GM\tools\2_Landmarking-Yolo_v1.0\config                                                 
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets                                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013054                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013054\train_list.csv            8664
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013054\val_list.csv              1010
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013416                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013416\train_list.csv            8664
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013416\val_list.csv              1010
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022103                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022103\train_list.csv            8664
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022103\val_list.csv              1010
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022212                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022212\train_list.csv            8664
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022212\val_list.csv              1010
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124000                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124000\train_list.csv            8664
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124000\val_list.csv              1010
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124842                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124842\train_list.csv            8664
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124842\val_list.csv              1010
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_130416                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_130416\train_list.csv            8664
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_130416\val_list.csv              1010
+D:\GM\tools\2_Landmarking-Yolo_v1.0\LM_number.txt                                         4
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs                                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\cleanup_hrnet_20251117_004346.log            42949
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\diag_yolo_20251117_005115.log                    0
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\tree_yolo_20251117_005115.txt                    0
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models                                                 
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\current                                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\current\quality.json                         248
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history                                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235310                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235310\metrics.json         228
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235310\train_config.yaml    165
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235310\train_log.txt        234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235356                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235356\metrics.json         228
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235356\train_config.yaml    165
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235356\train_log.txt        234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235900                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235900\metrics.json         228
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235900\train_config.yaml    165
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235900\train_log.txt        234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235908                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235908\metrics.json         228
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235908\train_config.yaml    165
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235908\train_log.txt        234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000625                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000625\metrics.json         228
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000625\train_config.yaml    165
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000625\train_log.txt        234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000749                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000749\metrics.json         228
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000749\train_config.yaml    165
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000749\train_log.txt        234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_011356                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_011356\metrics.json         228
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_011356\train_config.yaml    165
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_011356\train_log.txt        234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013054                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013054\metrics.json         273
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013054\train_config.yaml    219
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013054\train_log.txt        238
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013416                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013416\metrics.json         273
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013416\train_config.yaml    219
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013416\train_log.txt        238
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022103                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022103\metrics.json         273
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022103\train_config.yaml    219
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022103\train_log.txt        238
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022212                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022212\metrics.json         273
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022212\train_config.yaml    219
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022212\train_log.txt        238
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124000                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124000\metrics.json         273
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124000\train_config.yaml    219
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124000\train_log.txt        238
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124842                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124842\metrics.json         273
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124842\train_config.yaml    219
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124842\train_log.txt        238
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_130416                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_130416\metrics.json         273
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_130416\train_config.yaml    219
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_130416\train_log.txt        238
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_135655                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_135655\metrics.json         234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_135655\train_config.yaml    446
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_135655\train_log.txt        274
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_144035                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_144035\metrics.json         234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_144035\train_config.yaml    446
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_144035\train_log.txt        274
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_150513                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_150513\metrics.json         228
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_150513\train_config.yaml    446
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_150513\train_log.txt        274
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_173308                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_173308\metrics.json         244
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_173308\train_config.yaml    455
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_173308\train_log.txt        190
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_000023                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_000023\metrics.json         290
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_000023\train_config.yaml    483
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_000023\train_log.txt      16691
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_010607                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_010607\metrics.json         303
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_010607\train_config.yaml    507
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_010607\train_log.txt      18681
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_101421                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_101421\metrics.json         304
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_101421\train_config.yaml    507
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_101421\train_log.txt      14799
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts                                                
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\__pycache__                                    
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\__pycache__\infer_hrnet.cpython-311.pyc   18584
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\__pycache__\train_hrnet.cpython-311.pyc   36576
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_hrnet_quick.py                       339
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import.py               320
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import_final.py         323
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import_final2.py        323
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_install.py                    334
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_only.py                       340
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_heatmap_shapes.py             1236
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_heatmaps_and_pck.py           4065
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_import_raw.py                 2607
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmcv_ext_loader_stub.py             2498
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmpose_heads_init_for_gm.py         1532
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmpose_models_init_for_gm.py        1391
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_xtcocotools_mask_stub.py            2664
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_mmpose_stack_versions.py              308
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_after_full_fix.py               323
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_after_numpy_xtc_fix.py          323
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_before_full_fix.py              323
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_before_numpy_xtc_fix.py         323
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_xtcocotools_stack.py                  302
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\annotator_wrapper.py                       4907
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\choose_localities.ps1                      2024
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\hrnet_config_utils.py                      5372
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\infer_hrnet.py                            14096
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\init_structure.py                          2234
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\menu_list.py                               3900
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\photos_diag.py                              864
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\PickFolder.ps1                              789
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\rebuild_localities_status.py               4558
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\start_annotator.ps1                        5152
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\start_annotator.ps1.bak_20251113_215022    4549
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\train_hrnet.py                            32203
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\train_hrnet_backup_before_debug.py        32203
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\trainer_menu.py                           23059
+D:\GM\tools\2_Landmarking-Yolo_v1.0\status                                                 
+D:\GM\tools\2_Landmarking-Yolo_v1.0\status\localities_status.csv                       3010
+D:\GM\tools\2_Landmarking-Yolo_v1.0\sync_repo_yolo_v3.ps1                              3063
+D:\GM\tools\2_Landmarking-Yolo_v1.0\ТЗ-YOLO.docx                                      53892
+
+

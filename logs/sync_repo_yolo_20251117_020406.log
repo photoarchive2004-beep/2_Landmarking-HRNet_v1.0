@@ -1,0 +1,34 @@
+﻿**********************
+Начало записи сценария Windows PowerShell
+Время начала: 20251117020406
+Имя пользователя: BERS\artae
+Запуск от имени пользователя: BERS\artae
+Имя конфигурации: 
+Компьютер: BERS (Microsoft Windows NT 10.0.26200.0)
+Ведущее приложение: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\sync_repo_yolo_v3.ps1
+ИД процесса: 21340
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Транскрибирование запущено, выходной файл D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\sync_repo_yolo_20251117_020406.log
+Root: D:\GM\tools\2_Landmarking-Yolo_v1.0
+.git folder already exists, using existing repo.
+Origin already set correctly.
+.gitignore already exists, not touching it.
+Tree saved to: D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\tree_20251117_020406.txt
+
+
+Committed local changes.
+=== git push origin main ===
+branch 'main' set up to track 'origin/main'.
+>> TerminatingError(cmd.exe): "Выполнение команды остановлено, так как привилегированной переменной "ErrorActionPreference" или общему параметру присвоено значение Stop: To https://github.com/photoarchive2004-beep/2_Landmarking-Yolo_v1.0.git"
+**********************
+Конец записи протокола Windows PowerShell
+Время окончания: 20251117020408
+**********************

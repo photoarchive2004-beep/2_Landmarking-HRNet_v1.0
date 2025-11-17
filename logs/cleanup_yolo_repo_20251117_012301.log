@@ -1,0 +1,241 @@
+﻿**********************
+Начало записи сценария Windows PowerShell
+Время начала: 20251117012301
+Имя пользователя: BERS\artae
+Запуск от имени пользователя: BERS\artae
+Имя конфигурации: 
+Компьютер: BERS (Microsoft Windows NT 10.0.26200.0)
+Ведущее приложение: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe
+ИД процесса: 22896
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Транскрибирование запущено, выходной файл D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\cleanup_yolo_repo_20251117_012301.log
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> try {
+    Write-Host "Root: $root"
+
+    # 1. Гарантируем наличие git-репозитория и origin (п.13.5 ТЗ)
+    if (!(Test-Path ".git")) {
+        git init
+        git branch -M main
+        Write-Host "Initialized new git repository with main branch."
+    }
+
+    $remoteUrl = "https://github.com/photoarchive2004-beep/2_Landmarking-Yolo_v1.0.git"
+    $origin    = git remote get-url origin 2>$null
+    if (-not $origin) {
+        git remote add origin $remoteUrl
+        Write-Host "Added origin: $remoteUrl"
+    } elseif ($origin -ne $remoteUrl) {
+        git remote set-url origin $remoteUrl
+        Write-Host "Updated origin URL to: $remoteUrl"
+    } else {
+        Write-Host "Origin already set correctly."
+    }
+
+    # 2. Приводим .gitignore к требованиям п.13.6 ТЗ
+    $gitignorePath = Join-Path $root ".gitignore"
+    if (!(Test-Path $gitignorePath)) {
+        New-Item -ItemType File -Path $gitignorePath | Out-Null
+    }
+
+    $giContent = Get-Content $gitignorePath -ErrorAction SilentlyContinue
+    if ($null -eq $giContent) { $giContent = @() }
+
+    function Add-IgnorePattern {
+        param(
+            [string]$pattern,
+            [string[]]$current
+        )
+        if ($current -notcontains $pattern) {
+            Write-Host "Adding to .gitignore: $pattern"
+            Add-Content -Path $gitignorePath -Value $pattern
+        }
+    }
+
+    # Базовые вещи (виртуалки, мусор)
+    Add-IgnorePattern "# --- auto-added by cleanup_yolo_repo_v2 ---" $giContent
+    Add-IgnorePattern ".venv/"       $giContent
+    Add-IgnorePattern ".venv_*/"     $giContent
+    Add-IgnorePattern "env/"         $giContent
+    Add-IgnorePattern "venv/"        $giContent
+    Add-IgnorePattern "__pycache__/" $giContent
+    Add-IgnorePattern "*.py[cod]"    $giContent
+    Add-IgnorePattern ".vscode/"     $giContent
+    Add-IgnorePattern ".idea/"       $giContent
+    Add-IgnorePattern ".DS_Store"    $giContent
+    Add-IgnorePattern "Thumbs.db"    $giContent
+
+    # Ограничения из п.13.6 ТЗ: логи, датасеты, эксперименты, веса моделей
+    Add-IgnorePattern "logs/"        $giContent
+    Add-IgnorePattern "logs/*.log"   $giContent
+    Add-IgnorePattern "logs/tree_*.txt"      $giContent
+    Add-IgnorePattern "logs/sync_*.log"      $giContent
+    Add-IgnorePattern "logs/sync_repo*.log"  $giContent
+
+    Add-IgnorePattern "datasets/"    $giContent
+    Add-IgnorePattern "experiments/" $giContent
+
+    Add-IgnorePattern "*.pth"        $giContent
+    Add-IgnorePattern "*.pt"         $giContent
+    Add-IgnorePattern "*.onnx"       $giContent
+
+    # Обновляем содержимое в памяти (на случай дальнейших проверок)
+    $giContent = Get-Content $gitignorePath
+
+    # 3. Убираем из индекса (git) то, что не должно быть в репозитории
+    #    ВАЖНО: удаляем только из индекса (--cached), файлы на диске остаются.
+
+    function Untrack-IfTracked {
+        param(
+            [string]$spec,
+            [switch]$Recursive
+        )
+        $files = git ls-files $spec 2>$null
+        if ($files) {
+            Write-Host "Untracking from git: $spec"
+            if ($Recursive) {
+                git rm --cached -r -- $spec
+            } else {
+                git rm --cached -- $spec
+            }
+        } else {
+            Write-Host "Nothing tracked for spec: $spec"
+        }
+    }
+
+    # Логи и дерево
+    Untrack-IfTracked "logs" -Recursive
+
+    # Локальные датасеты и эксперименты
+    Untrack-IfTracked "datasets"    -Recursive
+    Untrack-IfTracked "experiments" -Recursive
+
+    # Веса моделей (любые *.pth / *.pt / *.onnx)
+    Untrack-IfTracked "*.pth"
+    Untrack-IfTracked "*.pt"
+    Untrack-IfTracked "*.onnx"
+
+    # 4. Удаляем HRNet/MMPose отладочные скрипты, которые больше не нужны
+    $debugScripts = @(
+        "scripts\_check_hrnet_quick.py",
+        "scripts\_check_mmpose_hrnet_import.py",
+        "scripts\_check_mmpose_hrnet_import_final.py",
+        "scripts\_check_mmpose_hrnet_import_final2.py",
+        "scripts\_check_mmpose_install.py",
+        "scripts\_check_mmpose_only.py",
+        "scripts\_patch_hrnet_heatmap_shapes.py",
+        "scripts\_patch_hrnet_heatmaps_and_preds.py",
+        "scripts\_patch_hrnet_import_raw.py",
+        "scripts\_show_xtcocotools_stack.py"
+    )
+
+    foreach ($rel in $debugScripts) {
+        $full = Join-Path $root $rel
+        if (Test-Path $full) {
+            Write-Host "Removing debug script: $rel"
+            Remove-Item $full -Force
+        } else {
+            Write-Host "Debug script not found (ok): $rel"
+        }
+    }
+
+    # 5. git add / commit / push (п.13.5 ТЗ)
+    Write-Host "=== git status (before add) ==="
+    git status
+
+    git add -A
+
+    $changes = git status --porcelain
+    if (-not $changes) {
+        Write-Host "Nothing to commit after cleanup. Working tree clean."
+    }
+    else {
+        $msg = "Cleanup repo per section 13 (ignore logs/datasets, untrack weights, remove HRNet debug)"
+        Write-Host "Committing with message: $msg"
+        git commit -m $msg
+    }
+
+    # Даже если не было новых изменений, всё равно проверим push (п.13.5–13.7)
+    Write-Host "=== git push origin main ==="
+    $pushLog = Join-Path $logsDir "git_push_$stamp.log"
+    cmd /c "git push -u origin main 2>&1" | Tee-Object -FilePath $pushLog
+    $pushExitCode = $LASTEXITCODE
+
+    if ($pushExitCode -ne 0) {
+        Write-Host "git push FAILED with exit code $pushExitCode" -ForegroundColor Red
+        Write-Host "Repository on GitHub is NOT up to date."
+        Write-Host "Please send file: $pushLog"
+    }
+    else {
+        Write-Host "git push SUCCEEDED."
+        Write-Host "=== git ls-remote --heads origin ==="
+        $lsRemoteLog = Join-Path $logsDir "git_lsremote_$stamp.log"
+        cmd /c "git ls-remote --heads origin 2>&1" | Tee-Object -FilePath $lsRemoteLog
+    }
+
+    Write-Host "Cleanup completed. Log: $logFile"
+}
+finally {
+    Stop-Transcript
+}
+Root: D:\GM\tools\2_Landmarking-Yolo_v1.0
+Origin already set correctly.
+Adding to .gitignore: # --- auto-added by cleanup_yolo_repo_v2 ---
+Adding to .gitignore: .venv/
+Adding to .gitignore: .venv_*/
+Adding to .gitignore: env/
+Adding to .gitignore: venv/
+Adding to .gitignore: __pycache__/
+Adding to .gitignore: *.py[cod]
+Adding to .gitignore: .vscode/
+Adding to .gitignore: .idea/
+Adding to .gitignore: .DS_Store
+Adding to .gitignore: Thumbs.db
+Adding to .gitignore: logs/
+Adding to .gitignore: logs/*.log
+Adding to .gitignore: logs/tree_*.txt
+Adding to .gitignore: logs/sync_*.log
+Adding to .gitignore: logs/sync_repo*.log
+Adding to .gitignore: datasets/
+Adding to .gitignore: experiments/
+Nothing tracked for spec: logs
+Untracking from git: datasets
+
+Nothing tracked for spec: experiments
+Nothing tracked for spec: *.pth
+Nothing tracked for spec: *.pt
+Nothing tracked for spec: *.onnx
+Debug script not found (ok): scripts\_check_hrnet_quick.py
+Debug script not found (ok): scripts\_check_mmpose_hrnet_import.py
+Debug script not found (ok): scripts\_check_mmpose_hrnet_import_final.py
+Debug script not found (ok): scripts\_check_mmpose_hrnet_import_final2.py
+Debug script not found (ok): scripts\_check_mmpose_install.py
+Debug script not found (ok): scripts\_check_mmpose_only.py
+Debug script not found (ok): scripts\_patch_hrnet_heatmap_shapes.py
+Debug script not found (ok): scripts\_patch_hrnet_heatmaps_and_preds.py
+Debug script not found (ok): scripts\_patch_hrnet_import_raw.py
+Debug script not found (ok): scripts\_show_xtcocotools_stack.py
+=== git status (before add) ===
+
+
+Committing with message: Cleanup repo per section 13 (ignore logs/datasets, untrack weights, remove HRNet debug)
+
+=== git push origin main ===
+branch 'main' set up to track 'origin/main'.
+To https://github.com/photoarchive2004-beep/2_Landmarking-Yolo_v1.0.git
+   9d2a792..7c0ad20  main -> main
+git push SUCCEEDED.
+=== git ls-remote --heads origin ===
+7c0ad20db81bbd7e444554cbfbd3ccca92c49b2f	refs/heads/main
+Cleanup completed. Log: D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\cleanup_yolo_repo_20251117_012301.log
+**********************
+Конец записи протокола Windows PowerShell
+Время окончания: 20251117012304
+**********************

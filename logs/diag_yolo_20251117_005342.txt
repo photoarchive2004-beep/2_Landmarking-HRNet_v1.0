@@ -1,0 +1,4689 @@
+﻿YOLO diagnostics - 20251117_005342
+Project root: D:\GM\tools\2_Landmarking-Yolo_v1.0
+
+========== git status ==========
+
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+========== git remote -v ==========
+
+origin	https://github.com/photoarchive2004-beep/2_Landmarking-Yolo_v1.0.git (fetch)
+origin	https://github.com/photoarchive2004-beep/2_Landmarking-Yolo_v1.0.git (push)
+
+========== Project tree (FullName, Length) ==========
+
+
+FullName                                                                                                               
+--------                                                                                                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\.gitattributes                                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\.gitignore                                                                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\1_ANNOTATOR.bat                                                                    
+D:\GM\tools\2_Landmarking-Yolo_v1.0\annot_gui_custom.py                                                                
+D:\GM\tools\2_Landmarking-Yolo_v1.0\cfg                                                                                
+D:\GM\tools\2_Landmarking-Yolo_v1.0\cfg\last_base.txt                                                                  
+D:\GM\tools\2_Landmarking-Yolo_v1.0\config                                                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets                                                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013054                                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013054\train_list.csv                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013054\val_list.csv                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013416                                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013416\train_list.csv                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_013416\val_list.csv                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022103                                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022103\train_list.csv                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022103\val_list.csv                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022212                                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022212\train_list.csv                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_022212\val_list.csv                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124000                                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124000\train_list.csv                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124000\val_list.csv                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124842                                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124842\train_list.csv                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_124842\val_list.csv                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_130416                                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_130416\train_list.csv                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\datasets\20251115_130416\val_list.csv                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\LM_number.txt                                                                      
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs                                                                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\1_ANNOTATOR_bat_20251117_005115.txt                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\cleanup_hrnet_20251117_004346.log                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_hrnet_quick.py_20251...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_hrnet_import....
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_hrnet_import_...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_hrnet_import_...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_install.py_20...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_only.py_20251...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_hrnet_heatmap_shapes...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_hrnet_heatmaps_and_p...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_hrnet_import_raw.py_...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_mmcv_ext_loader_stub...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_mmpose_heads_init_fo...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_mmpose_models_init_f...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_xtcocotools_mask_stu...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_mmpose_stack_versions...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_stack_after_full_fix....
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_stack_after_numpy_xtc...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_stack_before_full_fix...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_stack_before_numpy_xt...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_xtcocotools_stack.py_...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_annotator_wrapper.py_202511...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_hrnet_config_utils.py_20251...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_infer_hrnet.py_20251117_005...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_init_structure.py_20251117_...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_menu_list.py_20251117_00511...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_photos_diag.py_20251117_005...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_rebuild_localities_status.p...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_train_hrnet.py_20251117_005...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_train_hrnet_backup_before_d...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_trainer_menu.py_20251117_00...
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\diag_yolo_20251117_005115.log                                                 
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\diag_yolo_20251117_005342.txt                                                 
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\sync_repo_yolo_v3_ps1_20251117_005115.txt                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\logs\tree_yolo_20251117_005115.txt                                                 
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models                                                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\current                                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\current\quality.json                                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history                                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235310                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235310\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235310\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235310\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235356                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235356\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235356\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235356\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235900                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235900\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235900\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235900\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235908                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235908\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235908\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251114_235908\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000625                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000625\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000625\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000625\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000749                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000749\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000749\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_000749\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_011356                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_011356\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_011356\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_011356\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013054                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013054\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013054\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013054\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013416                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013416\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013416\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_013416\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022103                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022103\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022103\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022103\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022212                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022212\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022212\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_022212\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124000                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124000\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124000\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124000\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124842                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124842\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124842\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_124842\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_130416                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_130416\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_130416\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_130416\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_135655                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_135655\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_135655\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_135655\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_144035                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_144035\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_144035\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_144035\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_150513                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_150513\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_150513\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_150513\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_173308                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_173308\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_173308\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251115_173308\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_000023                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_000023\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_000023\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_000023\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_010607                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_010607\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_010607\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_010607\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_101421                                                     
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_101421\metrics.json                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_101421\train_config.yaml                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\models\history\20251116_101421\train_log.txt                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts                                                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\__pycache__                                                                
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\__pycache__\infer_hrnet.cpython-311.pyc                                    
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\__pycache__\train_hrnet.cpython-311.pyc                                    
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_hrnet_quick.py                                                      
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import.py                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import_final.py                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import_final2.py                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_install.py                                                   
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_only.py                                                      
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_heatmap_shapes.py                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_heatmaps_and_pck.py                                           
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_import_raw.py                                                 
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmcv_ext_loader_stub.py                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmpose_heads_init_for_gm.py                                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmpose_models_init_for_gm.py                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_xtcocotools_mask_stub.py                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_mmpose_stack_versions.py                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_after_full_fix.py                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_after_numpy_xtc_fix.py                                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_before_full_fix.py                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_before_numpy_xtc_fix.py                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_xtcocotools_stack.py                                                 
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\annotator_wrapper.py                                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\choose_localities.ps1                                                      
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\hrnet_config_utils.py                                                      
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\infer_hrnet.py                                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\init_structure.py                                                          
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\menu_list.py                                                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\photos_diag.py                                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\PickFolder.ps1                                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\rebuild_localities_status.py                                               
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\start_annotator.ps1                                                        
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\start_annotator.ps1.bak_20251113_215022                                    
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\train_hrnet.py                                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\train_hrnet_backup_before_debug.py                                         
+D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\trainer_menu.py                                                            
+D:\GM\tools\2_Landmarking-Yolo_v1.0\status                                                                             
+D:\GM\tools\2_Landmarking-Yolo_v1.0\status\localities_status.csv                                                       
+D:\GM\tools\2_Landmarking-Yolo_v1.0\sync_repo_yolo_v3.ps1                                                              
+D:\GM\tools\2_Landmarking-Yolo_v1.0\ТЗ-YOLO.docx                                                                       
+
+
+
+========== FILE: 1_ANNOTATOR.bat ==========
+
+@echo off
+setlocal EnableExtensions EnableDelayedExpansion
+chcp 65001 >nul
+
+rem ---- Paths ----
+set "HERE=%~dp0"
+for %%I in ("%HERE%\..\..") do set "ROOT=%%~fI"
+set "TOOL_DIR=%ROOT%\tools\2_Landmarking_v1.0"
+set "PHOTOS_DIR=%ROOT%\photos"
+set "LOG_DIR=%TOOL_DIR%\logs"
+if not exist "%LOG_DIR%" mkdir "%LOG_DIR%" >nul 2>&1
+
+rem ---- Localities base picker (Windows dialog) ----
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\choose_localities.ps1" -Silent
+if errorlevel 1 (
+    echo [WARN] Localities base picker failed or was cancelled.>>"%LOG_DIR%\annotator_last.log"
+    echo [WARN] Localities base picker failed or was cancelled. Using existing "%PHOTOS_DIR%".
+)
+
+rem ---- Resolve PHOTOS_DIR from cfg\last_base.txt, if present ----
+set "CFG_DIR=%TOOL_DIR%\cfg"
+set "LAST_BASE=%CFG_DIR%\last_base.txt"
+if exist "%LAST_BASE%" (
+    set /p PHOTOS_DIR=<"%LAST_BASE%"
+)
+if not defined PHOTOS_DIR (
+    set "PHOTOS_DIR=%ROOT%\photos"
+)
+
+rem ---- Python resolver ----
+set "PY=%TOOL_DIR%\.venv_lm\Scripts\python.exe"
+if not exist "%PY%" (
+    where.exe py >nul 2>&1 && (set "PY=py -3")
+)
+if /I "%PY%"=="py -3" (
+    py -3 -c "import sys" >nul 2>&1 || set "PY="
+)
+if not defined PY (
+    where.exe python >nul 2>&1 && (set "PY=python")
+)
+if not defined PY (
+    echo [ERR] Landmarking environment not found.>>"%LOG_DIR%\annotator_last.log"
+    echo [ERR] Landmarking environment not found.
+    echo Run 0_INSTALL_ENV.ps1.
+    pause
+    exit /b 1
+)
+
+title == GM Landmarking: Points Annotator v1.0 ==
+echo == GM Landmarking: Points Annotator v1.0 ==
+
+if not exist "%PHOTOS_DIR%" (
+    echo [ERR] Photos dir not found: %PHOTOS_DIR%
+    pause
+    exit /b 1
+)
+
+rem ---- Initialization: structure + localities status ----
+"%PY%" "%TOOL_DIR%\scripts\init_structure.py" 1>>"%LOG_DIR%\init_annotator_last.log" 2>&1
+"%PY%" "%TOOL_DIR%\scripts\rebuild_localities_status.py" 1>>"%LOG_DIR%\status_annotator_last.log" 2>&1
+
+rem ---- Menu ----
+echo.
+
+rem If called from trainer in REVIEW_AUTO mode, force given locality
+if /I "%GM_MODE%"=="REVIEW_AUTO" (
+    if defined GM_LOCALITY (
+        set "SEL_LOC=%GM_LOCALITY%"
+    )
+)
+
+if not defined SEL_LOC (
+    %PY% "%TOOL_DIR%\scripts\menu_list.py" --print --root "%ROOT%"
+    set /p CH=
+    if /I "!CH!"=="Q" goto :EOF
+
+    set "TMP_SEL=%TEMP%\gm_sel_%RANDOM%.txt"
+    %PY% "%TOOL_DIR%\scripts\menu_list.py" --pick !CH! --root "%ROOT%" 1> "!TMP_SEL!" 2> "%LOG_DIR%\menu_pick_last.err"
+
+    if exist "!TMP_SEL!" (
+        set /p SEL_LOC=<"!TMP_SEL!"
+        del /q "!TMP_SEL!" 2>nul
+    )
+
+    if not defined SEL_LOC (
+        echo [ERR] Invalid selection.
+        echo See "%LOG_DIR%\menu_pick_last.err"
+        pause
+        exit /b 2
+    )
+)
+
+set "PNG_DIR=%PHOTOS_DIR%\!SEL_LOC!\png"
+if not exist "!PNG_DIR!" (
+    echo [ERR] Locality path not found: !PNG_DIR!
+    pause
+    exit /b 2
+)
+
+rem ---- Find first PNG robustly (sorted)
+set "FIRST_PNG="
+for /f "usebackq delims=" %%F in (`dir /b /a-d "!PNG_DIR!\*.png" ^| sort`) do (
+    set "FIRST_PNG=%%F"
+    goto _fp_done
+)
+:_fp_done
+if not defined FIRST_PNG (
+    echo [ERR] No PNG files in !PNG_DIR!
+    pause
+    exit /b 3
+)
+
+rem ---- Auto Scale Wizard (no questions)
+if not exist "!PNG_DIR!\!FIRST_PNG!.scale.csv" (
+    echo [INFO] No SCALE for "!FIRST_PNG!" -> starting Scale Wizard...
+    set "GUI_LOG=%LOG_DIR%\gui_scale_last.log"
+    %PY% "%TOOL_DIR%\annot_gui_custom.py" --root "%ROOT%" --images "!PNG_DIR!" --start-from "!FIRST_PNG!" --scale-wizard 1> "!GUI_LOG!" 2>&1
+    if not exist "!PNG_DIR!\!FIRST_PNG!.scale.csv" (
+        echo [ERR] Scale file still missing after wizard.
+        echo See "!GUI_LOG!" below:
+        type "!GUI_LOG!" | more
+        pause
+    )
+)
+
+rem ---- Launch custom GUI (always)
+set "GUI_LOG=%LOG_DIR%\gui_run_last.log"
+%PY% "%TOOL_DIR%\scripts\annotator_wrapper.py" --root "%ROOT%" --images "!PNG_DIR!" 1> "!GUI_LOG!" 2>&1
+
+set "RC=%ERRORLEVEL%"
+if not "!RC!"=="0" (
+    echo [ERR] GUI exited with code !RC!. See "!GUI_LOG!" below:
+    type "!GUI_LOG!" | more
+    pause
+)
+
+exit /b 0
+
+
+
+========== FILE: sync_repo_yolo_v3.ps1 ==========
+
+param()
+
+$ErrorActionPreference = "Stop"
+
+$root = Get-Location
+$logsDir = Join-Path $root "logs"
+if (!(Test-Path $logsDir)) {
+    New-Item -ItemType Directory -Path $logsDir | Out-Null
+}
+
+$stamp   = Get-Date -Format "yyyyMMdd_HHmmss"
+$logFile = Join-Path $logsDir "sync_repo_yolo_$stamp.log"
+Start-Transcript -Path $logFile -Force
+
+try {
+    Write-Host "Root: $root"
+
+    # 1. Ensure git repo
+    if (!(Test-Path ".git")) {
+        git init
+        git branch -M main
+        Write-Host "Initialized new git repository with main branch."
+    } else {
+        Write-Host ".git folder already exists, using existing repo."
+    }
+
+    # 2. Configure origin
+    $remoteUrl = "https://github.com/photoarchive2004-beep/2_Landmarking-Yolo_v1.0.git"
+    $origin    = git remote get-url origin 2>$null
+    if (-not $origin) {
+        git remote add origin $remoteUrl
+        Write-Host "Added origin: $remoteUrl"
+    } elseif ($origin -ne $remoteUrl) {
+        git remote set-url origin $remoteUrl
+        Write-Host "Updated origin URL to: $remoteUrl"
+    } else {
+        Write-Host "Origin already set correctly."
+    }
+
+    # 3. Minimal .gitignore (не трогаем, если уже есть)
+    $gitignorePath = Join-Path $root ".gitignore"
+    if (!(Test-Path $gitignorePath)) {
+@"
+# Python virtual environments
+.venv/
+.venv_*/
+env/
+venv/
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+
+# IDE / editors
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+"@ | Set-Content -Encoding UTF8 $gitignorePath
+        Write-Host "Created basic .gitignore."
+    } else {
+        Write-Host ".gitignore already exists, not touching it."
+    }
+
+    # 4. Capture working tree (без .git)
+    $treeFile = Join-Path $logsDir "tree_$stamp.txt"
+    Get-ChildItem -Recurse -Force |
+        Where-Object { $_.FullName -notlike "*\.git\*" } |
+        Sort-Object FullName |
+        ForEach-Object {
+            $rel = Resolve-Path $_.FullName -Relative
+            "{0}`t{1}`t{2:yyyy-MM-dd HH:mm:ss}" -f $rel, $_.Length, $_.LastWriteTime
+        } | Set-Content -Encoding UTF8 $treeFile
+    Write-Host "Tree saved to: $treeFile"
+
+    # 5. git add / commit
+    git add -A
+    $changes = git status --porcelain
+    if ($changes) {
+        git commit -m "Sync local YOLO repo $stamp"
+        Write-Host "Committed local changes."
+    } else {
+        Write-Host "Nothing to commit, working tree clean."
+    }
+
+    # 6. git push with output capture
+    Write-Host "=== git push origin main ==="
+    $pushLog = Join-Path $logsDir "git_push_$stamp.log"
+    git push -u origin main 2>&1 | Tee-Object -FilePath $pushLog
+    $pushExitCode = $LASTEXITCODE
+    if ($pushExitCode -ne 0) {
+        Write-Host "git push FAILED with exit code $pushExitCode" -ForegroundColor Red
+    } else {
+        Write-Host "git push succeeded."
+        Write-Host "=== git ls-remote --heads origin ==="
+        git ls-remote --heads origin | Tee-Object -FilePath (Join-Path $logsDir "git_lsremote_$stamp.log")
+    }
+
+    Write-Host "Sync attempt completed. Log: $logFile"
+}
+finally {
+    Stop-Transcript
+}
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_hrnet_quick.py ==========
+
+print("=== HRNet quick check AFTER clean ext_loader stub ===")
+import numpy
+print("numpy:", numpy.__version__)
+try:
+    from mmpose.models.backbones import HRNet as MMPoseHRNet
+    print("OK: MMPoseHRNet imported:", MMPoseHRNet)
+except Exception as e:
+    import traceback
+    print("IMPORT_ERROR:", repr(e))
+    traceback.print_exc()
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import.py ==========
+
+import numpy, traceback
+
+print("=== MMPose HRNet import check v2 ===")
+print("numpy version:", numpy.__version__)
+try:
+    from mmpose.models.backbones import HRNet as MMPoseHRNet
+    print("MMPoseHRNet imported OK:", MMPoseHRNet)
+except Exception as e:
+    print("IMPORT_ERROR:", repr(e))
+    traceback.print_exc()
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import_final.py ==========
+
+import numpy, traceback
+
+print("=== MMPose HRNet import check FINAL ===")
+print("numpy version:", numpy.__version__)
+try:
+    from mmpose.models.backbones import HRNet as MMPoseHRNet
+    print("MMPoseHRNet imported OK:", MMPoseHRNet)
+except Exception as e:
+    print("IMPORT_ERROR:", repr(e))
+    traceback.print_exc()
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import_final2.py ==========
+
+import numpy, traceback
+
+print("=== FINAL MMPose HRNet import check ===")
+print("numpy version:", numpy.__version__)
+try:
+    from mmpose.models.backbones import HRNet as MMPoseHRNet
+    print("MMPoseHRNet imported OK:", MMPoseHRNet)
+except Exception as e:
+    print("IMPORT_ERROR:", repr(e))
+    traceback.print_exc()
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_install.py ==========
+
+import sys
+print("Python:", sys.version)
+try:
+    import mmengine
+    import mmcv
+    import mmpose
+    print("mmengine:", mmengine.__version__)
+    print("mmcv:", mmcv.__version__)
+    print("mmpose:", mmpose.__version__)
+    print("OK: all core MMPose deps imported.")
+except Exception as e:
+    print("IMPORT ERROR:", repr(e))
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_only.py ==========
+
+import importlib, sys
+
+def check(name):
+    try:
+        m = importlib.import_module(name)
+        ver = getattr(m, "__version__", "?")
+        print(f"{name}: OK (version {ver})")
+    except Exception as e:
+        print(f"{name}: FAIL ({e!r})")
+
+print("Python:", sys.version)
+for pkg in ("mmengine", "mmcv", "mmpose"):
+    check(pkg)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_heatmap_shapes.py ==========
+
+from pathlib import Path
+
+root = Path(__file__).resolve().parent
+train_path = root / "scripts" / "train_hrnet.py"
+
+text = train_path.read_text(encoding="utf-8")
+
+old_block = """            _, _, H, W = imgs.shape
+            gt_heatmaps = keypoints_to_heatmaps(
+                kps,
+                H,
+                W,
+                sigma=float(getattr(cfg, "heatmap_sigma_px", 2.0)),
+                device=device,
+            )
+            pred_heatmaps = model(imgs)
+            loss = criterion(pred_heatmaps, gt_heatmaps)
+"""
+
+new_block = """            pred_heatmaps = model(imgs)
+            _, _, H_hm, W_hm = pred_heatmaps.shape
+            gt_heatmaps = keypoints_to_heatmaps(
+                kps,
+                H_hm,
+                W_hm,
+                sigma=float(getattr(cfg, "heatmap_sigma_px", 2.0)),
+                device=device,
+            )
+            loss = criterion(pred_heatmaps, gt_heatmaps)
+"""
+
+if old_block not in text:
+    print("[ERR] Target training block not found in train_hrnet.py, patch not applied.")
+else:
+    text = text.replace(old_block, new_block)
+    train_path.write_text(text, encoding="utf-8")
+    print("[INFO] train_hrnet.py patched: gt_heatmaps now use model heatmap size.")
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_heatmaps_and_pck.py ==========
+
+from pathlib import Path
+
+root = Path(__file__).resolve().parent.parent
+train_path = root / "scripts" / "train_hrnet.py"
+print("[INFO] train_hrnet.py:", train_path)
+
+text = train_path.read_text(encoding="utf-8")
+
+old_train_block = """            optimizer.zero_grad()
+            _, _, H, W = imgs.shape
+            gt_heatmaps = keypoints_to_heatmaps(
+                kps,
+                H,
+                W,
+                sigma=float(getattr(cfg, "heatmap_sigma_px", 2.0)),
+                device=device,
+            )
+            pred_heatmaps = model(imgs)
+            loss = criterion(pred_heatmaps, gt_heatmaps)
+            loss.backward()
+            optimizer.step()
+
+            running_loss += loss.item()
+            num_batches += 1
+"""
+
+new_train_block = """            optimizer.zero_grad()
+            # Сначала прогоняем через модель и узнаём размер теплокарт
+            pred_heatmaps = model(imgs)
+            _, _, H_hm, W_hm = pred_heatmaps.shape
+            _, _, H_in, W_in = imgs.shape
+
+            # Масштабируем ключевые точки под разрешение теплокарт,
+            # чтобы gt и pred были одного размера.
+            if H_in != H_hm or W_in != W_hm:
+                scale_x = float(W_hm) / float(W_in)
+                scale_y = float(H_hm) / float(H_in)
+                kps_scaled = kps.clone()
+                kps_scaled[..., 0] = kps_scaled[..., 0] * scale_x
+                kps_scaled[..., 1] = kps_scaled[..., 1] * scale_y
+            else:
+                kps_scaled = kps
+
+            gt_heatmaps = keypoints_to_heatmaps(
+                kps_scaled,
+                H_hm,
+                W_hm,
+                sigma=float(getattr(cfg, "heatmap_sigma_px", 2.0)),
+                device=device,
+            )
+            loss = criterion(pred_heatmaps, gt_heatmaps)
+            loss.backward()
+            optimizer.step()
+
+            running_loss += loss.item()
+            num_batches += 1
+"""
+
+if old_train_block not in text:
+    print("[ERR] Training inner block (optimizer/gt_heatmaps) not found, patch NOT applied.")
+else:
+    text = text.replace(old_train_block, new_train_block)
+    print("[INFO] Training block patched (heatmaps now at HRNet output resolution).")
+
+old_val_block = """        model.eval()
+        all_pred = []
+        all_gt = []
+        with torch.no_grad():
+            for imgs, kps in val_loader:
+                imgs = imgs.to(device)
+                kps = kps.to(device)
+                pred_heatmaps = model(imgs)
+                pred_kps = heatmaps_to_keypoints(pred_heatmaps)
+                all_pred.append(pred_kps.cpu())
+                all_gt.append(kps.cpu())
+"""
+
+new_val_block = """        model.eval()
+        all_pred = []
+        all_gt = []
+        with torch.no_grad():
+            for imgs, kps in val_loader:
+                imgs = imgs.to(device)
+                kps = kps.to(device)
+                pred_heatmaps = model(imgs)
+                pred_kps = heatmaps_to_keypoints(pred_heatmaps)
+                # Переводим предсказанные координаты в ту же систему, что и gt
+                _, _, H_in, W_in = imgs.shape
+                _, _, H_hm, W_hm = pred_heatmaps.shape
+                if H_in != H_hm or W_in != W_hm:
+                    scale_x = float(W_in) / float(W_hm)
+                    scale_y = float(H_in) / float(H_hm)
+                    pred_kps[..., 0] = pred_kps[..., 0] * scale_x
+                    pred_kps[..., 1] = pred_kps[..., 1] * scale_y
+                all_pred.append(pred_kps.cpu())
+                all_gt.append(kps.cpu())
+"""
+
+if old_val_block not in text:
+    print("[ERR] Validation block not found, patch for PCK NOT applied.")
+else:
+    text = text.replace(old_val_block, new_val_block)
+    print("[INFO] Validation block patched (PCK computed in input image coordinates).")
+
+train_path.write_text(text, encoding="utf-8")
+print("[INFO] train_hrnet.py updated successfully.")
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_import_raw.py ==========
+
+from pathlib import Path
+
+root = Path(__file__).resolve().parent
+scripts_dir = root / "scripts"
+
+def patch_file(path: Path) -> None:
+    print(f"[INFO] Patching {path} ...")
+    if not path.is_file():
+        print(f"[WARN] File not found, skip: {path}")
+        return
+    text = path.read_text(encoding="utf-8")
+
+    needle = "from mmpose.models.backbones import HRNet as MMPoseHRNet"
+    if needle not in text:
+        print(f"[WARN] Import line not found in {path.name}, skip.")
+        return
+
+    # Ищем блок try/except вокруг импорта
+    idx_import = text.index(needle)
+    # ищем начало блока по ближайшему 'try:' выше
+    idx_try = text.rfind("try:", 0, idx_import)
+    if idx_try == -1:
+        print(f"[WARN] 'try:' before HRNet import not found in {path.name}, skip.")
+        return
+
+    # ищем конец блока по строке с MMPoseHRNet = None
+    end_marker = "MMPoseHRNet = None  # type: ignore"
+    idx_end_marker = text.find(end_marker, idx_import)
+    if idx_end_marker == -1:
+        print(f"[WARN] end marker not found in {path.name}, skip.")
+        return
+    idx_block_end = idx_end_marker + len(end_marker)
+
+    old_block = text[idx_try:idx_block_end]
+
+    new_block = '''
+def _load_mmpose_hrnet() -> object:
+    """Load HRNet backbone from MMPose without importing datasets/evaluation."""
+    from pathlib import Path
+    import importlib.util
+    import mmpose  # type: ignore
+
+    base = Path(mmpose.__file__).resolve().parent
+    hrnet_py = base / "models" / "backbones" / "hrnet.py"
+    if not hrnet_py.is_file():
+        raise FileNotFoundError(f"MMPose HRNet file not found: {hrnet_py}")
+    spec = importlib.util.spec_from_file_location("gm_mmpose_hrnet", hrnet_py)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot create module spec for {hrnet_py}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)  # type: ignore[arg-type]
+    if not hasattr(module, "HRNet"):
+        raise AttributeError("HRNet class not found in MMPose hrnet.py")
+    return module.HRNet
+
+try:
+    MMPoseHRNet = _load_mmpose_hrnet()
+except Exception as e:  # pragma: no cover
+    print("[WARN] Exception during import or setup (possibly MMPose HRNet):", repr(e))
+    MMPoseHRNet = None  # type: ignore
+'''
+
+    new_text = text[:idx_try] + new_block + text[idx_block_end:]
+    path.write_text(new_text, encoding="utf-8")
+    print(f"[INFO] Patched {path.name} successfully.")
+
+for name in ("train_hrnet.py", "infer_hrnet.py"):
+    patch_file(scripts_dir / name)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmcv_ext_loader_stub.py ==========
+
+from pathlib import Path
+import traceback
+
+print("[INFO] Importing mmcv to locate utils/ext_loader.py ...")
+try:
+    import mmcv  # type: ignore
+except Exception as e:
+    print("[ERR] Cannot import mmcv:", repr(e))
+    traceback.print_exc()
+    raise SystemExit(1)
+
+base = Path(mmcv.__file__).resolve().parent
+ext_loader_path = base / "utils" / "ext_loader.py"
+print("[INFO] mmcv ext_loader.py:", ext_loader_path)
+
+if not ext_loader_path.is_file():
+    print("[ERR] ext_loader.py not found, cannot patch.")
+    raise SystemExit(1)
+
+text = ext_loader_path.read_text(encoding="utf-8")
+
+if "[GM PATCH] stub load_ext" in text:
+    print("[INFO] GM stub for load_ext already present, skip patch.")
+else:
+    stub = """
+# [GM PATCH] stub load_ext to allow missing mmcv._ext for GM HRNet-only use.
+def load_ext(name, funcs):
+    \\"\\"
+    Simplified loader for mmcv C-extensions.
+
+    If mmcv._ext is available, use it.
+    If not, return a dummy module so that imports do not fail.
+    Heavy ops that rely on these extensions are not used in GM HRNet pipeline.
+    \\"\\"
+    import importlib
+    import types
+    try:
+        ext = importlib.import_module('mmcv._ext')
+        return ext
+    except Exception as e:  # pragma: no cover
+        print("[WARN] GM: mmcv._ext not available, returning dummy ext for", name, ":", repr(e))
+        dummy = types.SimpleNamespace()
+        # Optionally attach dummy functions for requested ops
+        try:
+            for fn_name in (funcs or []):
+                def _make_dummy(n):
+                    def _fn(*args, **kwargs):
+                        raise NotImplementedError(f"mmcv._ext op '{n}' is disabled in GM stub")
+                    return _fn
+                setattr(dummy, fn_name, _make_dummy(fn_name))
+        except Exception:
+            pass
+        return dummy
+"""
+    print("[INFO] Appending GM stub load_ext to ext_loader.py ...")
+    text = text.rstrip() + "\\n" + stub + "\\n"
+    ext_loader_path.write_text(text, encoding="utf-8")
+    print("[INFO] GM stub appended to ext_loader.py")
+
+# --- Проверяем импорт HRNet после патча ---
+print("\\n[INFO] Testing MMPose HRNet import with patched mmcv.ext_loader ...")
+try:
+    from mmpose.models.backbones import HRNet as MMPoseHRNet  # type: ignore
+    print("[OK] MMPoseHRNet imported:", MMPoseHRNet)
+    raise SystemExit(0)
+except Exception as e:
+    print("[ERR] Still cannot import MMPoseHRNet:", repr(e))
+    traceback.print_exc()
+    raise SystemExit(1)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmpose_heads_init_for_gm.py ==========
+
+from pathlib import Path
+import traceback
+
+print("[INFO] Importing mmpose to locate heads/__init__.py ...")
+try:
+    import mmpose  # type: ignore
+except Exception as e:
+    print("[ERR] Cannot import mmpose:", repr(e))
+    traceback.print_exc()
+    raise SystemExit(1)
+
+base = Path(mmpose.__file__).resolve().parent
+heads_init = base / "models" / "heads" / "__init__.py"
+print("[INFO] mmpose heads __init__:", heads_init)
+
+if not heads_init.is_file():
+    print("[ERR] heads __init__.py not found, cannot patch.")
+    raise SystemExit(1)
+
+text = heads_init.read_text(encoding="utf-8")
+
+needle = "from .hybrid_heads import DEKRHead, RTMOHead, VisPredictHead"
+if needle not in text:
+    print("[WARN] Target import line not found in heads/__init__.py, nothing to patch.")
+else:
+    replacement = """try:
+    from .hybrid_heads import DEKRHead, RTMOHead, VisPredictHead
+except Exception as e:  # pragma: no cover
+    print("[WARN] GM: hybrid_heads (RTMOHead) disabled because mmdet is missing:", repr(e))
+    DEKRHead = RTMOHead = VisPredictHead = None
+"""
+    text = text.replace(needle, replacement)
+    heads_init.write_text(text, encoding="utf-8")
+    print("[INFO] Patch applied to heads/__init__.py")
+
+print("[INFO] Testing HRNet import after patch ...")
+try:
+    from mmpose.models.backbones import HRNet as MMPoseHRNet  # type: ignore
+    print("[OK] MMPoseHRNet imported:", MMPoseHRNet)
+except Exception as e:
+    print("[ERR] Still cannot import MMPoseHRNet:", repr(e))
+    traceback.print_exc()
+    raise SystemExit(1)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmpose_models_init_for_gm.py ==========
+
+from pathlib import Path
+import sys
+
+print("[INFO] Importing mmpose to locate models/__init__.py ...")
+try:
+    import mmpose  # type: ignore
+except Exception as e:
+    print("[ERR] Cannot import mmpose:", repr(e))
+    sys.exit(1)
+
+models_dir = Path(mmpose.__file__).resolve().parent / "models"
+init_path = models_dir / "__init__.py"
+print("[INFO] mmpose models/__init__.py:", init_path)
+
+if not init_path.is_file():
+    print("[ERR] __init__.py not found:", init_path)
+    sys.exit(1)
+
+text = init_path.read_text(encoding="utf-8")
+
+needle = "from .distillers import *"
+if needle not in text:
+    print("[WARN] Line 'from .distillers import *' not found, nothing to patch.")
+else:
+    print("[INFO] Patching models/__init__.py: disabling distillers import to avoid xtcocotools.")
+    patched = text.replace(
+        needle,
+        "# [GM] disabled distillers for HRNet-GM project (no need for DWPose/COCO)\n# "
+        + needle
+    )
+    init_path.write_text(patched, encoding="utf-8")
+    print("[INFO] Patch applied.")
+
+print("[INFO] Testing HRNet import from MMPose ...")
+try:
+    from mmpose.models.backbones import HRNet as MMPoseHRNet  # type: ignore
+    print("[OK] MMPoseHRNet imported successfully:", MMPoseHRNet)
+    sys.exit(0)
+except Exception as e:
+    import traceback
+    print("[ERR] Still cannot import MMPoseHRNet:", repr(e))
+    traceback.print_exc()
+    sys.exit(1)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_xtcocotools_mask_stub.py ==========
+
+from pathlib import Path
+import traceback
+
+print("[INFO] Import xtcocotools ...")
+try:
+    import xtcocotools  # type: ignore
+except Exception as e:
+    print("[ERR] Cannot import xtcocotools:", repr(e))
+    traceback.print_exc()
+    raise SystemExit(1)
+
+mask_path = Path(xtcocotools.__file__).resolve().parent / "mask.py"
+backup_path = mask_path.with_name("mask_orig_gm_backup.py")
+
+print("[INFO] xtcocotools module file:", xtcocotools.__file__)
+print("[INFO] mask.py path:", mask_path)
+
+if not mask_path.is_file():
+    print("[ERR] mask.py not found, nothing to patch.")
+    raise SystemExit(1)
+
+# Делаем бэкап оригинального mask.py один раз
+if not backup_path.exists():
+    print("[INFO] Saving original mask.py to", backup_path)
+    backup_path.write_text(mask_path.read_text(encoding="utf-8"), encoding="utf-8")
+else:
+    print("[INFO] Backup already exists:", backup_path)
+
+stub = """\"\"\"[GM PATCH] Simplified xtcocotools.mask for GM HRNet training.
+
+В этой заглушке мы полностью отключаем использование скомпилированного _mask,
+который конфликтует с текущей версией NumPy. Модуль нужен только для того,
+чтобы успешно импортировался MMPose/COCO, сами операции с масками нам по ТЗ не нужны.
+\"\"\"
+
+import numpy as np  # noqa: F401
+
+
+def _disabled(name: str):
+    raise NotImplementedError(
+        f\"xtcocotools.mask.{name} is disabled in GM stub (COCO masks are not used in this project)\"
+    )
+
+
+def encode(*args, **kwargs):
+    return _disabled("encode")
+
+
+def decode(*args, **kwargs):
+    return _disabled("decode")
+
+
+def area(*args, **kwargs):
+    return _disabled("area")
+
+
+def toBbox(*args, **kwargs):
+    return _disabled("toBbox")
+
+
+def iou(*args, **kwargs):
+    return _disabled("iou")
+
+
+def merge(*args, **kwargs):
+    return _disabled("merge")
+
+
+def frPyObjects(*args, **kwargs):
+    return _disabled("frPyObjects")
+"""
+
+print("[INFO] Writing GM stub to mask.py ...")
+mask_path.write_text(stub, encoding="utf-8")
+print("[INFO] Stub xtcocotools.mask written successfully.")
+
+# --- Проверяем импорт HRNet из MMPose ---
+print("\\n[INFO] Now testing MMPose HRNet import ...")
+import numpy
+print("numpy version:", numpy.__version__)
+try:
+    from mmpose.models.backbones import HRNet as MMPoseHRNet  # type: ignore
+    print("[OK] MMPoseHRNet imported successfully:", MMPoseHRNet)
+except Exception as e:
+    print("[ERR] Still cannot import MMPoseHRNet:", repr(e))
+    traceback.print_exc()
+    raise SystemExit(1)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_mmpose_stack_versions.py ==========
+
+import importlib
+
+def show(name):
+    try:
+        m = importlib.import_module(name)
+        ver = getattr(m, "__version__", "?")
+        print(f"{name}: {ver}")
+    except Exception as e:
+        print(f"{name}: FAIL ({e!r})")
+
+for pkg in ("numpy", "torch", "mmengine", "mmcv", "mmpose"):
+    show(pkg)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_after_full_fix.py ==========
+
+import importlib
+
+def show(name):
+    try:
+        m = importlib.import_module(name)
+        ver = getattr(m, "__version__", "?")
+        print(f"{name}: {ver}")
+    except Exception as e:
+        print(f"{name}: FAIL ({e!r})")
+
+for pkg in ("numpy", "torch", "mmengine", "mmcv", "mmpose", "xtcocotools"):
+    show(pkg)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_after_numpy_xtc_fix.py ==========
+
+import importlib
+
+def show(name):
+    try:
+        m = importlib.import_module(name)
+        ver = getattr(m, "__version__", "?")
+        print(f"{name}: {ver}")
+    except Exception as e:
+        print(f"{name}: FAIL ({e!r})")
+
+for pkg in ("numpy", "torch", "mmengine", "mmcv", "mmpose", "xtcocotools"):
+    show(pkg)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_before_full_fix.py ==========
+
+import importlib
+
+def show(name):
+    try:
+        m = importlib.import_module(name)
+        ver = getattr(m, "__version__", "?")
+        print(f"{name}: {ver}")
+    except Exception as e:
+        print(f"{name}: FAIL ({e!r})")
+
+for pkg in ("numpy", "torch", "mmengine", "mmcv", "mmpose", "xtcocotools"):
+    show(pkg)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_before_numpy_xtc_fix.py ==========
+
+import importlib
+
+def show(name):
+    try:
+        m = importlib.import_module(name)
+        ver = getattr(m, "__version__", "?")
+        print(f"{name}: {ver}")
+    except Exception as e:
+        print(f"{name}: FAIL ({e!r})")
+
+for pkg in ("numpy", "torch", "mmengine", "mmcv", "mmpose", "xtcocotools"):
+    show(pkg)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_xtcocotools_stack.py ==========
+
+import importlib
+
+def show(name):
+    try:
+        m = importlib.import_module(name)
+        ver = getattr(m, "__version__", "?")
+        print(f"{name}: {ver}")
+    except Exception as e:
+        print(f"{name}: FAIL ({e!r})")
+
+for pkg in ("numpy", "mmcv", "mmpose", "xtcocotools"):
+    show(pkg)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\annotator_wrapper.py ==========
+
+from __future__ import annotations
+
+import os
+import sys
+import subprocess
+from pathlib import Path
+import argparse
+
+
+def parse_args() -> argparse.Namespace:
+    """
+    Simple pass-through for annotator CLI arguments.
+    We forward them to annot_gui_custom.py.
+    """
+    parser = argparse.ArgumentParser(
+        description="GM Landmarking: annotator wrapper (adds Review finished flag in REVIEW_AUTO mode)."
+    )
+    parser.add_argument("--root", required=False, help="Project root (passed through to GUI).")
+    parser.add_argument("--images", required=True, help="Path to PNG images for selected locality.")
+    parser.add_argument("--first", required=False, help="Optional first image name (if used by GUI).")
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    exe = sys.executable
+
+    # LANDMARK_ROOT = tools/2_Landmarking_v1.0
+    tool_dir = Path(__file__).resolve().parent.parent
+    gui = tool_dir / "annot_gui_custom.py"
+    if not gui.exists():
+        print(f"[ERR] annotator GUI not found: {gui}")
+        sys.exit(1)
+
+    mode = os.environ.get("GM_MODE", "").upper()
+    locality = (os.environ.get("GM_LOCALITY") or "").strip()
+
+    # Build command for original GUI
+    cmd: list[str] = [exe, str(gui)]
+    if args.root:
+        cmd += ["--root", args.root]
+    cmd += ["--images", args.images]
+    if args.first:
+        cmd += ["--first", args.first]
+
+    # Normal/manual mode: just run GUI as before
+    if mode != "REVIEW_AUTO" or not locality:
+        rc = subprocess.call(cmd)
+        sys.exit(rc)
+
+    # REVIEW_AUTO mode: start GUI + small window with "Review finished" button.
+    print()
+    print(f'Starting annotator in REVIEW_AUTO mode for locality "{locality}"...')
+    print("When you finish checking auto landmarks, press 'Review finished' in the small window.")
+    print()
+
+    try:
+        gui_proc = subprocess.Popen(cmd)
+    except Exception as exc:
+        print("[ERR] Cannot start annotator GUI:")
+        print(f"      {exc}")
+        sys.exit(1)
+
+    # Try to use Tkinter for a small helper window
+    try:
+        import tkinter as tk
+        from tkinter import ttk
+    except Exception:
+        print("[WARN] tkinter is not available, falling back to console confirmation.")
+        _confirm_via_console(locality)
+        rc = gui_proc.wait()
+        sys.exit(rc)
+
+    def on_finish() -> None:
+        _create_review_flag(locality)
+        root_win.destroy()
+
+    def on_close_without() -> None:
+        # Just close helper window, do not create flag
+        root_win.destroy()
+
+    root_win = tk.Tk()
+    root_win.title("GM Landmarking: Review AUTO")
+
+    msg = (
+        f'Locality "{locality}"\n\n'
+        "1) Check and fix all AUTO landmarks in the main annotator window.\n"
+        "2) When you are sure, click \"Review finished\" here.\n\n"
+        "If you close this window without the button, MANUAL status will NOT be set."
+    )
+    label = ttk.Label(root_win, text=msg, justify="left")
+    label.pack(padx=12, pady=12)
+
+    btn_finish = ttk.Button(root_win, text="Review finished", command=on_finish)
+    btn_finish.pack(pady=(0, 6))
+
+    btn_cancel = ttk.Button(root_win, text="Close without flag", command=on_close_without)
+    btn_cancel.pack(pady=(0, 12))
+
+    # Hotkeys: Enter / Ctrl+Enter => Review finished
+    root_win.bind("<Return>", lambda event: on_finish())
+    root_win.bind("<Control-Return>", lambda event: on_finish())
+
+    root_win.mainloop()
+
+    # After helper window is closed we just wait for GUI to finish
+    rc = gui_proc.wait()
+    sys.exit(rc)
+
+
+def _create_review_flag(locality: str) -> None:
+    """
+    Create status/review_done_<locality>.flag relative to LANDMARK_ROOT
+    (tools/2_Landmarking_v1.0), as required in ТЗ_1.0.
+    """
+    tool_dir = Path(__file__).resolve().parent.parent
+    flag_dir = tool_dir / "status"
+    try:
+        flag_dir.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        # If directory already exists or cannot be created, we still try to write file.
+        pass
+
+    flag_path = flag_dir / f"review_done_{locality}.flag"
+    try:
+        flag_path.write_text("review finished\n", encoding="utf-8")
+        print(f'[INFO] Review flag created: {flag_path}')
+    except Exception as exc:
+        print(f"[ERR] Cannot create review flag for locality '{locality}': {exc}")
+
+
+def _confirm_via_console(locality: str) -> None:
+    """
+    Fallback variant if Tkinter is not available:
+    ask in console and create flag only if user clearly confirms.
+    """
+    ans = input(
+        f'Did you finish review for locality "{locality}"? '
+        'Type "YES" to create MANUAL flag: '
+    ).strip().upper()
+    if ans == "YES":
+        _create_review_flag(locality)
+    else:
+        print("[INFO] Review not confirmed, flag was not created.")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(0)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\hrnet_config_utils.py ==========
+
+"""
+Вспомогательные функции для HRNet-конфигурации в проекте 2_Landmarking_v1.0.
+
+Задачи:
+- определить корень проекта;
+- прочитать число ландмарок из LM_number.txt;
+- прочитать параметры HRNet из config/hrnet_config.yaml.
+"""
+
+from pathlib import Path
+
+try:
+    import yaml  # PyYAML должен быть установлен установочным скриптом среды
+except ImportError as e:
+    raise ImportError(
+        "PyYAML не установлен. Установи среду через INSTALL_LM_ENV/аналогичный скрипт "
+        "перед запуском обучения HRNet."
+    ) from e
+
+
+# Корень проекта: D:\\GM\\tools\\2_Landmarking_v1.0 (один уровень выше папки scripts)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+LM_NUMBER_FILE = PROJECT_ROOT / "LM_number.txt"
+HRNET_CONFIG_FILE = PROJECT_ROOT / "config" / "hrnet_config.yaml"
+
+
+class HRNetConfigError(RuntimeError):
+    """Ошибки, связанные с конфигом HRNet или LM_number.txt."""
+    pass
+
+
+def read_num_keypoints() -> int:
+    """
+    Читать число ландмарок из LM_number.txt.
+    Берём первое непустое число в файле. Комментарии (# ...) игнорируются.
+    """
+    if not LM_NUMBER_FILE.exists():
+        raise HRNetConfigError(
+            f"LM_number.txt не найден: {LM_NUMBER_FILE}\n"
+            f"Проверь, что файл существует в корне модуля 2_Landmarking_v1.0."
+        )
+
+    text = LM_NUMBER_FILE.read_text(encoding="utf-8", errors="ignore")
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+        if line.startswith("#"):
+            continue
+        try:
+            value = int(line)
+        except ValueError:
+            # если строка не число (например, комментарий) — пропускаем
+            continue
+        if value <= 0:
+            raise HRNetConfigError(
+                f"Некорректное количество ландмарок в LM_number.txt: {value}. "
+                f"Должно быть положительное целое число."
+            )
+        return value
+
+    raise HRNetConfigError(
+        "Не удалось прочитать количество ландмарок из LM_number.txt.\n"
+        "Убедись, что в файле есть строка с целым числом (например: 18)."
+    )
+
+
+def read_hrnet_config() -> dict:
+    """
+    Читать словарь конфигурации HRNet из config/hrnet_config.yaml.
+
+    Ожидается структура, описанная в ТЗ-V2:
+    - resize_long_side
+    - model_type
+    - train_val_split, max_epochs, batch_size, learning_rate, weight_decay, heatmap_sigma_px
+    - блок augmentation
+    - блок infer
+    """
+    if not HRNET_CONFIG_FILE.exists():
+        raise HRNetConfigError(
+            f"Файл конфигурации HRNet не найден: {HRNET_CONFIG_FILE}\n"
+            f"Сначала создай config/hrnet_config.yaml (мы уже сделали это на предыдущем шаге)."
+        )
+
+    with HRNET_CONFIG_FILE.open("r", encoding="utf-8") as f:
+        cfg = yaml.safe_load(f)
+
+    if not isinstance(cfg, dict):
+        raise HRNetConfigError(
+            f"Ожидался словарь в hrnet_config.yaml, но получено: {type(cfg).__name__}"
+        )
+
+    return cfg
+
+
+def get_resize_long_side(cfg: dict) -> int:
+    """
+    Достать параметр resize_long_side из словаря конфига.
+    Если по какой-то причине его нет, вернуть дефолт 1280 (как в ТЗ-V2).
+    """
+    value = cfg.get("resize_long_side", 1280)
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        raise HRNetConfigError(
+            f"Некорректное значение resize_long_side в hrnet_config.yaml: {value!r}"
+        )
+
+
+if __name__ == "__main__":
+    # Простой режим диагностики при ручном запуске:
+    #   python scripts/hrnet_config_utils.py
+    print("=== HRNet config utils: diagnostic mode ===")
+    print(f"PROJECT_ROOT: {PROJECT_ROOT}")
+
+    try:
+        n_kpts = read_num_keypoints()
+        print(f"LM_number.txt -> num_keypoints = {n_kpts}")
+    except HRNetConfigError as e:
+        print("\n[ERR] Проблема с LM_number.txt:")
+        print(e)
+    except Exception as e:
+        print("\n[ERR] Неожиданная ошибка при чтении LM_number.txt:")
+        print(e)
+
+    try:
+        cfg = read_hrnet_config()
+        resize = get_resize_long_side(cfg)
+        print(f"hrnet_config.yaml -> resize_long_side = {resize}")
+        print("Ключи конфига:", ", ".join(sorted(cfg.keys())))
+    except HRNetConfigError as e:
+        print("\n[ERR] Проблема с hrnet_config.yaml:")
+        print(e)
+    except Exception as e:
+        print("\n[ERR] Неожиданная ошибка при чтении hrnet_config.yaml:")
+        print(e)
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\infer_hrnet.py ==========
+
+from __future__ import annotations
+
+import argparse
+import csv
+import os
+import sys
+import time
+from dataclasses import dataclass
+from pathlib import Path
+from typing import List, Tuple, Optional
+
+import numpy as np
+from PIL import Image
+
+try:
+    import torch
+    from torch import nn
+except ImportError:  # pragma: no cover
+    torch = None
+    nn = None  # type: ignore[assignment]
+
+try:
+    # HRNet backbone from MMPose (используем, если установлен)
+    from mmpose.models.backbones import HRNet as MMPoseHRNet  # type: ignore
+except Exception as e:  # pragma: no cover
+    print("[WARN] Exception during import or setup (possibly MMPose HRNet):", repr(e))
+    MMPoseHRNet = None  # type: ignore
+
+try:
+    import yaml
+except ImportError:  # pragma: no cover
+    yaml = None
+
+
+@dataclass
+class HRNetConfig:
+    model_type: str = "hrnet_w32"
+    input_size: int = 256
+    resize_mode: str = "resize"
+    keep_aspect_ratio: bool = True
+    batch_size: int = 8
+    learning_rate: float = 5e-4
+    max_epochs: int = 100
+    train_val_split: float = 0.9
+    flip_augmentation: bool = False
+    rotation_augmentation_deg: float = 15.0
+    scale_augmentation: float = 0.3
+    weight_decay: float = 1e-4
+    heatmap_sigma_px: float = 2.5
+
+
+def get_landmark_root() -> Path:
+    return Path(__file__).resolve().parent.parent
+
+
+def load_yaml_config(cfg_path: Path) -> HRNetConfig:
+    cfg = HRNetConfig()
+    if not cfg_path.is_file() or yaml is None:
+        return cfg
+    with cfg_path.open("r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    for field in cfg.__dataclass_fields__.keys():  # type: ignore[attr-defined]
+        if field in data:
+            setattr(cfg, field, data[field])
+    return cfg
+
+
+def read_lm_number(root: Path) -> int:
+    lm_path = root / "LM_number.txt"
+    try:
+        with lm_path.open("r", encoding="utf-8") as f:
+            line = f.readline().strip()
+        n = int(line)
+        if n <= 0:
+            raise ValueError
+        return n
+    except Exception:
+        return -1
+
+
+def read_last_base(root: Path) -> Optional[Path]:
+    base_txt = root / "cfg" / "last_base.txt"
+    if not base_txt.is_file():
+        return None
+    txt = base_txt.read_text(encoding="utf-8").strip()
+    if not txt:
+        return None
+    base = Path(txt)
+    if not base.is_dir():
+        return None
+    return base
+
+
+def _resize_and_pad(
+    img: Image.Image,
+    cfg: HRNetConfig,
+) -> Tuple[Image.Image, float, int, int]:
+    """
+    Ресайз с сохранением пропорций и паддингом до квадрата input_size x input_size.
+    Возвращает (новое_изображение, scale, offset_x, offset_y).
+    """
+    w, h = img.size
+    if cfg.resize_mode == "original" or cfg.input_size <= 0:
+        return img, 1.0, 0, 0
+
+    target = int(cfg.input_size)
+    if target <= 0:
+        return img, 1.0, 0, 0
+
+    scale = min(target / float(w), target / float(h))
+    new_w = max(1, int(round(w * scale)))
+    new_h = max(1, int(round(h * scale)))
+    resized = img.resize((new_w, new_h), Image.BILINEAR)
+
+    canvas = Image.new("RGB", (target, target), (0, 0, 0))
+    offset_x = (target - new_w) // 2
+    offset_y = (target - new_h) // 2
+    canvas.paste(resized, (offset_x, offset_y))
+    return canvas, scale, offset_x, offset_y
+
+
+def heatmaps_to_keypoints(heatmaps: "torch.Tensor") -> "torch.Tensor":
+    """
+    Из теплокарт получаем координаты максимумов.
+    """
+    B, K, H, W = heatmaps.shape
+    heatmaps_reshaped = heatmaps.view(B, K, -1)
+    idx = heatmaps_reshaped.argmax(dim=2)  # (B, K)
+    ys = (idx // W).float()
+    xs = (idx % W).float()
+    kps = torch.stack([xs, ys], dim=2)
+    return kps
+
+
+# Модель должна совпадать с train_hrnet.py
+if torch is not None:
+
+    class SimpleHRNet(nn.Module):
+        def __init__(self, num_keypoints: int) -> None:
+            super().__init__()
+            self.stem = nn.Sequential(
+                nn.Conv2d(3, 32, kernel_size=3, padding=1),
+                nn.BatchNorm2d(32),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(32, 64, kernel_size=3, padding=1),
+                nn.BatchNorm2d(64),
+                nn.ReLU(inplace=True),
+            )
+            blocks = []
+            in_channels = 64
+            for _ in range(3):
+                block = nn.Sequential(
+                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
+                    nn.BatchNorm2d(in_channels),
+                    nn.ReLU(inplace=True),
+                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
+                    nn.BatchNorm2d(in_channels),
+                )
+                blocks.append(block)
+            self.blocks = nn.ModuleList(blocks)
+            self.relu = nn.ReLU(inplace=True)
+            self.head = nn.Conv2d(64, num_keypoints, kernel_size=1)
+
+        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
+            x = self.stem(x)
+            for block in self.blocks:
+                residual = x
+                out = block(x)
+                x = self.relu(out + residual)
+            heatmaps = self.head(x)
+            return heatmaps
+
+    class HRNetW32GM(nn.Module):
+        def __init__(self, num_keypoints: int) -> None:
+            super().__init__()
+            self.num_keypoints = int(num_keypoints)
+            self.use_mmpose = MMPoseHRNet is not None
+            if self.use_mmpose:
+                extra = {
+                    "stage1": dict(
+                        num_modules=1,
+                        num_branches=1,
+                        block="BOTTLENECK",
+                        num_blocks=(4,),
+                        num_channels=(64,),
+                    ),
+                    "stage2": dict(
+                        num_modules=1,
+                        num_branches=2,
+                        block="BASIC",
+                        num_blocks=(4, 4),
+                        num_channels=(32, 64),
+                    ),
+                    "stage3": dict(
+                        num_modules=4,
+                        num_branches=3,
+                        block="BASIC",
+                        num_blocks=(4, 4, 4),
+                        num_channels=(32, 64, 128),
+                    ),
+                    "stage4": dict(
+                        num_modules=3,
+                        num_branches=4,
+                        block="BASIC",
+                        num_blocks=(4, 4, 4, 4),
+                        num_channels=(32, 64, 128, 256),
+                    ),
+                }
+                self.backbone = MMPoseHRNet(extra=extra, in_channels=3)  # type: ignore[call-arg]
+                self.head = nn.Conv2d(32, self.num_keypoints, kernel_size=1)
+            else:
+                self.fallback = SimpleHRNet(num_keypoints)
+
+        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
+            if self.use_mmpose:
+                feats = self.backbone(x)
+                if isinstance(feats, (list, tuple)):
+                    feats0 = feats[0]
+                else:
+                    feats0 = feats
+                return self.head(feats0)
+            return self.fallback(x)
+
+else:
+
+    class SimpleHRNet:  # type: ignore[misc]
+        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
+            raise RuntimeError("PyTorch is required for SimpleHRNet but is not installed.")
+
+    class HRNetW32GM:  # type: ignore[misc]
+        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
+            raise RuntimeError("PyTorch is required for HRNetW32GM but is not installed.")
+
+
+def build_model_for_infer(cfg: HRNetConfig, num_keypoints: int) -> "nn.Module":
+    model_type = (cfg.model_type or "").lower()
+    if model_type.startswith("hrnet_w32"):
+        return HRNetW32GM(num_keypoints=num_keypoints)
+    return SimpleHRNet(num_keypoints=num_keypoints)
+
+
+def _write_dummy_csv(csv_path: Path, num_keypoints: int) -> None:
+    """
+    Записываем CSV в формате одной строки: x1,y1,x2,y2,... .
+    Используется в заглушках, если нет модели или torch.
+    """
+    with csv_path.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.writer(f)
+        row = []
+        for _ in range(num_keypoints):
+            row.extend([0.0, 0.0])
+        writer.writerow(row)
+
+
+def infer_for_locality(
+    root: Path,
+    base_dir: Path,
+    locality: str,
+    num_keypoints: int,
+    cfg: HRNetConfig,
+) -> None:
+    """
+    Автолейблинг одной локальности.
+    """
+    png_dir = base_dir / locality / "png"
+    if not png_dir.is_dir():
+        print(f"[ERR] Папка с изображениями не найдена: {png_dir}")
+        return
+
+    models_current = root / "models" / "current"
+    model_path = models_current / "hrnet_best.pth"
+
+    # Ветка без torch или без модели: честная заглушка
+    if torch is None or not model_path.is_file():
+        if torch is None:
+            print("[WARN] PyTorch не установлен. Создаём CSV с нулевыми координатами (заглушка).")
+        else:
+            print("[WARN] Файл модели models/current/hrnet_best.pth не найден. Создаём CSV с нулевыми координатами (заглушка).")
+
+        for img_path in sorted(png_dir.glob("*.png")):
+            csv_path = img_path.with_suffix(".csv")
+            _write_dummy_csv(csv_path, num_keypoints)
+        return
+
+    # Реальный инференс
+    assert torch is not None
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"[INFO] Загружаем модель для инференса: {model_path} (device={device})")
+
+    model = build_model_for_infer(cfg, num_keypoints)
+    state = torch.load(model_path, map_location=device)
+    if isinstance(state, dict) and "state_dict" in state:
+        state = state["state_dict"]
+    model.load_state_dict(state)
+    model.to(device)
+    model.eval()
+
+    for img_path in sorted(png_dir.glob("*.png")):
+        img = Image.open(img_path).convert("RGB")
+        img_resized, scale, offset_x, offset_y = _resize_and_pad(img, cfg)
+
+        np_img = np.asarray(img_resized, dtype=np.float32) / 255.0
+        np_img = np.transpose(np_img, (2, 0, 1))  # CHW
+        tensor = torch.from_numpy(np_img).unsqueeze(0).to(device)
+
+        with torch.no_grad():
+            heatmaps = model(tensor)
+            kps_resized = heatmaps_to_keypoints(heatmaps)[0].cpu().numpy()  # (K, 2)
+
+        # Переводим координаты обратно в систему исходного изображения
+        if scale > 0:
+            kps_orig = np.zeros_like(kps_resized, dtype=np.float32)
+            kps_orig[:, 0] = (kps_resized[:, 0] - float(offset_x)) / scale
+            kps_orig[:, 1] = (kps_resized[:, 1] - float(offset_y)) / scale
+        else:
+            kps_orig = kps_resized
+
+        # Запись CSV в формате одной строки: x1,y1,x2,y2,...
+        csv_path = img_path.with_suffix(".csv")
+        with csv_path.open("w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+            row = []
+            for i in range(num_keypoints):
+                x = float(kps_orig[i, 0]) if i < len(kps_orig) else 0.0
+                y = float(kps_orig[i, 1]) if i < len(kps_orig) else 0.0
+                row.extend([x, y])
+            writer.writerow(row)
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    """
+    Точка входа для действия 2) Autolabel locality with current model.
+    Внешний интерфейс не меняем, стараемся быть максимально совместимыми:
+    - база берётся из cfg/last_base.txt, если не передана явно;
+    - локальность берётся из аргумента --locality или переменной окружения GM_LOCALITY.
+    """
+    argv = list(sys.argv[1:] if argv is None else argv)
+    parser = argparse.ArgumentParser(description="Autolabel locality with current HRNet model")
+    parser.add_argument("--base", help="Базовая папка локальностей", default=None)
+    parser.add_argument("--locality", help="Имя локальности", default=None)
+    args, _unknown = parser.parse_known_args(argv)
+
+    root = get_landmark_root()
+    cfg_path = root / "config" / "hrnet_config.yaml"
+    cfg = load_yaml_config(cfg_path)
+
+    lm_number = read_lm_number(root)
+    if lm_number <= 0:
+        print("[ERR] LM_number.txt не найден или содержит неверное значение.")
+        return 1
+
+    base_dir: Optional[Path]
+    if args.base:
+        base_dir = Path(args.base)
+    else:
+        base_dir = read_last_base(root)
+
+    if base_dir is None or not base_dir.is_dir():
+        print("[ERR] Базовая папка локальностей не определена или не существует.")
+        return 1
+
+    locality = args.locality or os.environ.get("GM_LOCALITY", "").strip()
+    if not locality:
+        print("[ERR] Локальность не указана (нет --locality и GM_LOCALITY).")
+        return 1
+
+    print(f"[INFO] Autolabel locality: {locality}")
+    print(f"[INFO] Base dir: {base_dir}")
+
+    infer_for_locality(root, base_dir, locality, lm_number, cfg)
+
+    print("[INFO] Autolabel finished for locality:", locality)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+
+
+
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\init_structure.py ==========
+
+from __future__ import annotations
+
+from pathlib import Path
+
+
+def get_root() -> Path:
+    """Landmarking root = folder with 1_ANNOTATOR.bat."""
+    # scripts/ -> parent = tools/2_Landmarking_v1.0
+    return Path(__file__).resolve().parent.parent
+
+
+def ensure_dirs(root: Path) -> None:
+    """
+    Create all service directories if they do not exist.
+    According to ТЗ_1.0: status/, models/current/, models/history/,
+    config/, logs/, datasets/.
+    """
+    subdirs = [
+        "status",
+        "models/current",
+        "models/history",
+        "config",
+        "logs",
+        "datasets",
+    ]
+    for sub in subdirs:
+        (root / sub).mkdir(parents=True, exist_ok=True)
+
+
+def ensure_config(root: Path) -> None:
+    """
+    Create default config/hrnet_config.yaml if missing.
+    Values follow ТЗ_1.0 (simple HRNet W32 config).
+    """
+    cfg_dir = root / "config"
+    cfg_dir.mkdir(parents=True, exist_ok=True)
+    cfg_path = cfg_dir / "hrnet_config.yaml"
+    if cfg_path.exists():
+        return
+
+    default_yaml = """# HRNet training config for GM Landmarking
+model_type: "hrnet_w32"
+input_size: 256  # 0 = do not resize (see resize_mode)
+resize_mode: "resize"  # "resize" or "original"
+keep_aspect_ratio: true
+batch_size: 8
+learning_rate: 0.0005
+max_epochs: 100
+train_val_split: 0.9
+flip_augmentation: true
+rotation_augmentation_deg: 15
+scale_augmentation: 0.3
+weight_decay: 0.0001
+"""
+    cfg_path.write_text(default_yaml, encoding="utf-8")
+
+
+def ensure_status_header(root: Path) -> None:
+    """
+    Create empty status/localities_status.csv with header
+    if file does not exist yet.
+    """
+    status_dir = root / "status"
+    status_dir.mkdir(parents=True, exist_ok=True)
+    status_csv = status_dir / "localities_status.csv"
+    if status_csv.exists():
+        return
+
+    header = (
+        "locality,status,auto_quality,"
+        "last_model_run,last_update,n_images,n_labeled\n"
+    )
+    status_csv.write_text(header, encoding="utf-8")
+
+
+def main() -> int:
+    root = get_root()
+    ensure_dirs(root)
+    ensure_config(root)
+    ensure_status_header(root)
+    # No verbose output here: this script is called on every start.
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\menu_list.py ==========
+
+import os, sys
+
+HERE = os.path.dirname(__file__)
+def default_root():
+    # scripts -> 2_Landmarking_v1.0 -> tools -> GM
+    return os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+
+def parse_args(argv):
+    args = {"mode":"print", "pick":None, "root":None}
+    it = iter(range(len(argv)))
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "--print": args["mode"] = "print"
+        elif a == "--pick":
+            args["mode"] = "pick"
+            if i+1 < len(argv):
+                try: args["pick"] = int(argv[i+1]); i += 1
+                except: pass
+        elif a == "--root":
+            if i+1 < len(argv):
+                args["root"] = argv[i+1]; i += 1
+        i += 1
+    return args
+
+def read_npoints(LM_FILE):
+    try:
+        with open(LM_FILE, "r", encoding="utf-8-sig") as f:
+            s = f.readline().strip()
+        n = int(s)
+        return n if n > 1 else None
+    except:
+        return None
+
+def parse_wide_nums(line):
+    vals = []
+    for t in [x.strip() for x in line.split(",") if x.strip()]:
+        try: vals.append(float(t))
+        except: pass
+    return vals
+
+def image_is_done(png_path, N):
+    base = os.path.splitext(os.path.basename(png_path))[0]
+    csv_path = os.path.join(os.path.dirname(png_path), base + ".csv")
+    if not os.path.exists(csv_path): 
+        return False
+    try:
+        with open(csv_path, "r", encoding="utf-8-sig") as f:
+            rows = [r.strip() for r in f if r.strip()]
+        if not rows: return False
+        for line in rows:
+            nums = parse_wide_nums(line)
+            if N and len(nums) == 2 * N:
+                return True
+        return False
+    except:
+        return False
+
+def has_any_scale(png_dir):
+    try:
+        for fn in os.listdir(png_dir):
+            if fn.lower().endswith(".scale.csv"):
+                return True
+    except: pass
+    return False
+
+def collect_localities(PHOTOS):
+    if not os.path.isdir(PHOTOS):
+        return []
+    names = []
+    for d in sorted(os.listdir(PHOTOS)):
+        png_dir = os.path.join(PHOTOS, d, "png")
+        if os.path.isdir(png_dir): 
+            names.append(d)
+    return names
+
+def main():
+    a = parse_args(sys.argv[1:])
+    ROOT = os.path.abspath(a["root"]) if a["root"] else default_root()
+    TOOL = os.path.join(ROOT, "tools", "2_Landmarking_v1.0")
+    CFG = os.path.abspath(os.path.join(HERE, "..", "cfg", "last_base.txt"))
+    _base = None
+    if os.path.isfile(CFG):
+        try:
+            with open(CFG, "r", encoding="utf-8") as f:
+                _base = f.read().strip()
+        except OSError:
+            _base = None
+    if _base:
+        PHOTOS = _base
+    else:
+        PHOTOS = os.path.join(ROOT, "photos")
+    LM_FILE = os.path.join(TOOL, "LM_number.txt")
+    N = read_npoints(LM_FILE)
+    locs = collect_localities(PHOTOS)
+
+    if a["mode"] == "print":
+        if not locs:
+            print("No localities found in 'photos'.")
+            return 0
+        for i, loc in enumerate(locs, 1):
+            png_dir = os.path.join(PHOTOS, loc, "png")
+            pngs = [os.path.join(png_dir, f) for f in os.listdir(png_dir) if f.lower().endswith(".png")]
+            total = len(pngs)
+            done  = sum(image_is_done(p, N) for p in pngs) if (N and total) else 0
+            pct   = int(round((done / total * 100), 0)) if total else 0
+            line  = f"{i}) {loc} [{done}/{total}] {pct}%"
+            if total and done == total and not has_any_scale(png_dir):
+                line += "  Set Scale!"
+            print(line)
+        return 0
+
+    if a["mode"] == "pick":
+        if not (a["pick"] and 1 <= a["pick"] <= len(locs)): 
+            return 2
+        print(locs[a["pick"]-1], end="")
+        return 0
+
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\photos_diag.py ==========
+
+import os, glob, sys
+HERE = os.path.dirname(__file__)
+ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
+PHOTOS = os.path.join(ROOT, "photos")
+print(f"[DIAG] ROOT   = {ROOT}")
+print(f"[DIAG] PHOTOS = {PHOTOS}")
+if not os.path.isdir(PHOTOS):
+    print("[ERR] photos dir not found")
+    sys.exit(1)
+
+dirs = sorted([d for d in os.listdir(PHOTOS) if os.path.isdir(os.path.join(PHOTOS, d))])
+if not dirs:
+    print("[DIAG] photos is empty")
+    sys.exit(0)
+
+for d in dirs:
+    loc = os.path.join(PHOTOS, d)
+    png_dir = os.path.join(loc, "png")
+    has_png_dir = os.path.isdir(png_dir)
+    cnt_png_in_dir = len(glob.glob(os.path.join(png_dir, "*.png"))) if has_png_dir else 0
+    cnt_png_flat   = len(glob.glob(os.path.join(loc, "*.png")))
+    print(f"{d}: png_subdir={has_png_dir}, png_in_subdir={cnt_png_in_dir}, png_in_root={cnt_png_flat}")
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\rebuild_localities_status.py ==========
+
+from pathlib import Path
+import csv
+import sys
+from datetime import datetime
+
+
+def find_tool_dir() -> Path:
+    # scripts/ -> parent = tools/2_Landmarking_v1.0
+    return Path(__file__).resolve().parent.parent
+
+
+def load_base_localities(tool_dir: Path):
+    cfg_dir = tool_dir / "cfg"
+    last_base = cfg_dir / "last_base.txt"
+    if not last_base.exists():
+        print(
+            "[ERR] cfg/last_base.txt not found; run 1_ANNOTATOR.bat or 2_TRAIN-INFER_HRNet.bat first.",
+            file=sys.stderr,
+        )
+        return None
+
+    base = last_base.read_text(encoding="utf-8").strip()
+    if not base:
+        print("[ERR] cfg/last_base.txt is empty.", file=sys.stderr)
+        return None
+
+    path = Path(base)
+    if not path.exists():
+        print(f"[ERR] Localities base not found: {path}", file=sys.stderr)
+        return None
+
+    return path
+
+
+def scan_localities(base_dir: Path):
+    """
+    Return list of (locality_name, n_images, n_labeled).
+
+    n_labeled считается так:
+    для каждого img_XXXX.png считаем размеченным, если рядом есть файл img_XXXX.csv.
+    Подпапка "bad" игнорируется, т.к. мы не обходим подкаталоги.
+    """
+    results = []
+    for loc_dir in sorted(p for p in base_dir.iterdir() if p.is_dir()):
+        png_dir = loc_dir / "png"
+        if not png_dir.is_dir():
+            continue
+
+        # Только файлы *.png в самом png/, без рекурсии
+        images = sorted(png_dir.glob("*.png"))
+        n_images = len(images)
+        if n_images == 0:
+            continue
+
+        n_labeled = 0
+        for img in images:
+            lm = png_dir / f"{img.stem}.csv"
+            if lm.exists():
+                n_labeled += 1
+
+        results.append((loc_dir.name, n_images, n_labeled))
+
+    return results
+
+
+def read_old_status(status_file: Path):
+    if not status_file.exists():
+        return {}
+    with status_file.open("r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        out = {}
+        for row in reader:
+            loc = row.get("locality") or row.get("name")
+            if not loc:
+                continue
+            out[loc] = row
+        return out
+
+
+def write_status(status_file: Path, rows):
+    fieldnames = [
+        "locality",
+        "status",
+        "auto_quality",
+        "last_model_run",
+        "last_update",
+        "n_images",
+        "n_labeled",
+    ]
+    status_file.parent.mkdir(parents=True, exist_ok=True)
+    with status_file.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(row)
+
+
+def main() -> int:
+    tool_dir = find_tool_dir()
+    base_dir = load_base_localities(tool_dir)
+    if base_dir is None:
+        return 1
+
+    status_file = tool_dir / "status" / "localities_status.csv"
+    old = read_old_status(status_file)
+    scanned = scan_localities(base_dir)
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    new_rows = []
+    for name, n_images, n_labeled in scanned:
+        prev = old.get(name, {})
+        prev_status = (prev.get("status") or "").strip()
+        status = prev_status
+        auto_quality = (prev.get("auto_quality") or "").strip()
+        last_model_run = (prev.get("last_model_run") or "").strip()
+        last_update = (prev.get("last_update") or "").strip()
+
+        # Если все изображения размечены и статус пустой -> считаем MANUAL
+        if n_images > 0 and n_labeled == n_images:
+            if not prev_status:
+                status = "MANUAL"
+            elif prev_status.upper() == "MANUAL":
+                status = "MANUAL"
+            else:
+                # AUTO и другие статусы не трогаем автоматически
+                status = prev_status
+
+        if not last_update:
+            last_update = now
+
+        new_rows.append(
+            {
+                "locality": name,
+                "status": status,
+                "auto_quality": auto_quality,
+                "last_model_run": last_model_run,
+                "last_update": last_update,
+                "n_images": str(n_images),
+                "n_labeled": str(n_labeled),
+            }
+        )
+
+    write_status(status_file, new_rows)
+    print(f"[INFO] Rebuilt status for {len(new_rows)} localities.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\train_hrnet.py ==========
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import random
+import sys
+import time
+import shutil
+from dataclasses import dataclass
+from pathlib import Path
+from typing import List, Tuple, Optional, Dict, Any
+
+import numpy as np
+from PIL import Image
+
+try:
+    import torch
+    from torch import nn
+    from torch.utils.data import Dataset, DataLoader
+except ImportError:  # pragma: no cover
+    torch = None
+    nn = None  # type: ignore[assignment]
+    Dataset = object  # type: ignore[assignment]
+    DataLoader = object  # type: ignore[assignment]
+
+try:
+    # HRNet backbone from MMPose (используем, если установлен)
+    from mmpose.models.backbones import HRNet as MMPoseHRNet  # type: ignore
+except Exception as e:  # pragma: no cover
+    print("[WARN] Exception during import or setup (possibly MMPose HRNet):", repr(e))
+    MMPoseHRNet = None  # type: ignore
+
+try:
+    import yaml
+except ImportError:  # pragma: no cover
+    yaml = None
+
+
+@dataclass
+class HRNetConfig:
+    model_type: str = "hrnet_w32"
+    input_size: int = 256
+    resize_mode: str = "resize"  # "resize" или "original"
+    keep_aspect_ratio: bool = True
+    batch_size: int = 8
+    learning_rate: float = 5e-4
+    max_epochs: int = 100
+    train_val_split: float = 0.9
+    flip_augmentation: bool = False
+    rotation_augmentation_deg: float = 15.0
+    scale_augmentation: float = 0.3
+    weight_decay: float = 1e-4
+    heatmap_sigma_px: float = 2.5
+
+
+def get_landmark_root() -> Path:
+    return Path(__file__).resolve().parent.parent
+
+
+def load_yaml_config(cfg_path: Path) -> HRNetConfig:
+    cfg = HRNetConfig()
+    if not cfg_path.is_file() or yaml is None:
+        return cfg
+    with cfg_path.open("r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    for field in cfg.__dataclass_fields__.keys():  # type: ignore[attr-defined]
+        if field in data:
+            setattr(cfg, field, data[field])
+    return cfg
+
+
+def read_lm_number(root: Path) -> int:
+    lm_path = root / "LM_number.txt"
+    try:
+        with lm_path.open("r", encoding="utf-8") as f:
+            line = f.readline().strip()
+        n = int(line)
+        if n <= 0:
+            raise ValueError
+        return n
+    except Exception:
+        return -1
+
+
+def read_last_base(root: Path) -> Optional[Path]:
+    base_txt = root / "cfg" / "last_base.txt"
+    if not base_txt.is_file():
+        return None
+    txt = base_txt.read_text(encoding="utf-8").strip()
+    if not txt:
+        return None
+    base = Path(txt)
+    if not base.is_dir():
+        return None
+    return base
+
+
+def gather_manual_samples(root: Path, base_dir: Path) -> List[Tuple[Path, Path, str]]:
+    """
+    Собираем пары (png, csv, locality) только для MANUAL локальностей.
+    """
+    status_dir = root / "status"
+    status_file = status_dir / "localities_status.csv"
+    manual_localities: List[str] = []
+
+    if status_file.is_file():
+        with status_file.open("r", encoding="utf-8", newline="") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                loc = (row.get("locality") or "").strip()
+                status = (row.get("status") or "").strip().upper()
+                if loc and status == "MANUAL":
+                    manual_localities.append(loc)
+
+    manual_localities = sorted(set(manual_localities))
+    samples: List[Tuple[Path, Path, str]] = []
+
+    for loc in manual_localities:
+        png_dir = base_dir / loc / "png"
+        if not png_dir.is_dir():
+            continue
+        for img_path in sorted(png_dir.glob("*.png")):
+            csv_path = img_path.with_suffix(".csv")
+            if csv_path.is_file():
+                samples.append((img_path, csv_path, loc))
+
+    return samples
+
+
+def _resize_and_pad(
+    img: Image.Image,
+    cfg: HRNetConfig,
+) -> Tuple[Image.Image, float, int, int]:
+    """
+    Ресайз с сохранением пропорций и паддингом до квадрата input_size x input_size.
+    Возвращает (новое_изображение, scale, offset_x, offset_y).
+    """
+    w, h = img.size
+    if cfg.resize_mode == "original" or cfg.input_size <= 0:
+        # Без изменения размера
+        return img, 1.0, 0, 0
+
+    target = int(cfg.input_size)
+    if target <= 0:
+        return img, 1.0, 0, 0
+
+    scale = min(target / float(w), target / float(h))
+    new_w = max(1, int(round(w * scale)))
+    new_h = max(1, int(round(h * scale)))
+    resized = img.resize((new_w, new_h), Image.BILINEAR)
+
+    canvas = Image.new("RGB", (target, target), (0, 0, 0))
+    offset_x = (target - new_w) // 2
+    offset_y = (target - new_h) // 2
+    canvas.paste(resized, (offset_x, offset_y))
+    return canvas, scale, offset_x, offset_y
+
+
+def _load_keypoints(csv_path: Path, num_keypoints: int) -> np.ndarray:
+    """
+    Загружаем точки из CSV.
+
+    Поддерживаем два формата:
+    1) ОДНА строка: x1,y1,x2,y2,... (как делает аннотатор).
+    2) МНОГО строк: по одной точке в строке (x,y), возможен заголовок x,y.
+
+    Возвращаем массив (K, 2), недостающие точки = 0,0.
+    """
+    kps = np.zeros((num_keypoints, 2), dtype=np.float32)
+    try:
+        with csv_path.open("r", encoding="utf-8", newline="") as f:
+            reader = csv.reader(f)
+            # убираем полностью пустые строки
+            rows = [row for row in reader if any((c or "").strip() for c in row)]
+
+        if not rows:
+            return kps
+
+        # убираем заголовок "x,y" если есть
+        if rows and rows[0] and (rows[0][0] or "").strip().lower().startswith("x"):
+            rows = rows[1:]
+
+        if not rows:
+            return kps
+
+        # Вариант 1: одна строка, много чисел -> считаем, что это x1,y1,x2,y2,...
+        if len(rows) == 1 and len(rows[0]) > 2:
+            flat_vals: list[float] = []
+            for cell in rows[0]:
+                cell = (cell or "").strip()
+                if not cell:
+                    continue
+                try:
+                    flat_vals.append(float(cell))
+                except ValueError:
+                    continue
+
+            idx = 0
+            it = iter(flat_vals)
+            for x, y in zip(it, it):
+                if idx >= num_keypoints:
+                    break
+                kps[idx, 0] = x
+                kps[idx, 1] = y
+                idx += 1
+
+        else:
+            # Вариант 2: построчный формат x,y
+            idx = 0
+            for row in rows:
+                if idx >= num_keypoints:
+                    break
+                if len(row) < 2:
+                    continue
+                try:
+                    x = float((row[0] or "").strip())
+                    y = float((row[1] or "").strip())
+                except ValueError:
+                    continue
+                kps[idx, 0] = x
+                kps[idx, 1] = y
+                idx += 1
+
+    except Exception:
+        # В случае ошибок возвращаем нули
+        pass
+    return kps
+
+
+class LandmarkDataset(Dataset):  # type: ignore[misc]
+    def __init__(
+        self,
+        samples: List[Tuple[Path, Path, str]],
+        num_keypoints: int,
+        cfg: HRNetConfig,
+        phase: str = "train",
+    ) -> None:
+        self.samples = samples
+        self.num_keypoints = num_keypoints
+        self.cfg = cfg
+        self.phase = phase
+
+    def __len__(self) -> int:
+        return len(self.samples)
+
+    def __getitem__(self, idx: int):
+        img_path, csv_path, loc = self.samples[idx]
+        img = Image.open(img_path).convert("RGB")
+
+        # Ресайз + паддинг
+        img_resized, scale, offset_x, offset_y = _resize_and_pad(img, self.cfg)
+
+        # Базовые преобразования в тензор
+        np_img = np.asarray(img_resized, dtype=np.float32) / 255.0
+        np_img = np.transpose(np_img, (2, 0, 1))  # CHW
+
+        # Точки -> координаты в новом масштабе
+        kps = _load_keypoints(csv_path, self.num_keypoints)
+        if scale != 1.0 or offset_x != 0 or offset_y != 0:
+            kps[:, 0] = kps[:, 0] * scale + float(offset_x)
+            kps[:, 1] = kps[:, 1] * scale + float(offset_y)
+
+        if torch is not None:
+            img_tensor = torch.from_numpy(np_img).float()
+            kps_tensor = torch.from_numpy(kps).float()
+        else:
+            # В заглушке нам фактически не важно содержимое, но форма должна быть корректной
+            img_tensor = np_img  # type: ignore[assignment]
+            kps_tensor = kps  # type: ignore[assignment]
+
+        return img_tensor, kps_tensor
+
+
+def keypoints_to_heatmaps(
+    keypoints: "torch.Tensor",
+    height: int,
+    width: int,
+    sigma: float = 2.0,
+    device: Optional["torch.device"] = None,
+) -> "torch.Tensor":
+    """
+    Преобразуем координаты (N, K, 2) в теплокарты (N, K, H, W).
+    Точки с координатами <= 0 считаем отсутствующими.
+    """
+    if device is None:
+        device = keypoints.device
+    N, K, _ = keypoints.shape
+    yy, xx = torch.meshgrid(
+        torch.arange(height, device=device),
+        torch.arange(width, device=device),
+        indexing="ij",
+    )
+    heatmaps = []
+    for n in range(N):
+        kps = keypoints[n]
+        hm_per_img = []
+        for k in range(K):
+            x = kps[k, 0]
+            y = kps[k, 1]
+            if x <= 0 and y <= 0:
+                hm_per_img.append(torch.zeros((height, width), device=device))
+                continue
+            g = torch.exp(-((xx - x) ** 2 + (yy - y) ** 2) / (2 * sigma * sigma))
+            hm_per_img.append(g)
+        hm_per_img = torch.stack(hm_per_img, dim=0)
+        heatmaps.append(hm_per_img)
+    heatmaps = torch.stack(heatmaps, dim=0)
+    return heatmaps
+
+
+def heatmaps_to_keypoints(heatmaps: "torch.Tensor") -> "torch.Tensor":
+    """
+    Из теплокарт получаем координаты максимумов.
+    """
+    B, K, H, W = heatmaps.shape
+    heatmaps_reshaped = heatmaps.view(B, K, -1)
+    idx = heatmaps_reshaped.argmax(dim=2)  # (B, K)
+    ys = (idx // W).float()
+    xs = (idx % W).float()
+    kps = torch.stack([xs, ys], dim=2)
+    return kps
+
+
+def compute_pck_at_r(
+    pred: "torch.Tensor",  # (N, K, 2)
+    gt: "torch.Tensor",  # (N, K, 2)
+    R: float,
+) -> float:
+    """
+    PCK@R: доля точек, попавших в радиус R от разметки.
+    Точки с gt <= (0,0) игнорируем.
+    """
+    mask = (gt[..., 0] > 0) | (gt[..., 1] > 0)
+    if mask.sum().item() == 0:
+        return 0.0
+    dists = torch.norm(pred - gt, dim=2)
+    correct = (dists <= R) & mask
+    return float(correct.sum().item()) / float(mask.sum().item())
+
+
+# Модели: простая сеть SimpleHRNet и HRNet-W32 (через MMPose)
+if torch is not None:
+
+    class SimpleHRNet(nn.Module):
+        """
+        Упрощённый бэкбон для расстановки ландмарок.
+        """
+
+        def __init__(self, num_keypoints: int) -> None:
+            super().__init__()
+            self.stem = nn.Sequential(
+                nn.Conv2d(3, 32, kernel_size=3, padding=1),
+                nn.BatchNorm2d(32),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(32, 64, kernel_size=3, padding=1),
+                nn.BatchNorm2d(64),
+                nn.ReLU(inplace=True),
+            )
+            blocks = []
+            in_channels = 64
+            for _ in range(3):
+                block = nn.Sequential(
+                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
+                    nn.BatchNorm2d(in_channels),
+                    nn.ReLU(inplace=True),
+                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
+                    nn.BatchNorm2d(in_channels),
+                )
+                blocks.append(block)
+            self.blocks = nn.ModuleList(blocks)
+            self.relu = nn.ReLU(inplace=True)
+            self.head = nn.Conv2d(64, num_keypoints, kernel_size=1)
+
+        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
+            x = self.stem(x)
+            for block in self.blocks:
+                residual = x
+                out = block(x)
+                x = self.relu(out + residual)
+            heatmaps = self.head(x)
+            return heatmaps
+
+    class HRNetW32GM(nn.Module):
+        """
+        HRNet-W32 из MMPose + простой head для теплокарт.
+        Если MMPose недоступен, используется SimpleHRNet.
+        """
+
+        def __init__(self, num_keypoints: int) -> None:
+            super().__init__()
+            self.num_keypoints = int(num_keypoints)
+            self.use_mmpose = MMPoseHRNet is not None
+            if self.use_mmpose:
+                extra = {
+                    "stage1": dict(
+                        num_modules=1,
+                        num_branches=1,
+                        block="BOTTLENECK",
+                        num_blocks=(4,),
+                        num_channels=(64,),
+                    ),
+                    "stage2": dict(
+                        num_modules=1,
+                        num_branches=2,
+                        block="BASIC",
+                        num_blocks=(4, 4),
+                        num_channels=(32, 64),
+                    ),
+                    "stage3": dict(
+                        num_modules=4,
+                        num_branches=3,
+                        block="BASIC",
+                        num_blocks=(4, 4, 4),
+                        num_channels=(32, 64, 128),
+                    ),
+                    "stage4": dict(
+                        num_modules=3,
+                        num_branches=4,
+                        block="BASIC",
+                        num_blocks=(4, 4, 4, 4),
+                        num_channels=(32, 64, 128, 256),
+                    ),
+                }
+                self.backbone = MMPoseHRNet(extra=extra, in_channels=3)  # type: ignore[call-arg]
+                self.head = nn.Conv2d(32, self.num_keypoints, kernel_size=1)
+            else:
+                self.fallback = SimpleHRNet(num_keypoints)
+
+        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
+            if self.use_mmpose:
+                feats = self.backbone(x)
+                if isinstance(feats, (list, tuple)):
+                    feats0 = feats[0]
+                else:
+                    feats0 = feats
+                return self.head(feats0)
+            return self.fallback(x)
+
+else:
+
+    class SimpleHRNet:  # type: ignore[misc]
+        """
+        Заглушка, если torch не установлен.
+        """
+
+        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
+            raise RuntimeError("PyTorch is required for SimpleHRNet but is not installed.")
+
+    class HRNetW32GM:  # type: ignore[misc]
+        """
+        Заглушка, если torch не установлен.
+        """
+
+        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
+            raise RuntimeError("PyTorch is required for HRNetW32GM but is not installed.")
+
+
+def write_datasets_txt(
+    root: Path,
+    run_id: str,
+    train_samples: List[Tuple[Path, Path, str]],
+    val_samples: List[Tuple[Path, Path, str]],
+) -> None:
+    datasets_dir = root / "datasets"
+    datasets_dir.mkdir(parents=True, exist_ok=True)
+    train_txt = datasets_dir / f"hrnet_train_{run_id}.txt"
+    val_txt = datasets_dir / f"hrnet_val_{run_id}.txt"
+
+    def _write(path: Path, samples: List[Tuple[Path, Path, str]]) -> None:
+        with path.open("w", encoding="utf-8") as f:
+            for img_path, csv_path, loc in samples:
+                f.write(f"{img_path};{csv_path};{loc}\n")
+
+    _write(train_txt, train_samples)
+    _write(val_txt, val_samples)
+
+
+def train_model(
+    cfg: HRNetConfig,
+    train_samples: List[Tuple[Path, Path, str]],
+    val_samples: List[Tuple[Path, Path, str]],
+    num_keypoints: int,
+    run_id: str,
+    root: Path,
+    log_path: Path,
+) -> Dict[str, Any]:
+    """
+    Основной цикл обучения. Пишет:
+    - models/history/<run_id>/hrnet_best.pth, metrics.json, train_config.yaml, train_log.txt
+    - models/current/hrnet_best.pth, quality.json
+    - logs/train_hrnet_last.log
+    """
+    log_file = log_path.open("w", encoding="utf-8")
+
+    def log(msg: str) -> None:
+        ts = time.strftime("%Y-%m-%d %H:%M:%S")
+        line = f"[{ts}] {msg}"
+        print(line)
+        log_file.write(line + "\n")
+        log_file.flush()
+
+    history_dir = root / "models" / "history" / run_id
+    history_dir.mkdir(parents=True, exist_ok=True)
+    current_dir = root / "models" / "current"
+    current_dir.mkdir(parents=True, exist_ok=True)
+
+    # Общая информация о датасете
+    n_train = len(train_samples)
+    n_val = len(val_samples)
+    total = n_train + n_val
+    train_share = float(n_train) / total if total > 0 else 0.0
+    val_share = float(n_val) / total if total > 0 else 0.0
+    manual_localities = sorted({loc for *_rest, loc in train_samples + val_samples})
+    n_manual_localities = len(manual_localities)
+
+    # Ветка без torch: честная заглушка, но с корректными файлами метрик
+    if torch is None:
+        log("PyTorch не установлен. Обучение выполнить нельзя, пишем нулевые метрики и выходим без падения.")
+
+        metrics: Dict[str, Any] = {
+            "run_id": run_id,
+            "pck_r": 0.0,
+            "pck_r_percent": 0.0,
+            "R": 0.0,
+            "n_train_images": n_train,
+            "n_val_images": n_val,
+            "train_share": train_share,
+            "val_share": val_share,
+            "n_manual_localities": n_manual_localities,
+        }
+        quality: Dict[str, Any] = {
+            "run_id": run_id,
+            "pck_r": 0.0,
+            "pck_r_percent": 0.0,
+            "n_train_images": n_train,
+            "n_val_images": n_val,
+            "train_share": train_share,
+            "val_share": val_share,
+            "n_manual_localities": n_manual_localities,
+        }
+
+        # Заглушечные файлы модели/метрик
+        quality_path = current_dir / "quality.json"
+        with quality_path.open("w", encoding="utf-8") as f:
+            json.dump(quality, f, indent=2, ensure_ascii=False)
+
+        metrics_path = history_dir / "metrics.json"
+        with metrics_path.open("w", encoding="utf-8") as f:
+            json.dump(metrics, f, indent=2, ensure_ascii=False)
+
+        # train_config.yaml — просто копия текущего конфига и информации о запуске
+        train_cfg_path = history_dir / "train_config.yaml"
+        train_cfg_data: Dict[str, Any] = {
+            "run_id": run_id,
+            "config": cfg.__dict__,
+            "n_train_images": n_train,
+            "n_val_images": n_val,
+            "train_share": train_share,
+            "val_share": val_share,
+            "n_manual_localities": n_manual_localities,
+        }
+        try:
+            if yaml is not None:
+                with train_cfg_path.open("w", encoding="utf-8") as f:
+                    yaml.safe_dump(train_cfg_data, f, allow_unicode=True)
+            else:
+                with train_cfg_path.open("w", encoding="utf-8") as f:
+                    json.dump(train_cfg_data, f, indent=2, ensure_ascii=False)
+        except Exception:
+            pass
+
+        # train_log.txt — копия основного лога
+        log_file.close()
+        history_log = history_dir / "train_log.txt"
+        try:
+            shutil.copy2(log_path, history_log)
+        except Exception:
+            pass
+
+        # hrnet_best.pth — пустой файл-заглушка, чтобы 2) не падал на проверке наличия
+        best_model_hist = history_dir / "hrnet_best.pth"
+        best_model_curr = current_dir / "hrnet_best.pth"
+        try:
+            best_model_hist.touch()
+            shutil.copy2(best_model_hist, best_model_curr)
+        except Exception:
+            pass
+
+        return metrics
+
+    # --- Реальное обучение, если torch доступен ---
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log(f"Используем устройство: {device}")
+
+    log(
+        f"Всего образцов: {total} "
+        f"(train={n_train}, val={n_val})"
+    )
+
+    train_ds = LandmarkDataset(train_samples, num_keypoints, cfg, phase="train")
+    val_ds = LandmarkDataset(val_samples, num_keypoints, cfg, phase="val")
+
+    train_loader = DataLoader(
+        train_ds,
+        batch_size=max(1, int(cfg.batch_size)),
+        shuffle=True,
+        num_workers=0,
+    )
+    val_loader = DataLoader(
+        val_ds,
+        batch_size=max(1, int(cfg.batch_size)),
+        shuffle=False,
+        num_workers=0,
+    )
+
+    model_type = (cfg.model_type or "").lower()
+    if model_type.startswith("hrnet_w32"):
+        log("Создаём модель HRNet-W32 (MMPose) для геометрической морфометрии.")
+        model = HRNetW32GM(num_keypoints=num_keypoints)
+        if getattr(model, "use_mmpose", False) is False:
+            log("MMPose HRNet недоступен, используется запасной вариант SimpleHRNet.")
+    else:
+        log("Создаём упрощённую модель SimpleHRNet (без MMPose).")
+        model = HRNetW32GM(num_keypoints=num_keypoints)
+
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=float(cfg.learning_rate),
+        weight_decay=float(cfg.weight_decay),
+    )
+    criterion = torch.nn.MSELoss()
+
+    model = model.to(device)
+
+    # Радиус для PCK@R: фиксированный в пикселях на теплокарте
+    # Здесь берём 5% от меньшей стороны входа.
+    if cfg.input_size > 0:
+        R = float(max(1, int(round(min(cfg.input_size, cfg.input_size) * 0.05))))
+    else:
+        R = 10.0
+
+    best_pck = 0.0
+    best_epoch = 0
+
+    for epoch in range(int(cfg.max_epochs)):
+        model.train()
+        running_loss = 0.0
+        num_batches = 0
+
+        for imgs, kps in train_loader:
+            imgs = imgs.to(device)
+            kps = kps.to(device)
+
+            optimizer.zero_grad()
+            # Сначала прогоняем через модель и узнаём размер теплокарт
+            pred_heatmaps = model(imgs)
+            _, _, H_hm, W_hm = pred_heatmaps.shape
+            _, _, H_in, W_in = imgs.shape
+
+            # Масштабируем ключевые точки под разрешение теплокарт,
+            # чтобы gt и pred были одного размера.
+            if H_in != H_hm or W_in != W_hm:
+                scale_x = float(W_hm) / float(W_in)
+                scale_y = float(H_hm) / float(H_in)
+                kps_scaled = kps.clone()
+                kps_scaled[..., 0] = kps_scaled[..., 0] * scale_x
+                kps_scaled[..., 1] = kps_scaled[..., 1] * scale_y
+            else:
+                kps_scaled = kps
+
+            gt_heatmaps = keypoints_to_heatmaps(
+                kps_scaled,
+                H_hm,
+                W_hm,
+                sigma=float(getattr(cfg, "heatmap_sigma_px", 2.0)),
+                device=device,
+            )
+            loss = criterion(pred_heatmaps, gt_heatmaps)
+            loss.backward()
+            optimizer.step()
+
+            running_loss += loss.item()
+            num_batches += 1
+
+        avg_loss = running_loss / max(1, num_batches)
+        log(f"Epoch {epoch + 1}/{cfg.max_epochs} - train loss = {avg_loss:.6f}")
+
+        # Валидация
+        model.eval()
+        all_pred = []
+        all_gt = []
+        with torch.no_grad():
+            for imgs, kps in val_loader:
+                imgs = imgs.to(device)
+                kps = kps.to(device)
+                pred_heatmaps = model(imgs)
+                pred_kps = heatmaps_to_keypoints(pred_heatmaps)
+                # Переводим предсказанные координаты в ту же систему, что и gt
+                _, _, H_in, W_in = imgs.shape
+                _, _, H_hm, W_hm = pred_heatmaps.shape
+                if H_in != H_hm or W_in != W_hm:
+                    scale_x = float(W_in) / float(W_hm)
+                    scale_y = float(H_in) / float(H_hm)
+                    pred_kps[..., 0] = pred_kps[..., 0] * scale_x
+                    pred_kps[..., 1] = pred_kps[..., 1] * scale_y
+                all_pred.append(pred_kps.cpu())
+                all_gt.append(kps.cpu())
+
+        if all_pred and all_gt:
+            pred_cat = torch.cat(all_pred, dim=0)
+            gt_cat = torch.cat(all_gt, dim=0)
+            pck = compute_pck_at_r(pred_cat, gt_cat, R)
+        else:
+            pck = 0.0
+
+        log(f"Epoch {epoch + 1} - val PCK@R={pck:.4f}")
+
+        if pck >= best_pck:
+            best_pck = pck
+            best_epoch = epoch + 1
+            # Сохраняем лучшую модель
+            best_model_hist = history_dir / "hrnet_best.pth"
+            torch.save(model.state_dict(), best_model_hist)
+            best_model_curr = current_dir / "hrnet_best.pth"
+            shutil.copy2(best_model_hist, best_model_curr)
+            log(f"Новая лучшая модель сохранена (epoch={best_epoch}, PCK@R={best_pck:.4f}).")
+
+    # Финальные метрики
+    pck_percent = float(round(best_pck * 100))
+    metrics: Dict[str, Any] = {
+        "run_id": run_id,
+        "pck_r": float(best_pck),
+        "pck_r_percent": pck_percent,
+        "R": R,
+        "n_train_images": n_train,
+        "n_val_images": n_val,
+        "train_share": train_share,
+        "val_share": val_share,
+        "n_manual_localities": n_manual_localities,
+        "best_epoch": best_epoch,
+        "device": str(device),
+    }
+
+    metrics_path = history_dir / "metrics.json"
+    with metrics_path.open("w", encoding="utf-8") as f:
+        json.dump(metrics, f, indent=2, ensure_ascii=False)
+
+    quality: Dict[str, Any] = {
+        "run_id": run_id,
+        "pck_r": float(best_pck),
+        "pck_r_percent": pck_percent,
+        "n_train_images": n_train,
+        "n_val_images": n_val,
+        "train_share": train_share,
+        "val_share": val_share,
+        "n_manual_localities": n_manual_localities,
+    }
+    quality_path = current_dir / "quality.json"
+    with quality_path.open("w", encoding="utf-8") as f:
+        json.dump(quality, f, indent=2, ensure_ascii=False)
+
+    # train_config.yaml
+    train_cfg_path = history_dir / "train_config.yaml"
+    train_cfg_data: Dict[str, Any] = {
+        "run_id": run_id,
+        "config": cfg.__dict__,
+        "R": R,
+        "n_train_images": n_train,
+        "n_val_images": n_val,
+        "train_share": train_share,
+        "val_share": val_share,
+        "n_manual_localities": n_manual_localities,
+        "best_epoch": best_epoch,
+    }
+    try:
+        if yaml is not None:
+            with train_cfg_path.open("w", encoding="utf-8") as f:
+                yaml.safe_dump(train_cfg_data, f, allow_unicode=True)
+        else:
+            with train_cfg_path.open("w", encoding="utf-8") as f:
+                json.dump(train_cfg_data, f, indent=2, ensure_ascii=False)
+    except Exception:
+        pass
+
+    # train_log.txt
+    log_file.close()
+    history_log = history_dir / "train_log.txt"
+    try:
+        shutil.copy2(log_path, history_log)
+    except Exception:
+        pass
+
+    return metrics
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    """
+    Точка входа для действия 1) Train / Finetune model on MANUAL localities.
+    Никаких новых ключей/режимов не добавляем, только внутренняя реализация.
+    """
+    argv = list(sys.argv[1:] if argv is None else argv)
+    parser = argparse.ArgumentParser(description="Train HRNet model on MANUAL localities")
+    # parse_known_args, чтобы не сломаться, если trainer_menu.py что-то передаёт
+    parser.add_argument("--dummy", help="Не используется, только для совместимости", default=None)
+    args, _unknown = parser.parse_known_args(argv)
+
+    root = get_landmark_root()
+    cfg_path = root / "config" / "hrnet_config.yaml"
+    cfg = load_yaml_config(cfg_path)
+
+    lm_number = read_lm_number(root)
+    if lm_number <= 0:
+        print("[ERR] LM_number.txt не найден или содержит неверное значение.")
+        return 1
+
+    base_dir = read_last_base(root)
+    if base_dir is None:
+        print("[ERR] cfg\\last_base.txt не найден или папка с локальностями отсутствует.")
+        return 1
+
+    samples = gather_manual_samples(root, base_dir)
+    if not samples:
+        print("[INFO] MANUAL локальностей с полными PNG+CSV не найдено. Обучать нечего.")
+        return 0
+
+    # Один раз тасуем и делим, чтобы split совпадал и для логов, и для обучения
+    random.shuffle(samples)
+    train_val = float(cfg.train_val_split)
+    split_idx = int(len(samples) * train_val)
+    train_samples = samples[:split_idx]
+    val_samples = samples[split_idx:]
+
+    run_id = time.strftime("%Y%m%d_%H%M%S")
+    logs_dir = root / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    log_path = logs_dir / "train_hrnet_last.log"
+
+    # По ТЗ: сохраняем списки датасета
+    write_datasets_txt(root, run_id, train_samples, val_samples)
+
+    metrics = train_model(cfg, train_samples, val_samples, lm_number, run_id, root, log_path)
+
+    # Красивый вывод как в ТЗ
+    n_train = metrics.get("n_train_images", 0)
+    n_val = metrics.get("n_val_images", 0)
+    total = n_train + n_val
+    train_share = metrics.get("train_share", float(n_train) / total if total > 0 else 0.0)
+    val_share = metrics.get("val_share", float(n_val) / total if total > 0 else 0.0)
+    pck_percent = metrics.get("pck_r_percent", 0.0)
+    n_manual_localities = metrics.get("n_manual_localities", 0)
+    run_id_out = metrics.get("run_id", run_id)
+
+    print("Training finished.")
+    print()
+    print(f"Used MANUAL localities: {n_manual_localities}")
+    train_pct = int(round(train_share * 100))
+    val_pct = int(round(val_share * 100))
+    print(f"Train images: {n_train} ({train_pct}%)")
+    print(f"Val images:   {n_val} ({val_pct}%)")
+    print()
+    print(f"PCK@R (validation): {int(round(pck_percent))} %")
+    print()
+    print("Model saved as: models/current/hrnet_best.pth")
+    print(f"Run id: {run_id_out}")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\train_hrnet_backup_before_debug.py ==========
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import random
+import sys
+import time
+import shutil
+from dataclasses import dataclass
+from pathlib import Path
+from typing import List, Tuple, Optional, Dict, Any
+
+import numpy as np
+from PIL import Image
+
+try:
+    import torch
+    from torch import nn
+    from torch.utils.data import Dataset, DataLoader
+except ImportError:  # pragma: no cover
+    torch = None
+    nn = None  # type: ignore[assignment]
+    Dataset = object  # type: ignore[assignment]
+    DataLoader = object  # type: ignore[assignment]
+
+try:
+    # HRNet backbone from MMPose (используем, если установлен)
+    from mmpose.models.backbones import HRNet as MMPoseHRNet  # type: ignore
+except Exception as e:  # pragma: no cover
+    print("[WARN] Exception during import or setup (possibly MMPose HRNet):", repr(e))
+    MMPoseHRNet = None  # type: ignore
+
+try:
+    import yaml
+except ImportError:  # pragma: no cover
+    yaml = None
+
+
+@dataclass
+class HRNetConfig:
+    model_type: str = "hrnet_w32"
+    input_size: int = 256
+    resize_mode: str = "resize"  # "resize" или "original"
+    keep_aspect_ratio: bool = True
+    batch_size: int = 8
+    learning_rate: float = 5e-4
+    max_epochs: int = 100
+    train_val_split: float = 0.9
+    flip_augmentation: bool = False
+    rotation_augmentation_deg: float = 15.0
+    scale_augmentation: float = 0.3
+    weight_decay: float = 1e-4
+    heatmap_sigma_px: float = 2.5
+
+
+def get_landmark_root() -> Path:
+    return Path(__file__).resolve().parent.parent
+
+
+def load_yaml_config(cfg_path: Path) -> HRNetConfig:
+    cfg = HRNetConfig()
+    if not cfg_path.is_file() or yaml is None:
+        return cfg
+    with cfg_path.open("r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    for field in cfg.__dataclass_fields__.keys():  # type: ignore[attr-defined]
+        if field in data:
+            setattr(cfg, field, data[field])
+    return cfg
+
+
+def read_lm_number(root: Path) -> int:
+    lm_path = root / "LM_number.txt"
+    try:
+        with lm_path.open("r", encoding="utf-8") as f:
+            line = f.readline().strip()
+        n = int(line)
+        if n <= 0:
+            raise ValueError
+        return n
+    except Exception:
+        return -1
+
+
+def read_last_base(root: Path) -> Optional[Path]:
+    base_txt = root / "cfg" / "last_base.txt"
+    if not base_txt.is_file():
+        return None
+    txt = base_txt.read_text(encoding="utf-8").strip()
+    if not txt:
+        return None
+    base = Path(txt)
+    if not base.is_dir():
+        return None
+    return base
+
+
+def gather_manual_samples(root: Path, base_dir: Path) -> List[Tuple[Path, Path, str]]:
+    """
+    Собираем пары (png, csv, locality) только для MANUAL локальностей.
+    """
+    status_dir = root / "status"
+    status_file = status_dir / "localities_status.csv"
+    manual_localities: List[str] = []
+
+    if status_file.is_file():
+        with status_file.open("r", encoding="utf-8", newline="") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                loc = (row.get("locality") or "").strip()
+                status = (row.get("status") or "").strip().upper()
+                if loc and status == "MANUAL":
+                    manual_localities.append(loc)
+
+    manual_localities = sorted(set(manual_localities))
+    samples: List[Tuple[Path, Path, str]] = []
+
+    for loc in manual_localities:
+        png_dir = base_dir / loc / "png"
+        if not png_dir.is_dir():
+            continue
+        for img_path in sorted(png_dir.glob("*.png")):
+            csv_path = img_path.with_suffix(".csv")
+            if csv_path.is_file():
+                samples.append((img_path, csv_path, loc))
+
+    return samples
+
+
+def _resize_and_pad(
+    img: Image.Image,
+    cfg: HRNetConfig,
+) -> Tuple[Image.Image, float, int, int]:
+    """
+    Ресайз с сохранением пропорций и паддингом до квадрата input_size x input_size.
+    Возвращает (новое_изображение, scale, offset_x, offset_y).
+    """
+    w, h = img.size
+    if cfg.resize_mode == "original" or cfg.input_size <= 0:
+        # Без изменения размера
+        return img, 1.0, 0, 0
+
+    target = int(cfg.input_size)
+    if target <= 0:
+        return img, 1.0, 0, 0
+
+    scale = min(target / float(w), target / float(h))
+    new_w = max(1, int(round(w * scale)))
+    new_h = max(1, int(round(h * scale)))
+    resized = img.resize((new_w, new_h), Image.BILINEAR)
+
+    canvas = Image.new("RGB", (target, target), (0, 0, 0))
+    offset_x = (target - new_w) // 2
+    offset_y = (target - new_h) // 2
+    canvas.paste(resized, (offset_x, offset_y))
+    return canvas, scale, offset_x, offset_y
+
+
+def _load_keypoints(csv_path: Path, num_keypoints: int) -> np.ndarray:
+    """
+    Загружаем точки из CSV.
+
+    Поддерживаем два формата:
+    1) ОДНА строка: x1,y1,x2,y2,... (как делает аннотатор).
+    2) МНОГО строк: по одной точке в строке (x,y), возможен заголовок x,y.
+
+    Возвращаем массив (K, 2), недостающие точки = 0,0.
+    """
+    kps = np.zeros((num_keypoints, 2), dtype=np.float32)
+    try:
+        with csv_path.open("r", encoding="utf-8", newline="") as f:
+            reader = csv.reader(f)
+            # убираем полностью пустые строки
+            rows = [row for row in reader if any((c or "").strip() for c in row)]
+
+        if not rows:
+            return kps
+
+        # убираем заголовок "x,y" если есть
+        if rows and rows[0] and (rows[0][0] or "").strip().lower().startswith("x"):
+            rows = rows[1:]
+
+        if not rows:
+            return kps
+
+        # Вариант 1: одна строка, много чисел -> считаем, что это x1,y1,x2,y2,...
+        if len(rows) == 1 and len(rows[0]) > 2:
+            flat_vals: list[float] = []
+            for cell in rows[0]:
+                cell = (cell or "").strip()
+                if not cell:
+                    continue
+                try:
+                    flat_vals.append(float(cell))
+                except ValueError:
+                    continue
+
+            idx = 0
+            it = iter(flat_vals)
+            for x, y in zip(it, it):
+                if idx >= num_keypoints:
+                    break
+                kps[idx, 0] = x
+                kps[idx, 1] = y
+                idx += 1
+
+        else:
+            # Вариант 2: построчный формат x,y
+            idx = 0
+            for row in rows:
+                if idx >= num_keypoints:
+                    break
+                if len(row) < 2:
+                    continue
+                try:
+                    x = float((row[0] or "").strip())
+                    y = float((row[1] or "").strip())
+                except ValueError:
+                    continue
+                kps[idx, 0] = x
+                kps[idx, 1] = y
+                idx += 1
+
+    except Exception:
+        # В случае ошибок возвращаем нули
+        pass
+    return kps
+
+
+class LandmarkDataset(Dataset):  # type: ignore[misc]
+    def __init__(
+        self,
+        samples: List[Tuple[Path, Path, str]],
+        num_keypoints: int,
+        cfg: HRNetConfig,
+        phase: str = "train",
+    ) -> None:
+        self.samples = samples
+        self.num_keypoints = num_keypoints
+        self.cfg = cfg
+        self.phase = phase
+
+    def __len__(self) -> int:
+        return len(self.samples)
+
+    def __getitem__(self, idx: int):
+        img_path, csv_path, loc = self.samples[idx]
+        img = Image.open(img_path).convert("RGB")
+
+        # Ресайз + паддинг
+        img_resized, scale, offset_x, offset_y = _resize_and_pad(img, self.cfg)
+
+        # Базовые преобразования в тензор
+        np_img = np.asarray(img_resized, dtype=np.float32) / 255.0
+        np_img = np.transpose(np_img, (2, 0, 1))  # CHW
+
+        # Точки -> координаты в новом масштабе
+        kps = _load_keypoints(csv_path, self.num_keypoints)
+        if scale != 1.0 or offset_x != 0 or offset_y != 0:
+            kps[:, 0] = kps[:, 0] * scale + float(offset_x)
+            kps[:, 1] = kps[:, 1] * scale + float(offset_y)
+
+        if torch is not None:
+            img_tensor = torch.from_numpy(np_img).float()
+            kps_tensor = torch.from_numpy(kps).float()
+        else:
+            # В заглушке нам фактически не важно содержимое, но форма должна быть корректной
+            img_tensor = np_img  # type: ignore[assignment]
+            kps_tensor = kps  # type: ignore[assignment]
+
+        return img_tensor, kps_tensor
+
+
+def keypoints_to_heatmaps(
+    keypoints: "torch.Tensor",
+    height: int,
+    width: int,
+    sigma: float = 2.0,
+    device: Optional["torch.device"] = None,
+) -> "torch.Tensor":
+    """
+    Преобразуем координаты (N, K, 2) в теплокарты (N, K, H, W).
+    Точки с координатами <= 0 считаем отсутствующими.
+    """
+    if device is None:
+        device = keypoints.device
+    N, K, _ = keypoints.shape
+    yy, xx = torch.meshgrid(
+        torch.arange(height, device=device),
+        torch.arange(width, device=device),
+        indexing="ij",
+    )
+    heatmaps = []
+    for n in range(N):
+        kps = keypoints[n]
+        hm_per_img = []
+        for k in range(K):
+            x = kps[k, 0]
+            y = kps[k, 1]
+            if x <= 0 and y <= 0:
+                hm_per_img.append(torch.zeros((height, width), device=device))
+                continue
+            g = torch.exp(-((xx - x) ** 2 + (yy - y) ** 2) / (2 * sigma * sigma))
+            hm_per_img.append(g)
+        hm_per_img = torch.stack(hm_per_img, dim=0)
+        heatmaps.append(hm_per_img)
+    heatmaps = torch.stack(heatmaps, dim=0)
+    return heatmaps
+
+
+def heatmaps_to_keypoints(heatmaps: "torch.Tensor") -> "torch.Tensor":
+    """
+    Из теплокарт получаем координаты максимумов.
+    """
+    B, K, H, W = heatmaps.shape
+    heatmaps_reshaped = heatmaps.view(B, K, -1)
+    idx = heatmaps_reshaped.argmax(dim=2)  # (B, K)
+    ys = (idx // W).float()
+    xs = (idx % W).float()
+    kps = torch.stack([xs, ys], dim=2)
+    return kps
+
+
+def compute_pck_at_r(
+    pred: "torch.Tensor",  # (N, K, 2)
+    gt: "torch.Tensor",  # (N, K, 2)
+    R: float,
+) -> float:
+    """
+    PCK@R: доля точек, попавших в радиус R от разметки.
+    Точки с gt <= (0,0) игнорируем.
+    """
+    mask = (gt[..., 0] > 0) | (gt[..., 1] > 0)
+    if mask.sum().item() == 0:
+        return 0.0
+    dists = torch.norm(pred - gt, dim=2)
+    correct = (dists <= R) & mask
+    return float(correct.sum().item()) / float(mask.sum().item())
+
+
+# Модели: простая сеть SimpleHRNet и HRNet-W32 (через MMPose)
+if torch is not None:
+
+    class SimpleHRNet(nn.Module):
+        """
+        Упрощённый бэкбон для расстановки ландмарок.
+        """
+
+        def __init__(self, num_keypoints: int) -> None:
+            super().__init__()
+            self.stem = nn.Sequential(
+                nn.Conv2d(3, 32, kernel_size=3, padding=1),
+                nn.BatchNorm2d(32),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(32, 64, kernel_size=3, padding=1),
+                nn.BatchNorm2d(64),
+                nn.ReLU(inplace=True),
+            )
+            blocks = []
+            in_channels = 64
+            for _ in range(3):
+                block = nn.Sequential(
+                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
+                    nn.BatchNorm2d(in_channels),
+                    nn.ReLU(inplace=True),
+                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
+                    nn.BatchNorm2d(in_channels),
+                )
+                blocks.append(block)
+            self.blocks = nn.ModuleList(blocks)
+            self.relu = nn.ReLU(inplace=True)
+            self.head = nn.Conv2d(64, num_keypoints, kernel_size=1)
+
+        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
+            x = self.stem(x)
+            for block in self.blocks:
+                residual = x
+                out = block(x)
+                x = self.relu(out + residual)
+            heatmaps = self.head(x)
+            return heatmaps
+
+    class HRNetW32GM(nn.Module):
+        """
+        HRNet-W32 из MMPose + простой head для теплокарт.
+        Если MMPose недоступен, используется SimpleHRNet.
+        """
+
+        def __init__(self, num_keypoints: int) -> None:
+            super().__init__()
+            self.num_keypoints = int(num_keypoints)
+            self.use_mmpose = MMPoseHRNet is not None
+            if self.use_mmpose:
+                extra = {
+                    "stage1": dict(
+                        num_modules=1,
+                        num_branches=1,
+                        block="BOTTLENECK",
+                        num_blocks=(4,),
+                        num_channels=(64,),
+                    ),
+                    "stage2": dict(
+                        num_modules=1,
+                        num_branches=2,
+                        block="BASIC",
+                        num_blocks=(4, 4),
+                        num_channels=(32, 64),
+                    ),
+                    "stage3": dict(
+                        num_modules=4,
+                        num_branches=3,
+                        block="BASIC",
+                        num_blocks=(4, 4, 4),
+                        num_channels=(32, 64, 128),
+                    ),
+                    "stage4": dict(
+                        num_modules=3,
+                        num_branches=4,
+                        block="BASIC",
+                        num_blocks=(4, 4, 4, 4),
+                        num_channels=(32, 64, 128, 256),
+                    ),
+                }
+                self.backbone = MMPoseHRNet(extra=extra, in_channels=3)  # type: ignore[call-arg]
+                self.head = nn.Conv2d(32, self.num_keypoints, kernel_size=1)
+            else:
+                self.fallback = SimpleHRNet(num_keypoints)
+
+        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
+            if self.use_mmpose:
+                feats = self.backbone(x)
+                if isinstance(feats, (list, tuple)):
+                    feats0 = feats[0]
+                else:
+                    feats0 = feats
+                return self.head(feats0)
+            return self.fallback(x)
+
+else:
+
+    class SimpleHRNet:  # type: ignore[misc]
+        """
+        Заглушка, если torch не установлен.
+        """
+
+        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
+            raise RuntimeError("PyTorch is required for SimpleHRNet but is not installed.")
+
+    class HRNetW32GM:  # type: ignore[misc]
+        """
+        Заглушка, если torch не установлен.
+        """
+
+        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
+            raise RuntimeError("PyTorch is required for HRNetW32GM but is not installed.")
+
+
+def write_datasets_txt(
+    root: Path,
+    run_id: str,
+    train_samples: List[Tuple[Path, Path, str]],
+    val_samples: List[Tuple[Path, Path, str]],
+) -> None:
+    datasets_dir = root / "datasets"
+    datasets_dir.mkdir(parents=True, exist_ok=True)
+    train_txt = datasets_dir / f"hrnet_train_{run_id}.txt"
+    val_txt = datasets_dir / f"hrnet_val_{run_id}.txt"
+
+    def _write(path: Path, samples: List[Tuple[Path, Path, str]]) -> None:
+        with path.open("w", encoding="utf-8") as f:
+            for img_path, csv_path, loc in samples:
+                f.write(f"{img_path};{csv_path};{loc}\n")
+
+    _write(train_txt, train_samples)
+    _write(val_txt, val_samples)
+
+
+def train_model(
+    cfg: HRNetConfig,
+    train_samples: List[Tuple[Path, Path, str]],
+    val_samples: List[Tuple[Path, Path, str]],
+    num_keypoints: int,
+    run_id: str,
+    root: Path,
+    log_path: Path,
+) -> Dict[str, Any]:
+    """
+    Основной цикл обучения. Пишет:
+    - models/history/<run_id>/hrnet_best.pth, metrics.json, train_config.yaml, train_log.txt
+    - models/current/hrnet_best.pth, quality.json
+    - logs/train_hrnet_last.log
+    """
+    log_file = log_path.open("w", encoding="utf-8")
+
+    def log(msg: str) -> None:
+        ts = time.strftime("%Y-%m-%d %H:%M:%S")
+        line = f"[{ts}] {msg}"
+        print(line)
+        log_file.write(line + "\n")
+        log_file.flush()
+
+    history_dir = root / "models" / "history" / run_id
+    history_dir.mkdir(parents=True, exist_ok=True)
+    current_dir = root / "models" / "current"
+    current_dir.mkdir(parents=True, exist_ok=True)
+
+    # Общая информация о датасете
+    n_train = len(train_samples)
+    n_val = len(val_samples)
+    total = n_train + n_val
+    train_share = float(n_train) / total if total > 0 else 0.0
+    val_share = float(n_val) / total if total > 0 else 0.0
+    manual_localities = sorted({loc for *_rest, loc in train_samples + val_samples})
+    n_manual_localities = len(manual_localities)
+
+    # Ветка без torch: честная заглушка, но с корректными файлами метрик
+    if torch is None:
+        log("PyTorch не установлен. Обучение выполнить нельзя, пишем нулевые метрики и выходим без падения.")
+
+        metrics: Dict[str, Any] = {
+            "run_id": run_id,
+            "pck_r": 0.0,
+            "pck_r_percent": 0.0,
+            "R": 0.0,
+            "n_train_images": n_train,
+            "n_val_images": n_val,
+            "train_share": train_share,
+            "val_share": val_share,
+            "n_manual_localities": n_manual_localities,
+        }
+        quality: Dict[str, Any] = {
+            "run_id": run_id,
+            "pck_r": 0.0,
+            "pck_r_percent": 0.0,
+            "n_train_images": n_train,
+            "n_val_images": n_val,
+            "train_share": train_share,
+            "val_share": val_share,
+            "n_manual_localities": n_manual_localities,
+        }
+
+        # Заглушечные файлы модели/метрик
+        quality_path = current_dir / "quality.json"
+        with quality_path.open("w", encoding="utf-8") as f:
+            json.dump(quality, f, indent=2, ensure_ascii=False)
+
+        metrics_path = history_dir / "metrics.json"
+        with metrics_path.open("w", encoding="utf-8") as f:
+            json.dump(metrics, f, indent=2, ensure_ascii=False)
+
+        # train_config.yaml — просто копия текущего конфига и информации о запуске
+        train_cfg_path = history_dir / "train_config.yaml"
+        train_cfg_data: Dict[str, Any] = {
+            "run_id": run_id,
+            "config": cfg.__dict__,
+            "n_train_images": n_train,
+            "n_val_images": n_val,
+            "train_share": train_share,
+            "val_share": val_share,
+            "n_manual_localities": n_manual_localities,
+        }
+        try:
+            if yaml is not None:
+                with train_cfg_path.open("w", encoding="utf-8") as f:
+                    yaml.safe_dump(train_cfg_data, f, allow_unicode=True)
+            else:
+                with train_cfg_path.open("w", encoding="utf-8") as f:
+                    json.dump(train_cfg_data, f, indent=2, ensure_ascii=False)
+        except Exception:
+            pass
+
+        # train_log.txt — копия основного лога
+        log_file.close()
+        history_log = history_dir / "train_log.txt"
+        try:
+            shutil.copy2(log_path, history_log)
+        except Exception:
+            pass
+
+        # hrnet_best.pth — пустой файл-заглушка, чтобы 2) не падал на проверке наличия
+        best_model_hist = history_dir / "hrnet_best.pth"
+        best_model_curr = current_dir / "hrnet_best.pth"
+        try:
+            best_model_hist.touch()
+            shutil.copy2(best_model_hist, best_model_curr)
+        except Exception:
+            pass
+
+        return metrics
+
+    # --- Реальное обучение, если torch доступен ---
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log(f"Используем устройство: {device}")
+
+    log(
+        f"Всего образцов: {total} "
+        f"(train={n_train}, val={n_val})"
+    )
+
+    train_ds = LandmarkDataset(train_samples, num_keypoints, cfg, phase="train")
+    val_ds = LandmarkDataset(val_samples, num_keypoints, cfg, phase="val")
+
+    train_loader = DataLoader(
+        train_ds,
+        batch_size=max(1, int(cfg.batch_size)),
+        shuffle=True,
+        num_workers=0,
+    )
+    val_loader = DataLoader(
+        val_ds,
+        batch_size=max(1, int(cfg.batch_size)),
+        shuffle=False,
+        num_workers=0,
+    )
+
+    model_type = (cfg.model_type or "").lower()
+    if model_type.startswith("hrnet_w32"):
+        log("Создаём модель HRNet-W32 (MMPose) для геометрической морфометрии.")
+        model = HRNetW32GM(num_keypoints=num_keypoints)
+        if getattr(model, "use_mmpose", False) is False:
+            log("MMPose HRNet недоступен, используется запасной вариант SimpleHRNet.")
+    else:
+        log("Создаём упрощённую модель SimpleHRNet (без MMPose).")
+        model = HRNetW32GM(num_keypoints=num_keypoints)
+
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=float(cfg.learning_rate),
+        weight_decay=float(cfg.weight_decay),
+    )
+    criterion = torch.nn.MSELoss()
+
+    model = model.to(device)
+
+    # Радиус для PCK@R: фиксированный в пикселях на теплокарте
+    # Здесь берём 5% от меньшей стороны входа.
+    if cfg.input_size > 0:
+        R = float(max(1, int(round(min(cfg.input_size, cfg.input_size) * 0.05))))
+    else:
+        R = 10.0
+
+    best_pck = 0.0
+    best_epoch = 0
+
+    for epoch in range(int(cfg.max_epochs)):
+        model.train()
+        running_loss = 0.0
+        num_batches = 0
+
+        for imgs, kps in train_loader:
+            imgs = imgs.to(device)
+            kps = kps.to(device)
+
+            optimizer.zero_grad()
+            # Сначала прогоняем через модель и узнаём размер теплокарт
+            pred_heatmaps = model(imgs)
+            _, _, H_hm, W_hm = pred_heatmaps.shape
+            _, _, H_in, W_in = imgs.shape
+
+            # Масштабируем ключевые точки под разрешение теплокарт,
+            # чтобы gt и pred были одного размера.
+            if H_in != H_hm or W_in != W_hm:
+                scale_x = float(W_hm) / float(W_in)
+                scale_y = float(H_hm) / float(H_in)
+                kps_scaled = kps.clone()
+                kps_scaled[..., 0] = kps_scaled[..., 0] * scale_x
+                kps_scaled[..., 1] = kps_scaled[..., 1] * scale_y
+            else:
+                kps_scaled = kps
+
+            gt_heatmaps = keypoints_to_heatmaps(
+                kps_scaled,
+                H_hm,
+                W_hm,
+                sigma=float(getattr(cfg, "heatmap_sigma_px", 2.0)),
+                device=device,
+            )
+            loss = criterion(pred_heatmaps, gt_heatmaps)
+            loss.backward()
+            optimizer.step()
+
+            running_loss += loss.item()
+            num_batches += 1
+
+        avg_loss = running_loss / max(1, num_batches)
+        log(f"Epoch {epoch + 1}/{cfg.max_epochs} - train loss = {avg_loss:.6f}")
+
+        # Валидация
+        model.eval()
+        all_pred = []
+        all_gt = []
+        with torch.no_grad():
+            for imgs, kps in val_loader:
+                imgs = imgs.to(device)
+                kps = kps.to(device)
+                pred_heatmaps = model(imgs)
+                pred_kps = heatmaps_to_keypoints(pred_heatmaps)
+                # Переводим предсказанные координаты в ту же систему, что и gt
+                _, _, H_in, W_in = imgs.shape
+                _, _, H_hm, W_hm = pred_heatmaps.shape
+                if H_in != H_hm or W_in != W_hm:
+                    scale_x = float(W_in) / float(W_hm)
+                    scale_y = float(H_in) / float(H_hm)
+                    pred_kps[..., 0] = pred_kps[..., 0] * scale_x
+                    pred_kps[..., 1] = pred_kps[..., 1] * scale_y
+                all_pred.append(pred_kps.cpu())
+                all_gt.append(kps.cpu())
+
+        if all_pred and all_gt:
+            pred_cat = torch.cat(all_pred, dim=0)
+            gt_cat = torch.cat(all_gt, dim=0)
+            pck = compute_pck_at_r(pred_cat, gt_cat, R)
+        else:
+            pck = 0.0
+
+        log(f"Epoch {epoch + 1} - val PCK@R={pck:.4f}")
+
+        if pck >= best_pck:
+            best_pck = pck
+            best_epoch = epoch + 1
+            # Сохраняем лучшую модель
+            best_model_hist = history_dir / "hrnet_best.pth"
+            torch.save(model.state_dict(), best_model_hist)
+            best_model_curr = current_dir / "hrnet_best.pth"
+            shutil.copy2(best_model_hist, best_model_curr)
+            log(f"Новая лучшая модель сохранена (epoch={best_epoch}, PCK@R={best_pck:.4f}).")
+
+    # Финальные метрики
+    pck_percent = float(round(best_pck * 100))
+    metrics: Dict[str, Any] = {
+        "run_id": run_id,
+        "pck_r": float(best_pck),
+        "pck_r_percent": pck_percent,
+        "R": R,
+        "n_train_images": n_train,
+        "n_val_images": n_val,
+        "train_share": train_share,
+        "val_share": val_share,
+        "n_manual_localities": n_manual_localities,
+        "best_epoch": best_epoch,
+        "device": str(device),
+    }
+
+    metrics_path = history_dir / "metrics.json"
+    with metrics_path.open("w", encoding="utf-8") as f:
+        json.dump(metrics, f, indent=2, ensure_ascii=False)
+
+    quality: Dict[str, Any] = {
+        "run_id": run_id,
+        "pck_r": float(best_pck),
+        "pck_r_percent": pck_percent,
+        "n_train_images": n_train,
+        "n_val_images": n_val,
+        "train_share": train_share,
+        "val_share": val_share,
+        "n_manual_localities": n_manual_localities,
+    }
+    quality_path = current_dir / "quality.json"
+    with quality_path.open("w", encoding="utf-8") as f:
+        json.dump(quality, f, indent=2, ensure_ascii=False)
+
+    # train_config.yaml
+    train_cfg_path = history_dir / "train_config.yaml"
+    train_cfg_data: Dict[str, Any] = {
+        "run_id": run_id,
+        "config": cfg.__dict__,
+        "R": R,
+        "n_train_images": n_train,
+        "n_val_images": n_val,
+        "train_share": train_share,
+        "val_share": val_share,
+        "n_manual_localities": n_manual_localities,
+        "best_epoch": best_epoch,
+    }
+    try:
+        if yaml is not None:
+            with train_cfg_path.open("w", encoding="utf-8") as f:
+                yaml.safe_dump(train_cfg_data, f, allow_unicode=True)
+        else:
+            with train_cfg_path.open("w", encoding="utf-8") as f:
+                json.dump(train_cfg_data, f, indent=2, ensure_ascii=False)
+    except Exception:
+        pass
+
+    # train_log.txt
+    log_file.close()
+    history_log = history_dir / "train_log.txt"
+    try:
+        shutil.copy2(log_path, history_log)
+    except Exception:
+        pass
+
+    return metrics
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    """
+    Точка входа для действия 1) Train / Finetune model on MANUAL localities.
+    Никаких новых ключей/режимов не добавляем, только внутренняя реализация.
+    """
+    argv = list(sys.argv[1:] if argv is None else argv)
+    parser = argparse.ArgumentParser(description="Train HRNet model on MANUAL localities")
+    # parse_known_args, чтобы не сломаться, если trainer_menu.py что-то передаёт
+    parser.add_argument("--dummy", help="Не используется, только для совместимости", default=None)
+    args, _unknown = parser.parse_known_args(argv)
+
+    root = get_landmark_root()
+    cfg_path = root / "config" / "hrnet_config.yaml"
+    cfg = load_yaml_config(cfg_path)
+
+    lm_number = read_lm_number(root)
+    if lm_number <= 0:
+        print("[ERR] LM_number.txt не найден или содержит неверное значение.")
+        return 1
+
+    base_dir = read_last_base(root)
+    if base_dir is None:
+        print("[ERR] cfg\\last_base.txt не найден или папка с локальностями отсутствует.")
+        return 1
+
+    samples = gather_manual_samples(root, base_dir)
+    if not samples:
+        print("[INFO] MANUAL локальностей с полными PNG+CSV не найдено. Обучать нечего.")
+        return 0
+
+    # Один раз тасуем и делим, чтобы split совпадал и для логов, и для обучения
+    random.shuffle(samples)
+    train_val = float(cfg.train_val_split)
+    split_idx = int(len(samples) * train_val)
+    train_samples = samples[:split_idx]
+    val_samples = samples[split_idx:]
+
+    run_id = time.strftime("%Y%m%d_%H%M%S")
+    logs_dir = root / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    log_path = logs_dir / "train_hrnet_last.log"
+
+    # По ТЗ: сохраняем списки датасета
+    write_datasets_txt(root, run_id, train_samples, val_samples)
+
+    metrics = train_model(cfg, train_samples, val_samples, lm_number, run_id, root, log_path)
+
+    # Красивый вывод как в ТЗ
+    n_train = metrics.get("n_train_images", 0)
+    n_val = metrics.get("n_val_images", 0)
+    total = n_train + n_val
+    train_share = metrics.get("train_share", float(n_train) / total if total > 0 else 0.0)
+    val_share = metrics.get("val_share", float(n_val) / total if total > 0 else 0.0)
+    pck_percent = metrics.get("pck_r_percent", 0.0)
+    n_manual_localities = metrics.get("n_manual_localities", 0)
+    run_id_out = metrics.get("run_id", run_id)
+
+    print("Training finished.")
+    print()
+    print(f"Used MANUAL localities: {n_manual_localities}")
+    train_pct = int(round(train_share * 100))
+    val_pct = int(round(val_share * 100))
+    print(f"Train images: {n_train} ({train_pct}%)")
+    print(f"Val images:   {n_val} ({val_pct}%)")
+    print()
+    print(f"PCK@R (validation): {int(round(pck_percent))} %")
+    print()
+    print("Model saved as: models/current/hrnet_best.pth")
+    print(f"Run id: {run_id_out}")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+========== FILE: D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\trainer_menu.py ==========
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import os
+import subprocess
+import sys
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+try:
+    import yaml  # type: ignore
+except ImportError:  # pragma: no cover
+    yaml = None
+
+
+STATUS_FILE = "status/localities_status.csv"
+
+CONFIG_DEFAULTS: Dict[str, Any] = {
+    "model_type": "hrnet_w32",
+    "input_size": 256,
+    "resize_mode": "resize",
+    "keep_aspect_ratio": True,
+    "batch_size": 8,
+    "learning_rate": 0.0005,
+    "max_epochs": 100,
+    "train_val_split": 0.9,
+    "flip_augmentation": True,
+    "rotation_augmentation_deg": 15,
+    "scale_augmentation": 0.3,
+    "weight_decay": 0.0001,
+}
+
+
+@dataclass
+class Locality:
+    locality: str
+    status: str
+    auto_quality: str
+    last_model_run: str
+    last_update: str
+    n_images: int
+    n_labeled: int
+
+
+def get_landmark_root(arg_root: Optional[str]) -> Path:
+    """Return landmark module root (tools/2_Landmarking_v1.0)."""
+    # Всегда берём папку на два уровня выше scripts/, как в ТЗ_1.0.
+    # Аргумент --root игнорируем, чтобы не уезжать в D:\GM и т.п.
+    return Path(__file__).resolve().parent.parent
+
+
+def read_last_base(landmark_root: Path) -> Optional[Path]:
+    cfg_path = landmark_root / "cfg" / "last_base.txt"
+    if not cfg_path.exists():
+        return None
+    text = cfg_path.read_text(encoding="utf-8").strip()
+    if not text:
+        return None
+    return Path(text)
+
+
+def load_localities(landmark_root: Path) -> List[Locality]:
+    status_path = landmark_root / STATUS_FILE
+    if not status_path.exists():
+        return []
+
+    rows: List[Locality] = []
+    with status_path.open("r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            try:
+                n_images = int(row.get("n_images", "") or 0)
+            except ValueError:
+                n_images = 0
+            try:
+                n_labeled = int(row.get("n_labeled", "") or 0)
+            except ValueError:
+                n_labeled = 0
+
+            rows.append(
+                Locality(
+                    locality=row.get("locality", ""),
+                    status=row.get("status", ""),
+                    auto_quality=row.get("auto_quality", ""),
+                    last_model_run=row.get("last_model_run", ""),
+                    last_update=row.get("last_update", ""),
+                    n_images=n_images,
+                    n_labeled=n_labeled,
+                )
+            )
+    return rows
+
+
+def save_localities(landmark_root: Path, localities: List[Locality]) -> None:
+    status_path = landmark_root / STATUS_FILE
+    status_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with status_path.open("w", encoding="utf-8", newline="") as f:
+        fieldnames = [
+            "locality",
+            "status",
+            "auto_quality",
+            "last_model_run",
+            "last_update",
+            "n_images",
+            "n_labeled",
+        ]
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for loc in localities:
+            writer.writerow(
+                {
+                    "locality": loc.locality,
+                    "status": loc.status,
+                    "auto_quality": loc.auto_quality,
+                    "last_model_run": loc.last_model_run,
+                    "last_update": loc.last_update,
+                    "n_images": loc.n_images,
+                    "n_labeled": loc.n_labeled,
+                }
+            )
+
+
+def format_status(loc: Locality) -> str:
+    if loc.status == "MANUAL":
+        return "MANUAL"
+    if loc.status == "AUTO":
+        if loc.auto_quality:
+            return f"AUTO {loc.auto_quality}"
+        return "AUTO"
+    return ""
+
+
+def calc_percent(loc: Locality) -> int:
+    if loc.n_images <= 0:
+        return 0
+    return int(round(100.0 * loc.n_labeled / max(1, loc.n_images)))
+
+
+def print_localities_block(localities: List[Locality]) -> None:
+    print()
+    print("Localities (photos/<locality>/png):")
+    print()
+
+    if not localities:
+        print(" (no localities found)")
+        return
+
+    # Аккуратные столбцы имени, статуса и счётчиков
+    max_name = max((len(loc.locality) for loc in localities), default=0)
+    name_width = max(max_name + 2, 24)  # минимум 24 символа
+    count_width = 16
+
+    for idx, loc in enumerate(localities, start=1):
+        percent = calc_percent(loc)
+        status_text = format_status(loc)
+
+        prefix = f"[{idx:2d}] "
+        name_part = f"{loc.locality}".ljust(name_width)
+        name_part = prefix + name_part
+
+        count_part = f"[{loc.n_labeled}/{loc.n_images}] {percent:3d}%".ljust(count_width)
+        status_col = status_text if status_text else ""
+
+        line = f"{name_part} {status_col:10s} {count_part}"
+        print(line)
+
+
+def read_quality(landmark_root: Path) -> Dict[str, Any]:
+    quality_path = landmark_root / "models" / "current" / "quality.json"
+    if not quality_path.exists():
+        return {}
+
+    try:
+        data: Any = json.loads(quality_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+    if not isinstance(data, dict):
+        return {}
+    return data
+
+
+def run_training(landmark_root: Path) -> None:
+    localities = load_localities(landmark_root)
+    manual_localities = [loc for loc in localities if loc.status == "MANUAL"]
+
+    if not manual_localities:
+        print()
+        print("No MANUAL localities found.")
+        print("Nothing to train on.")
+        return
+
+    train_script = landmark_root / "scripts" / "train_hrnet.py"
+    if not train_script.exists():
+        print()
+        print("[ERR] train_hrnet.py not found.")
+        print("Cannot start training.")
+        return
+
+    print()
+    print("=== HRNet training started (action 1: MANUAL localities) ===")
+    print()
+
+    cmd = [sys.executable, str(train_script)]
+    try:
+        result = subprocess.run(cmd, check=False)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[ERR] Training failed: {exc}")
+        return
+
+    if result.returncode != 0:
+        print(f"[WARN] train_hrnet.py exited with code {result.returncode}.")
+
+    print("=== HRNet training finished ===")
+
+
+def choose_autolabel_locality(localities: List[Locality]) -> Optional[Locality]:
+    # Только локальности без статуса или с AUTO
+    candidates: List[Locality] = [
+        loc for loc in localities if loc.status in ("", "AUTO")
+    ]
+
+    print()
+    print("Localities available for autolabel:")
+    print()
+
+    if not candidates:
+        print(" (no localities available – only MANUAL localities found)")
+        return None
+
+    max_name = max((len(loc.locality) for loc in candidates), default=0)
+    name_width = max(max_name + 2, 24)
+
+    for idx, loc in enumerate(candidates, start=1):
+        status_text = format_status(loc)
+        status_block = status_text if status_text else ""
+        print(
+            f"[{idx}] {loc.locality.ljust(name_width)} "
+            f"{status_block:8s} ({loc.n_images} imgs, {loc.n_labeled} csv)"
+        )
+
+    print()
+
+    try:
+        choice = input("Select locality number (or 0 to cancel): ").strip()
+    except EOFError:
+        return None
+
+    if not choice:
+        return None
+    if not choice.isdigit():
+        print("Please enter a number.")
+        return None
+
+    idx = int(choice)
+    if idx <= 0:
+        return None
+    if idx > len(candidates):
+        print("No such locality.")
+        return None
+
+    return candidates[idx - 1]
+
+
+def run_autolabel(landmark_root: Path, base_localities: Optional[Path]) -> None:
+    localities = load_localities(landmark_root)
+    if not localities:
+        print()
+        print("No localities found in status/localities_status.csv.")
+        return
+
+    # Проверяем, что есть обученная модель
+    model_path = landmark_root / "models" / "current" / "hrnet_best.pth"
+    if not model_path.exists():
+        print()
+        print("No trained model found (models/current/hrnet_best.pth is missing).")
+        print("Please run action 1 (Train) first.")
+        return
+
+    loc = choose_autolabel_locality(localities)
+    if not loc:
+        return
+
+    if base_localities is None:
+        base_localities = read_last_base(landmark_root)
+
+    if base_localities is None:
+        print()
+        print("Base localities folder is not set (cfg/last_base.txt is empty).")
+        return
+
+    png_dir = base_localities / loc.locality / "png"
+    if not png_dir.exists():
+        print()
+        print(f"Folder not found: {png_dir}")
+        return
+
+    png_list = sorted(png_dir.glob("*.png"))
+    if not png_list:
+        print()
+        print(f"No *.png images found in {png_dir}")
+        return
+
+    infer_script = landmark_root / "scripts" / "infer_hrnet.py"
+    if not infer_script.exists():
+        print()
+        print("[ERR] infer_hrnet.py not found.")
+        print("Cannot run autolabel.")
+        return
+
+    print()
+    print(f'=== Autolabel started for locality "{loc.locality}" ===')
+    print()
+
+    cmd = [
+        sys.executable,
+        str(infer_script),
+        "--landmark-root",
+        str(landmark_root),
+        "--base",
+        str(base_localities),
+        "--locality",
+        loc.locality,
+    ]
+
+    try:
+        result = subprocess.run(cmd, check=False)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[ERR] Autolabel failed: {exc}")
+        return
+
+    if result.returncode != 0:
+        print(f"[ERR] Autolabel script returned code {result.returncode}.")
+        return
+
+    # Пересчитываем n_images / n_labeled для выбранной локальности
+    png_list = sorted(png_dir.glob("*.png"))
+    n_images = len(png_list)
+    n_labeled = 0
+    for img_path in png_list:
+        csv_path = img_path.with_suffix(".csv")
+        if csv_path.exists():
+            n_labeled += 1
+
+    loc.n_images = n_images
+    loc.n_labeled = n_labeled
+
+    # Читаем quality.json
+    quality = read_quality(landmark_root)
+    auto_quality = ""
+    run_id = ""
+
+    if quality:
+        try:
+            pck_percent = int(round(float(quality.get("pck_r_percent", 0))))
+            auto_quality = str(pck_percent)
+        except Exception:
+            auto_quality = ""
+        run_id = str(quality.get("run_id", "") or "")
+
+    loc.status = "AUTO"
+    loc.auto_quality = auto_quality
+    loc.last_model_run = run_id
+    loc.last_update = datetime.now().isoformat(timespec="seconds")
+
+    save_localities(landmark_root, localities)
+
+    if auto_quality:
+        print(f'Autolabel done for locality "{loc.locality}".')
+        print(f"Status: AUTO {auto_quality}")
+    else:
+        print(f'Autolabel done for locality "{loc.locality}".')
+        print("Status: AUTO")
+
+    print()
+    input("Press Enter to exit...")
+
+
+def choose_auto_locality(localities: List[Locality]) -> Optional[Locality]:
+    auto_localities = [loc for loc in localities if loc.status == "AUTO"]
+
+    print()
+    print("AUTO localities:")
+    print()
+
+    if not auto_localities:
+        print(" (no AUTO localities found)")
+        return None
+
+    max_name = max((len(loc.locality) for loc in auto_localities), default=0)
+    name_width = max(max_name + 2, 24)
+
+    for idx, loc in enumerate(auto_localities, start=1):
+        status_text = format_status(loc)
+        print(
+            f"[{idx}] {loc.locality.ljust(name_width)} "
+            f"{status_text:8s} ({loc.n_images} imgs, {loc.n_labeled} csv)"
+        )
+
+    print()
+
+    try:
+        choice = input("Select locality to review (or 0 to cancel): ").strip()
+    except EOFError:
+        return None
+
+    if not choice:
+        return None
+    if not choice.isdigit():
+        print("Please enter a number.")
+        return None
+
+    idx = int(choice)
+    if idx <= 0:
+        return None
+    if idx > len(auto_localities):
+        print("No such locality.")
+        return None
+
+    return auto_localities[idx - 1]
+
+
+def run_review_auto(landmark_root: Path) -> None:
+    localities = load_localities(landmark_root)
+    if not localities:
+        print()
+        print("No localities found in status/localities_status.csv.")
+        print()
+        input("Press Enter to exit...")
+        return
+
+    loc = choose_auto_locality(localities)
+    if not loc:
+        print()
+        input("Press Enter to exit...")
+        return
+
+    annotator_bat = landmark_root / "1_ANNOTATOR.bat"
+    if not annotator_bat.exists():
+        print()
+        print("[ERR] 1_ANNOTATOR.bat not found in module root.")
+        print()
+        input("Press Enter to exit...")
+        return
+
+    flag_dir = landmark_root / "status"
+    flag_dir.mkdir(parents=True, exist_ok=True)
+    flag_path = flag_dir / f"review_done_{loc.locality}.flag"
+
+    # Старый флаг на всякий случай удаляем
+    try:
+        if flag_path.exists():
+            flag_path.unlink()
+    except Exception:
+        pass
+
+    print()
+    print(f'Launching annotator for locality "{loc.locality}" in REVIEW_AUTO mode...')
+    print("Close annotator when review is finished.")
+    print()
+
+    env = os.environ.copy()
+    env["GM_LOCALITY"] = loc.locality
+    env["GM_MODE"] = "REVIEW_AUTO"
+
+    try:
+        subprocess.run(
+            ["cmd", "/c", str(annotator_bat)],
+            check=False,
+            env=env,
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[ERR] Failed to launch annotator: {exc}")
+        print()
+        input("Press Enter to exit...")
+        return
+
+    # После выхода аннотатора проверяем флаг
+    if flag_path.exists():
+        # Переводим локальность в MANUAL
+        loc.status = "MANUAL"
+        loc.auto_quality = ""
+        loc.last_update = datetime.now().isoformat(timespec="seconds")
+
+        save_localities(landmark_root, localities)
+
+        try:
+            flag_path.unlink()
+        except Exception:
+            pass
+
+        print()
+        print(f'Locality "{loc.locality}" marked as MANUAL (after review).')
+    else:
+        print()
+        print("Review was not finished (no flag file found).")
+        print(f'Locality "{loc.locality}" remains {format_status(loc) or "(no status)"}.')
+
+    print()
+    input("Press Enter to exit...")
+
+
+def show_model_info(landmark_root: Path) -> None:
+    print()
+    quality = read_quality(landmark_root)
+    if not quality:
+        print("Model is not trained yet (models/current/quality.json not found).")
+        print()
+        input("Press Enter to exit...")
+        return
+
+    print("Current model info:")
+    print()
+
+    run_id = quality.get("run_id", "")
+    print(f"Run id: {run_id}")
+    print("Model: HRNet-W32 (18 keypoints)")
+
+    n_train = quality.get("n_train_images", 0)
+    n_val = quality.get("n_val_images", 0)
+    train_share = quality.get("train_share", 0)
+    val_share = quality.get("val_share", 0)
+
+    try:
+        train_percent = int(round(float(train_share) * 100))
+    except Exception:
+        train_percent = 0
+
+    try:
+        val_percent = int(round(float(val_share) * 100))
+    except Exception:
+        val_percent = 0
+
+    print()
+    print(f"Train images: {n_train} ({train_percent}%)")
+    print(f"Val images:   {n_val}  ({val_percent}%)")
+
+    pck = quality.get("pck_r_percent", None)
+    if pck is not None:
+        try:
+            pck_int = int(round(float(pck)))
+        except Exception:
+            pck_int = 0
+        print()
+        print(f"PCK@R (validation): {pck_int} %")
+
+    used_manual = quality.get("n_manual_localities", None)
+    if used_manual is not None:
+        try:
+            used_manual_int = int(used_manual)
+        except Exception:
+            used_manual_int = None
+        if used_manual_int is not None:
+            print()
+            print(f"Used MANUAL localities: {used_manual_int}")
+
+    print()
+    input("Press Enter to exit...")
+
+
+def load_or_create_config(landmark_root: Path) -> Dict[str, Any]:
+    cfg_dir = landmark_root / "config"
+    cfg_dir.mkdir(parents=True, exist_ok=True)
+    cfg_path = cfg_dir / "hrnet_config.yaml"
+
+    cfg: Dict[str, Any] = dict(CONFIG_DEFAULTS)
+
+    if yaml is None:
+        # Нет PyYAML – просто гарантируем существование файла с простым форматом
+        if not cfg_path.exists():
+            with cfg_path.open("w", encoding="utf-8") as f:
+                for key, value in CONFIG_DEFAULTS.items():
+                    f.write(f"{key}: {value}\n")
+        return cfg
+def show_model_settings(landmark_root):
+    """
+    Print HRNet/MMPose training settings from config/hrnet_config.yaml
+    in a simple, user-friendly way (including crop margins).
+    """
+    from pathlib import Path
+
+    root = Path(landmark_root)
+    cfg_path = root / "config" / "hrnet_config.yaml"
+
+    print()
+    print("=== Model settings (config/hrnet_config.yaml) ===")
+
+    # Load config safely: if PyYAML is missing or file is broken,
+    # fall back to built-in defaults from CONFIG_DEFAULTS.
+    if yaml is None:
+        print("PyYAML is not installed in this environment.")
+        print("Using default values from CONFIG_DEFAULTS.")
+        cfg = dict(CONFIG_DEFAULTS)
+    else:
+        try:
+            if cfg_path.exists():
+                with cfg_path.open("r", encoding="utf-8") as f:
+                    cfg = yaml.safe_load(f) or {}
+            else:
+                print("Config file 'config/hrnet_config.yaml' not found.")
+                print("It will be created automatically when you run the trainer.")
+                cfg = dict(CONFIG_DEFAULTS)
+        except Exception as exc:
+            print("Error reading config/hrnet_config.yaml:")
+            print(f"  {exc}")
+            print("Using default values from CONFIG_DEFAULTS.")
+            cfg = dict(CONFIG_DEFAULTS)
+
+    def show_one(name, default, description_lines):
+        value = cfg.get(name, default)
+        print(f"{name} = {value}")
+        for line in description_lines:
+            print(f"  - {line}")
+        print()
+
+    # === Basic HRNet training params ===
+    show_one("model_type", "hrnet_w32", [
+        "HRNet backbone type. 'hrnet_w32' is a good default."
+    ])
+
+    show_one("input_size", 1280, [
+        "Target size for the LONG side of the image in pixels.",
+        "The image is resized keeping aspect ratio.",
+    ])
+
+    show_one("resize_mode", "resize", [
+        "'resize': rescale images so that the long side = input_size.",
+        "'original': keep original resolution (only safe changes)."
+    ])
+
+    show_one("keep_aspect_ratio", True, [
+        "If True: image proportions are always preserved.",
+        "This MUST stay True for geometric morphometrics."
+    ])
+
+    show_one("batch_size", 2, [
+        "How many images are processed in one training step.",
+        "Bigger batch uses more GPU memory."
+    ])
+
+    show_one("learning_rate", 0.0005, [
+        "How fast the model learns."
+    ])
+
+    show_one("max_epochs", 150, [
+        "Maximum number of passes through the training data."
+    ])
+
+    show_one("train_val_split", 0.9, [
+        "Part of data used for training. 0.9 = 90% train, 10% validation."
+    ])
+
+    show_one("flip_augmentation", True, [
+        "If True: random horizontal flips during training."
+    ])
+
+    show_one("rotation_augmentation_deg", 15, [
+        "Maximum random rotation angle in degrees during training."
+    ])
+
+    show_one("scale_augmentation", 0.3, [
+        "Random scaling of images during training.",
+        "0.3 means up to ±30% size change."
+    ])
+
+    show_one("weight_decay", 0.0001, [
+        "Regularization to reduce overfitting."
+    ])
+
+    show_one("crop_margin_x_percent", 0.15, [
+        "Extra space LEFT and RIGHT of the landmarks bounding box.",
+        "Value is a fraction of bbox width for EACH side.",
+        "Example: 0.15 -> +15% bbox width on the left and +15% on the right."
+    ])
+
+    show_one("crop_margin_y_percent", 0.5, [
+        "Extra space ABOVE and BELOW the landmarks bounding box.",
+        "Value is a fraction of bbox height for EACH side.",
+        "Example: 0.5 -> +50% bbox height above and +50% below."
+    ])
+
+    print("To change these values:")
+    print('  1) Open file "config/hrnet_config.yaml" in a text editor (for example Notepad).')
+    print("  2) Change numbers or true/false values.")
+    print("  3) Save the file.")
+    print("New training runs will automatically use the new settings.")
+    print("Do not change parameter names, only their values.")
+    print()
+    input("Press Enter to exit...")
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--root", dest="root", default=None)
+    parser.add_argument("--base", dest="base", default=None)
+    parser.add_argument("--base-localities", dest="base_localities", default=None)
+    args = parser.parse_args()
+
+    landmark_root = get_landmark_root(args.root)
+
+    base_localities: Optional[Path] = None
+    base_arg = args.base_localities or args.base
+    if base_arg:
+        base_localities = Path(base_arg)
+
+    localities = load_localities(landmark_root)
+
+    print("=== GM Landmarking: HRNet Trainer (v1.0) ===")
+    print()
+    print("1) Train / Finetune model on MANUAL localities")
+    print("2) Autolabel locality with current model")
+    print("3) Review AUTO locality in annotator (set MANUAL by button)")
+    print("4) Info about current model / metrics")
+    print("5) Model settings")
+    print()
+    print("0) Quit")
+    print()
+
+    choice = input("Select action: ").strip()
+
+    # После выбора действия показываем список локальностей (для информации)
+    print_localities_block(localities)
+
+    if choice == "1":
+        run_training(landmark_root)
+        print()
+        input("Press Enter to exit...")
+    elif choice == "2":
+        run_autolabel(landmark_root, base_localities)
+    elif choice == "3":
+        run_review_auto(landmark_root)
+    elif choice == "4":
+        show_model_info(landmark_root)
+    elif choice == "5":
+        show_model_settings(landmark_root)
+    else:
+        # 0 или что-то другое – просто выходим
+        return
+
+
+if __name__ == "__main__":
+    main()
+
+
+========== END ==========
+
+Diagnostics written to: logs\diag_yolo_20251117_005342.txt

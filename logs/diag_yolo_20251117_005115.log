@@ -1,0 +1,124 @@
+﻿**********************
+Начало записи сценария Windows PowerShell
+Время начала: 20251117005115
+Имя пользователя: BERS\artae
+Запуск от имени пользователя: BERS\artae
+Имя конфигурации: 
+Компьютер: BERS (Microsoft Windows NT 10.0.26200.0)
+Ведущее приложение: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe
+ИД процесса: 9072
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Транскрибирование запущено, выходной файл logs\diag_yolo_20251117_005115.log
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host "=== YOLO module diagnostics started: $stamp ==="
+=== YOLO module diagnostics started: 20251117_005115 ===
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host "Working directory: $(Get-Location)"
+Working directory: D:\GM\tools\2_Landmarking-Yolo_v1.0
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 5. Немного git-инфо (тоже только чтение)
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host ""
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host "=== git status ==="
+=== git status ===
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> git status
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host ""
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host "=== git remote -v ==="
+=== git remote -v ===
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> git remote -v
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 6. Дерево файлов проекта
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host ""
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host "=== Saving file tree to logs\tree_yolo_$stamp.txt ==="
+=== Saving file tree to logs\tree_yolo_20251117_005115.txt ===
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> $treePath = "logs\tree_yolo_$stamp.txt"
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Get-ChildItem -LiteralPath . -Recurse |
+    Sort-Object FullName |
+    Select-Object FullName, Length |
+    Out-File -FilePath $treePath -Encoding UTF8
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 7. Сохраняем содержимое ключевых файлов, если они есть
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> function Save-IfExists {
+    param(
+        [string]$Path,
+        [string]$OutFile
+    )
+    if (Test-Path $Path) {
+        Write-Host "Saving file: $Path -> $OutFile"
+        Get-Content -LiteralPath $Path -ErrorAction Stop |
+            Out-File -FilePath $OutFile -Encoding UTF8
+    } else {
+        Write-Host "File not found (skip): $Path"
+    }
+}
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 7.1. Батник аннотатора
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Save-IfExists -Path "1_ANNOTATOR.bat" -OutFile ("logs\1_ANNOTATOR_bat_$stamp.txt")
+Saving file: 1_ANNOTATOR.bat -> logs\1_ANNOTATOR_bat_20251117_005115.txt
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 7.2. Скрипт синхронизации репо
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Save-IfExists -Path "sync_repo_yolo_v3.ps1" -OutFile ("logs\sync_repo_yolo_v3_ps1_$stamp.txt")
+Saving file: sync_repo_yolo_v3.ps1 -> logs\sync_repo_yolo_v3_ps1_20251117_005115.txt
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 7.3. Конфиг YOLO (если уже есть)
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Save-IfExists -Path "config\yolo_config.yaml" -OutFile ("logs\yolo_config_yaml_$stamp.txt")
+File not found (skip): config\yolo_config.yaml
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> # 7.4. Все .py в scripts/
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> if (Test-Path "scripts") {
+    Write-Host ""
+    Write-Host "=== Saving Python scripts from scripts/ ==="
+    $pyFiles = Get-ChildItem "scripts" -Recurse -Filter "*.py"
+    foreach ($f in $pyFiles) {
+        $safeName = $f.FullName.Replace("\", "_").Replace(":", "")
+        $outFile = "logs\code_$safeName`_$stamp.txt"
+        Write-Host "  -> $($f.FullName) -> $outFile"
+        Get-Content -LiteralPath $f.FullName -ErrorAction Stop |
+            Out-File -FilePath $outFile -Encoding UTF8
+    }
+} else {
+    Write-Host "No 'scripts' folder found."
+}
+
+=== Saving Python scripts from scripts/ ===
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\annotator_wrapper.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_annotator_wrapper.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\hrnet_config_utils.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_hrnet_config_utils.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\infer_hrnet.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_infer_hrnet.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\init_structure.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_init_structure.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\menu_list.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_menu_list.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\photos_diag.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_photos_diag.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\rebuild_localities_status.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_rebuild_localities_status.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\trainer_menu.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_trainer_menu.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\train_hrnet.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_train_hrnet.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\train_hrnet_backup_before_debug.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts_train_hrnet_backup_before_debug.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_hrnet_quick.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_hrnet_quick.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_hrnet_import.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import_final.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_hrnet_import_final.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_hrnet_import_final2.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_hrnet_import_final2.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_install.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_install.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_check_mmpose_only.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__check_mmpose_only.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_heatmaps_and_pck.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_hrnet_heatmaps_and_pck.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_heatmap_shapes.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_hrnet_heatmap_shapes.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_hrnet_import_raw.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_hrnet_import_raw.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmcv_ext_loader_stub.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_mmcv_ext_loader_stub.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmpose_heads_init_for_gm.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_mmpose_heads_init_for_gm.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_mmpose_models_init_for_gm.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_mmpose_models_init_for_gm.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_patch_xtcocotools_mask_stub.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__patch_xtcocotools_mask_stub.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_mmpose_stack_versions.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_mmpose_stack_versions.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_after_full_fix.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_stack_after_full_fix.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_after_numpy_xtc_fix.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_stack_after_numpy_xtc_fix.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_before_full_fix.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_stack_before_full_fix.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_stack_before_numpy_xtc_fix.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_stack_before_numpy_xtc_fix.py_20251117_005115.txt
+  -> D:\GM\tools\2_Landmarking-Yolo_v1.0\scripts\_show_xtcocotools_stack.py -> logs\code_D_GM_tools_2_Landmarking-Yolo_v1.0_scripts__show_xtcocotools_stack.py_20251117_005115.txt
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host ""
+
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Write-Host "=== Diagnostics finished. Log: $logPath ==="
+=== Diagnostics finished. Log: logs\diag_yolo_20251117_005115.log ===
+PS D:\GM\tools\2_Landmarking-Yolo_v1.0> Stop-Transcript
+**********************
+Конец записи протокола Windows PowerShell
+Время окончания: 20251117005116
+**********************

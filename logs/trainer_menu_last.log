@@ -1,0 +1,17 @@
+[ERR] Landmarking YOLO environment not found: "D:\GM\tools\2_Landmarking-Yolo_v1.0\\.venv_lm\Scripts\python.exe"
+[ERR] Landmarking YOLO environment not found: "D:\GM\tools\2_Landmarking-Yolo_v1.0\\.venv_lm\Scripts\python.exe"
+=== GM Landmarking: YOLO Trainer (v1.0) ===
+
+Base folder:
+  G:\Research\Morphology\Photos\Phoxinus
+
+Actions:
+  1) Train / finetune YOLO model on MANUAL localities
+  2) Autolabel locality with current YOLO model
+  3) Open locality in annotator
+  4) Show current model info
+  5) Show / edit YOLO config
+
+  0) Quit
+
+Select action: ^C

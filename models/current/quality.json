@@ -1,10 +1,13 @@
 {
-  "run_id": "20251116_101421",
-  "pck_r": 0.15170278637770898,
-  "pck_r_percent": 15.0,
-  "n_train_images": 167,
-  "n_val_images": 19,
-  "train_share": 0.8978494623655914,
-  "val_share": 0.10215053763440861,
-  "n_manual_localities": 14
+  "run_id": "20251118_030855",
+  "model_type": "yolo_pose",
+  "num_keypoints": 17,
+  "n_manual_localities": 16,
+  "n_train_images": 192,
+  "n_val_images": 21,
+  "train_share": 0.9014084507042254,
+  "val_share": 0.09859154929577464,
+  "pck_r_percent": 26.0,
+  "resize_enabled": true,
+  "resize_long_side": 1600
 }

@@ -78,6 +78,7 @@ class YoloTrainConfig:
     batch_size: int = 8
     learning_rate: float = 5e-4
     weight_decay: float = 1e-4
+    early_stop_patience: int = 10
 
 
 @dataclass
@@ -118,12 +119,16 @@ def _load_yolo_config(root: Path, log_file: Any) -> YoloConfig:
     with cfg_path.open("r", encoding="utf-8") as f:
         data = yaml.safe_load(f) or {}
 
+    if not isinstance(data, dict):
+        raise RuntimeError("Invalid structure in yolo_config.yaml")
+
     model_data = data.get("model", {}) or {}
     resize_data = data.get("resize", {}) or {}
     train_data = data.get("train", {}) or {}
     augment_data = data.get("augment", {}) or {}
     infer_data = data.get("infer", {}) or {}
 
+    # Число ключевых точек: сначала LM_number.txt, затем model.num_keypoints
     n_kpts_from_file = int(model_data.get("num_keypoints") or 0)
     n_kpts_from_lm = _read_lm_number(root)
     num_keypoints = n_kpts_from_lm or n_kpts_from_file
@@ -152,12 +157,15 @@ def _load_yolo_config(root: Path, log_file: Any) -> YoloConfig:
         batch_size=int(train_data.get("batch_size", 8)),
         learning_rate=float(train_data.get("learning_rate", 5e-4)),
         weight_decay=float(train_data.get("weight_decay", 1e-4)),
+        early_stop_patience=int(train_data.get("early_stop_patience", 10)),
     )
 
     _log(
         f"YOLO config: num_keypoints={model_cfg.num_keypoints}, "
         f"pretrained_weights={model_cfg.pretrained_weights}, "
-        f"resize.enabled={resize_cfg.enabled}, resize.long_side={resize_cfg.long_side}",
+        f"resize.enabled={resize_cfg.enabled}, resize.long_side={resize_cfg.long_side}, "
+        f"train.max_epochs={train_cfg.max_epochs}, train.batch_size={train_cfg.batch_size}, "
+        f"train.early_stop_patience={train_cfg.early_stop_patience}",
         log_file,
     )
 
@@ -168,7 +176,6 @@ def _load_yolo_config(root: Path, log_file: Any) -> YoloConfig:
         augment=augment_data,
         infer=infer_data,
     )
-
 
 # -----------------------------
 # Чтение статусов и выбор MANUAL
@@ -590,10 +597,22 @@ def train_yolo(root: Path, base: Path) -> int:
         history_run_dir = history_root / run_id
 
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        _log(f"Creating YOLO model from weights: {cfg.model.pretrained_weights}", log_file)
+
+        # Если есть уже обученная модель в models/current/yolo_best.pt,
+        # продолжаем обучение от неё, иначе используем базовые веса из конфига.
+        current_best = root / "models" / "current" / "yolo_best.pt"
+        if current_best.is_file():
+            pretrained_path = current_best
+            _log(f"Found existing model in models/current: {pretrained_path}", log_file)
+        else:
+            pretrained_path = Path(cfg.model.pretrained_weights)
+            if not pretrained_path.is_absolute():
+                pretrained_path = root / pretrained_path
+            _log(f"Using pretrained weights from config: {pretrained_path}", log_file)
+
         _log(f"Using device: {device}", log_file)
 
-        model = YOLO(str(cfg.model.pretrained_weights))
+        model = YOLO(str(pretrained_path))
 
         train_args: Dict[str, Any] = {
             "data": str(ds_root / "dataset.yaml"),
@@ -609,13 +628,29 @@ def train_yolo(root: Path, base: Path) -> int:
             "device": device,
         }
 
+        if getattr(cfg.train, "early_stop_patience", 0) > 0:
+            train_args["patience"] = int(cfg.train.early_stop_patience)
+
         _log(f"Starting YOLO training with args: {train_args}", log_file)
         try:
             model.train(**train_args)
         except Exception as exc:
-            _log(f"[ERR] YOLO training failed: {exc}", log_file)
-            log_file.close()
-            return 1
+            # Если попытались тренировать на CUDA и что-то пошло не так — пробуем ещё раз на CPU.
+            if device == "cuda":
+                _log(f"[WARN] YOLO training on CUDA failed: {exc}. Falling back to CPU.", log_file)
+                device = "cpu"
+                train_args["device"] = device
+                _log(f"Restarting YOLO training on device: {device}", log_file)
+                try:
+                    model.train(**train_args)
+                except Exception as exc2:
+                    _log(f"[ERR] YOLO training failed on CPU: {exc2}", log_file)
+                    log_file.close()
+                    return 1
+            else:
+                _log(f"[ERR] YOLO training failed: {exc}", log_file)
+                log_file.close()
+                return 1
 
         # Ищем лучший чекпоинт
         weights_dir = history_run_dir / "weights"
@@ -787,3 +822,5 @@ def main(argv: Optional[List[str]] = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+

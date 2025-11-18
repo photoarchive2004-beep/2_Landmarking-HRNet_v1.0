@@ -1,10 +1,10 @@
 locality,status,auto_quality,last_model_run,last_update,n_images,n_labeled
-arctic-eur_isetensis-Kipshenga_RU_25,MANUAL,,20251115_144035,2025-11-15T15:08:24,16,16
-arctic-eur_isetensis-Likhtosh-2_RU_25,AUTO,15,20251116_101421,2025-11-16T11:00:43,22,22
+arctic-eur_isetensis-Kipshenga_RU_25,MANUAL,,20251115_144035,2025-11-17 22:11:02,16,15
+arctic-eur_isetensis-Likhtosh-2_RU_25,MANUAL,,20251116_101421,2025-11-17 21:53:11,22,22
 balkh-alakol_Ayagoz_KZ_25,MANUAL,,,2025-11-14 18:12:09,19,19
 balkh-alakol_Karakol_KZ_25,MANUAL,,,2025-11-14 18:12:09,13,13
 balkh-alakol_Lepsy_KZ_25,MANUAL,,,2025-11-14 18:12:09,11,11
-baltsea-east_isetensis-Allol_RU_25,,,,2025-11-15 00:06:23,9,0
+baltsea-east_isetensis-Allol_RU_25,AUTO,46,20251117_221738,2025-11-18 02:14:33,9,9
 baltsea-east_isetensis-Ryadan-Chern-Dymka_RU_25,MANUAL,,,2025-11-14 21:25:15,7,7
 baltsea-east_isetensis-Sitnya_RU_25,MANUAL,,,2025-11-14 18:12:09,19,19
 baltsea-east_isetensis-Velesa_RU_25,,,,2025-11-14 21:25:15,20,0
@@ -25,7 +25,7 @@ ob-altay_Ursul_RU_25,MANUAL,,,2025-11-14 18:12:09,7,7
 ob-altay_Usay_RU_25,,,,2025-11-14 18:12:09,55,0
 ob-irtysh_Abylaikit_KZ_25,,,,2025-11-14 18:12:09,20,0
 ob-irtysh_Bol-Kamenka_RU_25,,,,2025-11-14 18:12:09,27,0
-ob-irtysh_Kalzhir_RU_25,,,,2025-11-14 18:12:09,7,0
+ob-irtysh_Kalzhir_KZ_25,MANUAL,,,2025-11-18 02:58:15,6,6
 ob-irtysh_Kendirlik_KZ_25,,,,2025-11-14 18:12:09,24,0
 ob-irtysh_Kurchum_KZ_25,,,,2025-11-14 18:12:09,12,0
 ob-irtysh_Sht-Terekty_KZ_25,,,,2025-11-14 18:12:09,16,0
@@ -35,7 +35,7 @@ turk-west_kottelati-Uludere_TR_25,,,,2025-11-14 18:12:09,21,0
 turk-west_radeki-Buyuk_TR_25,,,,2025-11-14 18:12:09,16,0
 turk-west_strandjae-Balabandere_TR_25,,,,2025-11-14 18:12:09,17,0
 volga-kama_isetensis-Aspa_RU_25,,,,2025-11-15 00:06:23,23,0
-volga-kama_isetensis-Barmysh_RU_25,,,,2025-11-14 18:12:09,9,0
+volga-kama_isetensis-Barmysh_RU_25,MANUAL,,20251118_030855,2025-11-18 11:32:11,9,9
 volga-kama_isetensis-Berezovaya_RU_25,,,,2025-11-14 18:12:09,30,0
 volga-kama_isetensis-Bol-Yavysh_RU_25,,,,2025-11-15 00:06:23,23,0
 volga-kama_isetensis-Bui_RU_25,,,,2025-11-14 18:12:09,27,0

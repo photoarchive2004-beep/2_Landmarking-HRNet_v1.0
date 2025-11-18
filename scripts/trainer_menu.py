@@ -120,14 +120,14 @@ def load_yolo_config(root: Path) -> Dict[str, Any]:
             return {}
         return data
     except Exception as exc:
-        print(f"[WARN] Cannot read YOLO config: {exc}")
+        print(f"[WARN] Cannot read HRNet config: {exc}")
         return {}
 
 
 def show_yolo_config(root: Path) -> None:
     cfg = load_yolo_config(root)
     if not cfg:
-        print("No YOLO config found (config/yolo_config.yaml).")
+        print("No HRNet config found (config/yolo_config.yaml).")
         return
 
     model = cfg.get("model", {})
@@ -136,7 +136,7 @@ def show_yolo_config(root: Path) -> None:
     augment = cfg.get("augment", {})
     infer = cfg.get("infer", {})
 
-    print("YOLO config (config/yolo_config.yaml)")
+    print("HRNet config (config/yolo_config.yaml)")
     print()
     print("model:")
     print(f"  pretrained_weights: {model.get('pretrained_weights', '?')}")
@@ -186,7 +186,7 @@ def show_yolo_config(root: Path) -> None:
 def show_model_info(root: Path) -> None:
     q_path = root / QUALITY_FILE
     if not q_path.exists():
-        print("No trained YOLO model found. Please run action 1) Train / finetune model first.")
+        print("No trained HRNet model found. Please run action 1) Train / finetune model first.")
         return
     try:
         with q_path.open("r", encoding="utf-8") as f:
@@ -225,7 +225,7 @@ def show_model_info(root: Path) -> None:
 
 def run_train_yolo(root: Path, base_localities: Path, localities: List[LocalityStatus]) -> None:
     """
-    Action 1) Train / finetune YOLO model on MANUAL localities.
+    Action 1) Train / finetune HRNet model on MANUAL localities.
 
     According to ТЗ-YOLO:
       - use only MANUAL localities from status/localities_status.csv
@@ -270,7 +270,7 @@ def run_train_yolo(root: Path, base_localities: Path, localities: List[LocalityS
 
 def run_autolabel_yolo(root: Path, base_localities: Path, localities: List[LocalityStatus]) -> None:
     """
-    Action 2) Autolabel locality with current YOLO model.
+    Action 2) Autolabel locality with current HRNet model.
 
     Uses models/current/yolo_best.pt and models/current/quality.json
     to label a selected locality and update status/localities_status.csv.
@@ -280,8 +280,8 @@ def run_autolabel_yolo(root: Path, base_localities: Path, localities: List[Local
     quality_path = root / QUALITY_FILE
 
     if not model_path.is_file() or not quality_path.is_file():
-        print("No trained YOLO model found in models/current/.")
-        print("Please run action 1) Train / finetune YOLO model first.")
+        print("No trained HRNet model found in models/current/.")
+        print("Please run action 1) Train / finetune HRNet model first.")
         return
 
     loc = pick_locality(localities)
@@ -394,7 +394,7 @@ def main() -> int:
         else:
             base_localities = root
 
-    print("=== GM Landmarking: YOLO Trainer (v1.0) ===")
+    print("=== GM Landmarking: HRNet Trainer (v1.0) ===")
     print()
     print("Base folder:")
     print(f"  {base_localities}")
@@ -402,11 +402,11 @@ def main() -> int:
 
     while True:
         print("Actions:")
-        print("  1) Train / finetune YOLO model on MANUAL localities")
-        print("  2) Autolabel locality with current YOLO model")
+        print("  1) Train / finetune HRNet model on MANUAL localities")
+        print("  2) Autolabel locality with current HRNet model")
         print("  3) Open locality in annotator")
         print("  4) Show current model info")
-        print("  5) Show / edit YOLO config")
+        print("  5) Show / edit HRNet config")
         print()
         print("  0) Quit")
         print()
@@ -445,3 +445,4 @@ if __name__ == "__main__":
         print(f"[ERR] Trainer crashed: {exc}")
         code = 1
     raise SystemExit(code)
+

@@ -66,7 +66,7 @@ def _load_yolo_config(root: Path) -> Dict[str, Any]:
     if yaml is None:
         raise RuntimeError("PyYAML is not installed, cannot read yolo_config.yaml")
     if not cfg_path.is_file():
-        raise RuntimeError(f"YOLO config not found: {cfg_path}")
+        raise RuntimeError(f"HRNet config not found: {cfg_path}")
     with cfg_path.open("r", encoding="utf-8") as f:
         data = yaml.safe_load(f) or {}
     if not isinstance(data, dict):
@@ -161,7 +161,7 @@ def infer_locality(root: Path, base_localities: Path, locality_name: str) -> int
             return 1
 
         device = "cuda" if (torch is not None and torch.cuda.is_available()) else "cpu"
-        _log(f"Loading YOLO model from {model_path}", log_file)
+        _log(f"Loading HRNet model from {model_path}", log_file)
         _log(f"Using device: {device}", log_file)
         _log(f"Inference long_side (imgsz) = {img_long_side}", log_file)
 
@@ -301,3 +301,4 @@ def main() -> int:
 if __name__ == "__main__":
     exit_code = main()
     raise SystemExit(exit_code)
+

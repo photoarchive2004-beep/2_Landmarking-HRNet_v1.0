@@ -114,7 +114,7 @@ def _load_yolo_config(root: Path, log_file: Any) -> YoloConfig:
         raise RuntimeError("PyYAML is not installed, cannot read yolo_config.yaml")
 
     if not cfg_path.is_file():
-        raise RuntimeError(f"YOLO config not found: {cfg_path}")
+        raise RuntimeError(f"HRNet config not found: {cfg_path}")
 
     with cfg_path.open("r", encoding="utf-8") as f:
         data = yaml.safe_load(f) or {}
@@ -161,7 +161,7 @@ def _load_yolo_config(root: Path, log_file: Any) -> YoloConfig:
     )
 
     _log(
-        f"YOLO config: num_keypoints={model_cfg.num_keypoints}, "
+        f"HRNet config: num_keypoints={model_cfg.num_keypoints}, "
         f"pretrained_weights={model_cfg.pretrained_weights}, "
         f"resize.enabled={resize_cfg.enabled}, resize.long_side={resize_cfg.long_side}, "
         f"train.max_epochs={train_cfg.max_epochs}, train.batch_size={train_cfg.batch_size}, "
@@ -469,7 +469,7 @@ def _evaluate_pck(
         return 0.0
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    _log(f"Loading YOLO model for evaluation on device: {device}", log_file)
+    _log(f"Loading HRNet model for evaluation on device: {device}", log_file)
 
     model = YOLO(str(model_path))
 
@@ -822,5 +822,6 @@ def main(argv: Optional[List[str]] = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 
 

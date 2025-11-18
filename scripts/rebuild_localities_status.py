@@ -1,147 +1,135 @@
-﻿from pathlib import Path
+"""Rebuild status/localities_status.csv based on a localities base folder."""
+from __future__ import annotations
+
+import argparse
 import csv
 import sys
-from datetime import datetime
+from pathlib import Path
+from typing import Dict, List
 
 
-def find_tool_dir() -> Path:
-    # scripts/ -> parent = tools/2_Landmarking_v1.0
-    return Path(__file__).resolve().parent.parent
+LM_ROOT = Path(__file__).resolve().parent.parent
+STATUS_HEADER = [
+    "locality",
+    "status",
+    "auto_quality",
+    "last_model_run",
+    "n_images",
+    "n_labeled",
+    "last_update",
+]
+ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".tif", ".tiff"}
 
 
-def load_base_localities(tool_dir: Path):
-    cfg_dir = tool_dir / "cfg"
-    last_base = cfg_dir / "last_base.txt"
-    if not last_base.exists():
-        print(
-            "[ERR] cfg/last_base.txt not found; run 1_ANNOTATOR.bat or 2_TRAIN-INFER_HRNet.bat first.",
-            file=sys.stderr,
-        )
-        return None
-
-    base = last_base.read_text(encoding="utf-8").strip()
-    if not base:
-        print("[ERR] cfg/last_base.txt is empty.", file=sys.stderr)
-        return None
-
-    path = Path(base)
-    if not path.exists():
-        print(f"[ERR] Localities base not found: {path}", file=sys.stderr)
-        return None
-
-    return path
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Rebuild localities status table.")
+    parser.add_argument(
+        "--base", "-b", dest="base", help="Path to base localities directory", required=False
+    )
+    return parser.parse_args()
 
 
-def scan_localities(base_dir: Path):
-    """
-    Return list of (locality_name, n_images, n_labeled).
+def ensure_status_file() -> Path:
+    status_file = LM_ROOT / "status" / "localities_status.csv"
+    status_file.parent.mkdir(parents=True, exist_ok=True)
+    if not status_file.exists():
+        with status_file.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.writer(handle)
+            writer.writerow(STATUS_HEADER)
+    return status_file
 
-    n_labeled считается так:
-    для каждого img_XXXX.png считаем размеченным, если рядом есть файл img_XXXX.csv.
-    Подпапка "bad" игнорируется, т.к. мы не обходим подкаталоги.
-    """
-    results = []
-    for loc_dir in sorted(p for p in base_dir.iterdir() if p.is_dir()):
-        png_dir = loc_dir / "png"
+
+def load_existing_status(status_file: Path) -> Dict[str, Dict[str, str]]:
+    if not status_file.exists():
+        return {}
+
+    with status_file.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        existing = {}
+        for row in reader:
+            locality = row.get("locality")
+            if not locality:
+                continue
+            existing[locality] = row
+    return existing
+
+
+def scan_localities(base_dir: Path) -> List[tuple[str, int, int]]:
+    localities: List[tuple[str, int, int]] = []
+    for locality_dir in sorted(p for p in base_dir.iterdir() if p.is_dir()):
+        png_dir = locality_dir / "png"
         if not png_dir.is_dir():
             continue
 
-        # Только файлы *.png в самом png/, без рекурсии
-        images = sorted(png_dir.glob("*.png"))
+        images = [p for p in png_dir.iterdir() if p.is_file() and p.suffix.lower() in ALLOWED_EXTENSIONS]
         n_images = len(images)
         if n_images == 0:
             continue
 
-        n_labeled = 0
-        for img in images:
-            lm = png_dir / f"{img.stem}.csv"
-            if lm.exists():
-                n_labeled += 1
+        labeled = 0
+        for image in images:
+            if (png_dir / f"{image.stem}.csv").exists():
+                labeled += 1
 
-        results.append((loc_dir.name, n_images, n_labeled))
-
-    return results
+        localities.append((locality_dir.name, n_images, labeled))
+    return localities
 
 
-def read_old_status(status_file: Path):
-    if not status_file.exists():
-        return {}
-    with status_file.open("r", encoding="utf-8", newline="") as f:
-        reader = csv.DictReader(f)
-        out = {}
-        for row in reader:
-            loc = row.get("locality") or row.get("name")
-            if not loc:
-                continue
-            out[loc] = row
-        return out
+def build_rows(existing: Dict[str, Dict[str, str]], scanned: List[tuple[str, int, int]]):
+    rows = []
+    for locality, n_images, n_labeled in scanned:
+        previous = existing.get(locality, {})
+        status = (previous.get("status") or "").strip()
+        auto_quality = (previous.get("auto_quality") or "").strip()
+        last_model_run = (previous.get("last_model_run") or "").strip()
+        last_update = (previous.get("last_update") or "").strip()
+
+        if not status and n_images > 0 and n_images == n_labeled:
+            status = "MANUAL"
+
+        rows.append(
+            {
+                "locality": locality,
+                "status": status,
+                "auto_quality": auto_quality,
+                "last_model_run": last_model_run,
+                "n_images": str(n_images),
+                "n_labeled": str(n_labeled),
+                "last_update": last_update,
+            }
+        )
+    rows.sort(key=lambda row: row["locality"])
+    return rows
 
 
-def write_status(status_file: Path, rows):
-    fieldnames = [
-        "locality",
-        "status",
-        "auto_quality",
-        "last_model_run",
-        "last_update",
-        "n_images",
-        "n_labeled",
-    ]
-    status_file.parent.mkdir(parents=True, exist_ok=True)
-    with status_file.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+def write_status(status_file: Path, rows) -> None:
+    with status_file.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=STATUS_HEADER)
         writer.writeheader()
         for row in rows:
             writer.writerow(row)
 
 
 def main() -> int:
-    tool_dir = find_tool_dir()
-    base_dir = load_base_localities(tool_dir)
-    if base_dir is None:
+    args = parse_args()
+    if not args.base:
+        print("Error: --base argument is required (path to localities base).", file=sys.stderr)
         return 1
 
-    status_file = tool_dir / "status" / "localities_status.csv"
-    old = read_old_status(status_file)
+    base_dir = Path(args.base)
+    if not base_dir.exists():
+        print(f"Error: base path does not exist: {base_dir}", file=sys.stderr)
+        return 1
+    if not base_dir.is_dir():
+        print(f"Error: base path is not a directory: {base_dir}", file=sys.stderr)
+        return 1
+
+    status_file = ensure_status_file()
+    existing = load_existing_status(status_file)
     scanned = scan_localities(base_dir)
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    new_rows = []
-    for name, n_images, n_labeled in scanned:
-        prev = old.get(name, {})
-        prev_status = (prev.get("status") or "").strip()
-        status = prev_status
-        auto_quality = (prev.get("auto_quality") or "").strip()
-        last_model_run = (prev.get("last_model_run") or "").strip()
-        last_update = (prev.get("last_update") or "").strip()
-
-        # Если все изображения размечены и статус пустой -> считаем MANUAL
-        if n_images > 0 and n_labeled == n_images:
-            if not prev_status:
-                status = "MANUAL"
-            elif prev_status.upper() == "MANUAL":
-                status = "MANUAL"
-            else:
-                # AUTO и другие статусы не трогаем автоматически
-                status = prev_status
-
-        if not last_update:
-            last_update = now
-
-        new_rows.append(
-            {
-                "locality": name,
-                "status": status,
-                "auto_quality": auto_quality,
-                "last_model_run": last_model_run,
-                "last_update": last_update,
-                "n_images": str(n_images),
-                "n_labeled": str(n_labeled),
-            }
-        )
-
-    write_status(status_file, new_rows)
-    print(f"[INFO] Rebuilt status for {len(new_rows)} localities.")
+    rows = build_rows(existing, scanned)
+    write_status(status_file, rows)
+    print(f"Updated status for {len(rows)} localities.")
     return 0
 
 

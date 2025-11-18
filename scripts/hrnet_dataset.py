@@ -214,7 +214,7 @@ def build_train_val_datasets(base_localities: Path, cfg: Dict) -> Tuple[Dataset,
     train_items = items[:pivot]
     val_items = items[pivot:]
 
-    num_keypoints = cfg.get("model", {}).get("num_keypoints") or hrnet_config_utils.read_num_keypoints()
+    num_keypoints = hrnet_config_utils.read_num_keypoints()
     resize_cfg = cfg.get("resize", {})
     augment_cfg = cfg.get("augment", {})
 

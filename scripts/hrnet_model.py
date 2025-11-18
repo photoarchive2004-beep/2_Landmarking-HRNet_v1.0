@@ -6,6 +6,8 @@ from typing import Dict
 import torch
 from torch import nn
 
+from scripts import hrnet_config_utils
+
 
 class HRNetKeypointModel(nn.Module):
     def __init__(self, num_keypoints: int, model_type: str = "hrnet_w32") -> None:
@@ -44,17 +46,16 @@ class HRNetKeypointModel(nn.Module):
 
 def build_model_from_config(cfg: Dict) -> HRNetKeypointModel:
     model_cfg = cfg.get("model", {})
-    num_keypoints = int(model_cfg.get("num_keypoints")) if model_cfg.get("num_keypoints") else None
-    if num_keypoints is None:
-        from scripts.hrnet_config_utils import read_num_keypoints
-
-        num_keypoints = read_num_keypoints()
+    num_keypoints = hrnet_config_utils.read_num_keypoints()
     model_type = str(model_cfg.get("model_type", "hrnet_w32"))
 
     model = HRNetKeypointModel(num_keypoints=num_keypoints, model_type=model_type)
-
-    weights_path = Path(model_cfg.get("pretrained_weights", ""))
-    if weights_path and weights_path.exists():
-        state = torch.load(weights_path, map_location="cpu")
-        model.load_state_dict(state, strict=False)
+    weights_path_str = str(model_cfg.get("pretrained_weights") or "").strip()
+    if weights_path_str:
+        weights_path = Path(weights_path_str)
+        if not weights_path.is_absolute():
+            weights_path = (hrnet_config_utils.PROJECT_ROOT / weights_path).resolve()
+        if weights_path.exists():
+            state = torch.load(weights_path, map_location="cpu")
+            model.load_state_dict(state, strict=False)
     return model

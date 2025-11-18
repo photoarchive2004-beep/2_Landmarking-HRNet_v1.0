@@ -160,7 +160,7 @@ def train_hrnet_model(base_localities: Path, lm_root: Path) -> None:
 
     quality = {
         "run_id": run_id,
-        "num_keypoints": cfg.get("model", {}).get("num_keypoints") or hrnet_config_utils.read_num_keypoints(),
+        "num_keypoints": hrnet_config_utils.read_num_keypoints(),
         "n_train_images": meta.get("n_train_images", 0),
         "n_val_images": meta.get("n_val_images", 0),
         "localities": meta.get("localities", []),

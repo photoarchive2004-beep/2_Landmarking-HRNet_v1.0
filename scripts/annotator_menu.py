@@ -34,20 +34,30 @@ def _format_int(value: str) -> int:
 
 
 def _print_menu(rows, base_localities: Path) -> None:
+    if rows:
+        max_name_len = max(len(row.get("locality", "")) for row in rows)
+        max_name_len = min(max_name_len, 35)
+    else:
+        max_name_len = len("locality")
+
     print("=== GM Landmarking: Annotator ===")
     print("Base folder:")
     print(f"  {base_localities}")
     print()
-    print(f"#  {'locality':20} {'status':8} {'labeled/total':13} autoQ")
+    print(f"#  {'locality':{max_name_len}} {'status':8} {'labeled/total':13} autoQ")
 
     for idx, row in enumerate(rows, start=1):
         locality = row.get("locality", "")
+        if len(locality) > max_name_len:
+            locality_truncated = locality[: max_name_len - 1] + "…"
+        else:
+            locality_truncated = locality
         status = row.get("status", "")
         auto_q = row.get("auto_quality", "") or "-"
         n_images = _format_int(row.get("n_images", "0"))
         n_labeled = _format_int(row.get("n_labeled", "0"))
         print(
-            f"{idx:>2}  {locality:20} {status:8} "
+            f"{idx:>2}  {locality_truncated:{max_name_len}} {status:8} "
             f"{n_labeled:>3} / {n_images:<7} {auto_q}"
         )
     if not rows:

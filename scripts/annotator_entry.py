@@ -6,11 +6,25 @@ import sys
 from pathlib import Path
 from tkinter import Tk, filedialog
 
+LM_ROOT = Path(__file__).resolve().parent.parent
+if str(LM_ROOT) not in sys.path:
+    sys.path.insert(0, str(LM_ROOT))
+
+import importlib.util
+import types
+
+scripts_init = LM_ROOT / "scripts" / "__init__.py"
+if scripts_init.exists():
+    spec = importlib.util.spec_from_file_location("scripts", scripts_init)
+    scripts_pkg: types.ModuleType = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(scripts_pkg)
+    sys.modules["scripts"] = scripts_pkg
+
 from scripts import init_structure
 from scripts import rebuild_localities_status
 from scripts.annotator_menu import run_annotator_menu
 
-LM_ROOT = Path(__file__).resolve().parent.parent
 CFG_DIR = LM_ROOT / "cfg"
 LAST_BASE_FILE = CFG_DIR / "last_base.txt"
 

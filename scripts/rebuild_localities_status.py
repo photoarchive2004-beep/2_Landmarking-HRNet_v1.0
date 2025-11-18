@@ -110,26 +110,40 @@ def write_status(status_file: Path, rows) -> None:
             writer.writerow(row)
 
 
-def main() -> int:
-    args = parse_args()
-    if not args.base:
-        print("Error: --base argument is required (path to localities base).", file=sys.stderr)
-        return 1
+def rebuild_status(base_dir: Path) -> int:
+    """
+    Rebuild ``status/localities_status.csv`` using ``base_dir`` containing localities.
 
-    base_dir = Path(args.base)
+    Returns the number of localities processed.
+    Raises ``ValueError`` for invalid input paths.
+    """
+
+    base_dir = base_dir.resolve()
     if not base_dir.exists():
-        print(f"Error: base path does not exist: {base_dir}", file=sys.stderr)
-        return 1
+        raise ValueError(f"Base path does not exist: {base_dir}")
     if not base_dir.is_dir():
-        print(f"Error: base path is not a directory: {base_dir}", file=sys.stderr)
-        return 1
+        raise ValueError(f"Base path is not a directory: {base_dir}")
 
     status_file = ensure_status_file()
     existing = load_existing_status(status_file)
     scanned = scan_localities(base_dir)
     rows = build_rows(existing, scanned)
     write_status(status_file, rows)
-    print(f"Updated status for {len(rows)} localities.")
+    return len(rows)
+
+
+def main() -> int:
+    args = parse_args()
+    if not args.base:
+        print("Error: --base argument is required (path to localities base).", file=sys.stderr)
+        return 1
+
+    try:
+        count = rebuild_status(Path(args.base))
+    except ValueError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 1
+    print(f"Updated status for {count} localities.")
     return 0
 
 

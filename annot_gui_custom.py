@@ -6,12 +6,20 @@ from tkinter import messagebox, simpledialog
 
 # ---------- helpers ----------
 def read_npoints(root):
-    lm = Path(root) / "tools/2_Landmarking_v1.0/LM_number.txt"
-    try:
-        n = int(lm.read_text(encoding="utf-8-sig").splitlines()[0].strip())
-        return n if n > 1 else None
-    except Exception:
-        return None
+    root_path = Path(root)
+    candidates = [
+        root_path / "LM_number.txt",
+        root_path / "tools/2_Landmarking_v1.0/LM_number.txt",
+    ]
+    for lm in candidates:
+        if not lm.exists():
+            continue
+        try:
+            n = int(lm.read_text(encoding="utf-8-sig").splitlines()[0].strip())
+            return n if n > 1 else None
+        except Exception:
+            continue
+    return None
 
 def list_images(png_dir):
     return sorted(str(p) for p in Path(png_dir).glob("*.png"))
@@ -112,7 +120,7 @@ class AnnotGUI(tk.Tk):
         self.title("GM Points Annotator - Custom")
         self.configure(background="black")
 
-        self.root_dir = root
+        self.root_dir = Path(root)
         self.png_dir = png_dir
         self.N = n_points or read_npoints(root) or 0
         if self.N <= 1:
@@ -120,7 +128,7 @@ class AnnotGUI(tk.Tk):
             self.destroy()
             sys.exit(2)
 
-        logs_dir = Path(root) / "tools/2_Landmarking_v1.0/logs"
+        logs_dir = Path(root) / "logs"
         logs_dir.mkdir(exist_ok=True, parents=True)
         self.log_last = logs_dir / "annot_gui_last.log"
         def _write_log(msg):
@@ -620,7 +628,7 @@ class AnnotGUI(tk.Tk):
                 self.qc_marks[idx_img] = marks
         problems.sort(key=lambda x: x[0])
         self.qc_list = problems
-        out_path = Path(self.root_dir) / "tools/2_Landmarking_v1.0/logs" / "qc_last.txt"
+        out_path = Path(self.root_dir) / "logs" / "qc_last.txt"
         out_path.write_text(
             "\n".join([f"{Path(self.images[i]).name}: {r}" for i, r in self.qc_list]),
             encoding="utf-8",
@@ -720,6 +728,33 @@ class AnnotGUI(tk.Tk):
         finally:
             self.destroy()
 
+def run_gui_for_locality(images_dir: Path, lm_root: Path, num_keypoints=None, start_from=None, scale_wizard=False):
+    """
+    Запустить GUI-аннотацию для выбранной локальности.
+
+    :param images_dir: Путь к каталогу с изображениями PNG текущей локальности.
+    :param lm_root: Корень проекта (LM_ROOT).
+    :param num_keypoints: Явно заданное число ландмарков или None для чтения из LM_number.txt.
+    :param start_from: Имя файла, с которого начать (опционально).
+    :param scale_wizard: Запускать ли Scale Wizard, если он нужен.
+    """
+
+    lm_root = Path(lm_root)
+    N = num_keypoints or read_npoints(lm_root)
+    if not N or N <= 1:
+        raise RuntimeError("Некорректное количество ландмарков (LM_number.txt).")
+
+    app = AnnotGUI(
+        str(lm_root),
+        str(images_dir),
+        N,
+        start_from=start_from,
+        scale_wizard=scale_wizard,
+    )
+    app.mainloop()
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", required=True)
@@ -728,13 +763,18 @@ def main():
     ap.add_argument("--start-from", default=None)
     ap.add_argument("--scale-wizard", action="store_true")
     a = ap.parse_args()
-    N = a.n_points or read_npoints(a.root)
-    if not N or N <= 1:
-        print("[ERR] invalid N", file=sys.stderr)
+    try:
+        rc = run_gui_for_locality(
+            images_dir=Path(a.images),
+            lm_root=Path(a.root),
+            num_keypoints=a.n_points,
+            start_from=a.start_from,
+            scale_wizard=a.scale_wizard,
+        )
+    except Exception as exc:  # noqa: BLE001 - gui wrapper
+        print(f"[ERR] {exc}", file=sys.stderr)
         return 2
-    app = AnnotGUI(a.root, a.images, N, start_from=a.start_from, scale_wizard=a.scale_wizard)
-    app.mainloop()
-    return 0
+    return rc
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -32,9 +32,28 @@ def _log(message: str, log_path: Path) -> None:
 
 def _prepare_dataloaders(base_localities: Path, cfg: Dict) -> Tuple[DataLoader, DataLoader, Dict]:
     train_ds, val_ds, meta = build_train_val_datasets(base_localities, cfg)
-    batch_size = int(cfg.get("train", {}).get("batch_size", 8))
-    train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
-    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False)
+    train_cfg = cfg.get("train", {})
+    batch_size = int(train_cfg.get("batch_size", 8))
+    num_workers = int(train_cfg.get("num_workers", 8))
+    pin_memory = torch.cuda.is_available()
+    persistent_workers = num_workers > 0
+
+    train_loader = DataLoader(
+        train_ds,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=num_workers,
+        pin_memory=pin_memory,
+        persistent_workers=persistent_workers,
+    )
+    val_loader = DataLoader(
+        val_ds,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=pin_memory,
+        persistent_workers=persistent_workers,
+    )
     return train_loader, val_loader, meta
 
 

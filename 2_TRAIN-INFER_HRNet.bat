@@ -17,7 +17,7 @@ set "BASE_FILE=cfg\last_base.txt"
 
 REM Ask user for base localities folder via PowerShell dialog
 powershell -ExecutionPolicy Bypass -NoProfile ^
-  -Command "Add-Type -AssemblyName System.Windows.Forms; $initial = ''; if (Test-Path 'cfg\\last_base.txt') { $initial = Get-Content 'cfg\\last_base.txt' -ErrorAction SilentlyContinue }; $dlg = New-Object System.Windows.Forms.FolderBrowserDialog; if ($initial) { $dlg.SelectedPath = $initial }; $dlg.Description = 'Select base localities folder'; if ($dlg.ShowDialog() -eq 'OK') { $dlg.SelectedPath | Out-File -Encoding utf8 'cfg\\last_base.txt' }"
+  -Command "Add-Type -AssemblyName System.Windows.Forms; $initial = ''; if (Test-Path 'cfg\\last_base.txt') { $initial = Get-Content 'cfg\\last_base.txt' -ErrorAction SilentlyContinue }; $dlg = New-Object System.Windows.Forms.FolderBrowserDialog; if ($initial) { $dlg.SelectedPath = $initial }; $dlg.Description = 'Select base localities folder'; if ($dlg.ShowDialog() -eq 'OK') { $dlg.SelectedPath | Out-File -Encoding ascii 'cfg\\last_base.txt' }"
 
 if not exist "%BASE_FILE%" (
     echo Base localities not selected. Exiting.
@@ -58,3 +58,4 @@ echo HRNet trainer finished. Press any key to exit.
 pause >nul
 
 endlocal
+

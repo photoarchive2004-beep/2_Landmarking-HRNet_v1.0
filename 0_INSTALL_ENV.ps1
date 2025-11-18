@@ -1,74 +1,33 @@
-﻿param()
+﻿$ErrorActionPreference = "Stop"
 
-$ErrorActionPreference = "Stop"
+# HRNet environment installer (no YOLO, no ultralytics)
+$LM_ROOT = Split-Path -Parent $MyInvocation.MyCommand.Path
+$envDir = Join-Path $LM_ROOT ".venv_lm"
+$pythonExe = Join-Path $envDir "Scripts\\python.exe"
 
-$root = Split-Path -Parent $MyInvocation.MyCommand.Path
-Set-Location $root
+Write-Host "=== Installing HRNet env in: $envDir ==="
 
-$venvPath = Join-Path $root ".venv_lm"
-$venvPy   = Join-Path $venvPath "Scripts\python.exe"
-
-Write-Host "=== Installing YOLO env in: $venvPath ==="
-
-if (!(Test-Path $venvPath)) {
-    Write-Host "Creating virtual environment .venv_lm ..."
-
-    $pyCandidates = @()
-
-    # 1) Python из основного модуля 2_Landmarking_v1.0 (если есть)
-    $mainPy = "D:\GM\tools\2_Landmarking_v1.0\.venv_lm\Scripts\python.exe"
-    if (Test-Path $mainPy) {
-        $pyCandidates += $mainPy
-    }
-
-    # 2) py из PATH
-    $cmdPy = Get-Command py -ErrorAction SilentlyContinue
-    if ($cmdPy) {
-        $pyCandidates += "py"
-    }
-
-    # 3) python из PATH
-    $cmdPython = Get-Command python -ErrorAction SilentlyContinue
-    if ($cmdPython) {
-        $pyCandidates += "python"
-    }
-
-    if ($pyCandidates.Count -eq 0) {
-        throw "No Python found: neither main env nor 'py' nor 'python'."
-    }
-
-    $pyCmd = $pyCandidates[0]
-    Write-Host "Using Python: $pyCmd"
-
-    if ($pyCmd -eq "py") {
-        & py -3 -m venv ".venv_lm"
-    } else {
-        & $pyCmd -m venv ".venv_lm"
-    }
+if (Test-Path $pythonExe) {
+    Write-Host "Virtual environment already exists. Nothing to install."
+    Write-Host "Using Python: $pythonExe"
+    Write-Host "=== HRNet env is ready. ==="
+    return
 }
 
-if (!(Test-Path $venvPy)) {
-    throw "Virtual env python not found: $venvPy"
+Write-Host "Creating virtual environment .venv_lm ..."
+python -m venv "$envDir"
+
+if (-not (Test-Path $pythonExe)) {
+    Write-Host "ERROR: Failed to create virtual environment at $envDir"
+    exit 1
 }
 
+Write-Host "Using Python: $pythonExe"
 Write-Host "Upgrading pip/setuptools/wheel ..."
-& $venvPy -m pip install --upgrade pip setuptools wheel
+& "$pythonExe" -m pip install --upgrade pip setuptools wheel
 
-# Базовые зависимости для аннотатора + YOLO pose
-$pkgs = @(
-    "numpy",
-    "pillow",
-    "opencv-python",
-    "pyyaml",
-    "pandas",
-    "matplotlib",
-    "scipy",
-    "ultralytics"
-)
+Write-Host "Installing core packages for HRNet (numpy, pillow, opencv-python, pyyaml, pandas, matplotlib, scipy, torch, torchvision)..."
+& "$pythonExe" -m pip install numpy pillow opencv-python pyyaml pandas matplotlib scipy
+& "$pythonExe" -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 
-Write-Host "Installing packages:"
-$pkgs | ForEach-Object { Write-Host "  - $_" }
-
-& $venvPy -m pip install $pkgs
-
-Write-Host "=== YOLO env installation finished successfully. ==="
+Write-Host "=== HRNet env installation finished successfully. ==="

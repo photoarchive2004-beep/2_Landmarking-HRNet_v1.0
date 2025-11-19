@@ -14,4 +14,54 @@ Actions:
 
   0) Quit
 
-Select action: ^C
+Select action: ^C2025-11-18 22:37:38,719 [INFO] HRNet trainer started
+2025-11-18 22:37:38,719 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-18 22:37:38,719 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-18 22:40:34,904 [INFO] HRNet trainer started
+2025-11-18 22:40:34,904 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-18 22:40:34,904 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-18 23:09:30,560 [INFO] HRNet trainer started
+2025-11-18 23:09:30,561 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-18 23:09:30,561 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-18 23:11:55,568 [INFO] HRNet trainer started
+2025-11-18 23:11:55,568 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-18 23:11:55,568 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 00:15:52,435 [INFO] HRNet trainer started
+2025-11-19 00:15:52,435 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 00:15:52,435 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 00:33:34,483 [INFO] HRNet trainer started
+2025-11-19 00:33:34,484 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 00:33:34,484 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 00:49:14,544 [INFO] HRNet trainer started
+2025-11-19 00:49:14,544 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 00:49:14,544 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 01:07:39,464 [INFO] HRNet trainer started
+2025-11-19 01:07:39,464 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 01:07:39,464 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 01:17:02,520 [INFO] HRNet trainer started
+2025-11-19 01:17:02,520 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 01:17:02,520 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 01:26:59,637 [INFO] HRNet trainer started
+2025-11-19 01:26:59,637 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 01:26:59,637 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 01:29:37,355 [INFO] HRNet trainer started
+2025-11-19 01:29:37,355 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 01:29:37,355 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 01:43:10,699 [INFO] HRNet trainer started
+2025-11-19 01:43:10,699 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 01:43:10,699 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 01:44:38,574 [INFO] HRNet trainer started
+2025-11-19 01:44:38,574 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 01:44:38,574 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 11:05:00,940 [INFO] HRNet trainer started
+2025-11-19 11:05:00,940 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 11:05:00,940 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 11:58:13,818 [INFO] HRNet trainer started
+2025-11-19 11:58:13,818 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 11:58:13,818 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 12:03:10,226 [INFO] HRNet trainer started
+2025-11-19 12:03:10,226 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 12:03:10,226 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus
+2025-11-19 15:50:08,009 [INFO] HRNet trainer started
+2025-11-19 15:50:08,009 [INFO] LM_ROOT: D:\GM\tools\2_Landmarking-HRNet_v1.0
+2025-11-19 15:50:08,009 [INFO] Base localities: G:\Research\Morphology\Photos\Phoxinus

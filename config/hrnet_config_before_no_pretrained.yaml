@@ -1,8 +1,8 @@
-﻿# Default HRNet config for 2_Landmarking-HRNet_v1.0 (auto-created)
+# Default HRNet config for 2_Landmarking-HRNet_v1.0 (auto-created)
 model:
-  pretrained_weights: ""     # РїСѓС‚СЊ Рє РїСЂРµРґРѕР±СѓС‡РµРЅРЅС‹Рј РІРµСЃР°Рј РёР»Рё РїСѓСЃС‚Рѕ
-  model_type: "hrnet_w32"    # С‚РёРї РјРѕРґРµР»Рё
-  num_keypoints: 20          # С‡РёСЃР»Рѕ Р»Р°РЅРґРјР°СЂРєРѕРІ, РјРѕР¶РЅРѕ РїСЂР°РІРёС‚СЊ РІСЂСѓС‡РЅСѓСЋ
+  pretrained_weights: "models/pretrained/hrnet_w32-36af842e.pth"     # путь к предобученным весам или пусто
+  model_type: "hrnet_w32"    # тип модели
+  num_keypoints: 20          # число ландмарков, можно править вручную
 
 resize:
   enabled: true
@@ -35,4 +35,3 @@ data:
 
 infer:
   threshold: 0.2
-

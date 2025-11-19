@@ -1,0 +1,38 @@
+# Default HRNet config for 2_Landmarking-HRNet_v1.0 (auto-created)
+model:
+  pretrained_weights: ""     # путь к предобученным весам или пусто
+  model_type: "hrnet_w32"    # тип модели
+  pretrained_weights: "models/pretrained/hrnet_w32-36af842e.pth"
+  num_keypoints: 0      # чтобы реально число точек бралось из LM_number.txt
+
+resize:
+  enabled: true
+  long_side: 1280
+  keep_aspect_ratio: true
+
+train:
+  train_val_split: 0.9
+  max_epochs: 80
+  batch_size: 10
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  num_workers: 8
+  early_stop_patience: 10
+
+augment:
+  rotation_deg: 15
+  rotation_prob: 0.5
+  scale_min: 0.8
+  scale_max: 1.2
+  scale_prob: 0.5
+  brightness: 0.2
+  contrast: 0.2
+  color_prob: 0.3
+  horizontal_flip: false
+  vertical_flip: false
+
+data:
+  heatmap_sigma_px: 4
+
+infer:
+  threshold: 0.2

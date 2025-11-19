@@ -7,6 +7,7 @@ import random
 import sys
 import time
 import shutil
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Tuple, Optional, Dict, Any
@@ -18,11 +19,13 @@ try:
     import torch
     from torch import nn
     from torch.utils.data import Dataset, DataLoader
+    from torch.optim.lr_scheduler import MultiStepLR
 except ImportError:  # pragma: no cover
     torch = None
     nn = None  # type: ignore[assignment]
     Dataset = object  # type: ignore[assignment]
     DataLoader = object  # type: ignore[assignment]
+    MultiStepLR = object  # type: ignore[assignment]
 
 try:
     import yaml
@@ -40,7 +43,7 @@ class HRNetConfig:
     keep_aspect_ratio: bool = True
     batch_size: int = 8
     learning_rate: float = 5e-4
-    max_epochs: int = 100
+    max_epochs: int = 200
     train_val_split: float = 0.9
     flip_augmentation: bool = False
     rotation_augmentation_deg: float = 15.0
@@ -524,6 +527,12 @@ def train_model(
         lr=float(cfg.learning_rate),
         weight_decay=float(cfg.weight_decay),
     )
+    max_epochs = max(1, int(cfg.max_epochs))
+    scheduler = MultiStepLR(
+        optimizer,
+        milestones=[int(max_epochs * 0.5), int(max_epochs * 0.75)],
+        gamma=0.1,
+    )
     criterion = torch.nn.MSELoss()
 
     model = model.to(device)
@@ -537,8 +546,10 @@ def train_model(
 
     best_pck = 0.0
     best_epoch = 0
+    prev_lr = optimizer.param_groups[0]["lr"]
+    log(f"[LR] epoch=0 lr={prev_lr:.6f}")
 
-    for epoch in range(int(cfg.max_epochs)):
+    for epoch in range(max_epochs):
         model.train()
         running_loss = 0.0
         num_batches = 0
@@ -620,6 +631,12 @@ def train_model(
             best_model_curr = current_dir / "hrnet_best.pth"
             shutil.copy2(best_model_hist, best_model_curr)
             log(f"Новая лучшая модель сохранена (epoch={best_epoch}, PCK@R={best_pck:.4f}).")
+
+        scheduler.step()
+        current_lr = optimizer.param_groups[0]["lr"]
+        if not math.isclose(current_lr, prev_lr, rel_tol=1e-9, abs_tol=1e-12):
+            log(f"[LR] epoch={epoch + 1} lr={current_lr:.6f}")
+            prev_lr = current_lr
 
     # Финальные метрики
     pck_percent = float(round(best_pck * 100))

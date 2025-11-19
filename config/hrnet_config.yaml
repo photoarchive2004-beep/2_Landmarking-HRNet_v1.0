@@ -1,7 +1,7 @@
 model:
   pretrained_weights: ''
   model_type: hrnet_w32
-  num_keypoints: 20
+  num_keypoints: 17
 resize:
   enabled: true
   long_side: 1024

@@ -68,9 +68,23 @@ def read_hrnet_config() -> dict:
     return cfg
 
 
+def get_num_keypoints(cfg: Dict[str, Any]) -> int:
+    """Обеспечивает согласованность ``model.num_keypoints`` с ``LM_number.txt``.
+
+    Читает число ландмарок из :data:`LM_NUMBER_FILE`, приводит к ``int`` и
+    записывает в секцию ``model`` конфига.
+    """
+
+    num_keypoints = read_num_keypoints()
+    model_cfg = cfg.setdefault("model", {})
+    model_cfg["num_keypoints"] = int(num_keypoints)
+    return num_keypoints
+
+
 def load_hrnet_config() -> Dict[str, Any]:
     """Возвращает конфиг HRNet, гарантируя наличие основных блоков."""
     cfg = read_hrnet_config()
+    get_num_keypoints(cfg)
     cfg.setdefault("model", {})
     cfg.setdefault("resize", {})
     cfg.setdefault("train", {})

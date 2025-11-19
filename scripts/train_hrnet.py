@@ -32,6 +32,7 @@ try:
 except ImportError:  # pragma: no cover
     yaml = None
 
+from scripts import hrnet_config_utils
 from scripts.hrnet_model import HRNetW32GM
 
 
@@ -56,28 +57,41 @@ def get_landmark_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
-def load_yaml_config(cfg_path: Path) -> HRNetConfig:
+def load_yaml_config(cfg_path: Path, cfg_dict: Optional[Dict[str, Any]] = None) -> HRNetConfig:
+    base_cfg = cfg_dict if cfg_dict is not None else hrnet_config_utils.load_hrnet_config()
+
     cfg = HRNetConfig()
-    if not cfg_path.is_file() or yaml is None:
-        return cfg
-    with cfg_path.open("r", encoding="utf-8") as f:
-        data = yaml.safe_load(f) or {}
-    for field in cfg.__dataclass_fields__.keys():  # type: ignore[attr-defined]
-        if field in data:
-            setattr(cfg, field, data[field])
+    model_cfg = base_cfg.get("model", {})
+    resize_cfg = base_cfg.get("resize", {})
+    train_cfg = base_cfg.get("train", {})
+    augment_cfg = base_cfg.get("augment", {})
+    data_cfg = base_cfg.get("data", {})
+
+    cfg.model_type = model_cfg.get("model_type", cfg.model_type)
+    cfg.input_size = int(resize_cfg.get("long_side", cfg.input_size))
+    cfg.resize_mode = "resize" if resize_cfg.get("enabled", True) else "original"
+    cfg.keep_aspect_ratio = bool(resize_cfg.get("keep_aspect_ratio", cfg.keep_aspect_ratio))
+
+    cfg.batch_size = int(train_cfg.get("batch_size", cfg.batch_size))
+    cfg.learning_rate = float(train_cfg.get("learning_rate", cfg.learning_rate))
+    cfg.max_epochs = int(train_cfg.get("max_epochs", cfg.max_epochs))
+    cfg.train_val_split = float(train_cfg.get("train_val_split", cfg.train_val_split))
+
+    cfg.flip_augmentation = bool(augment_cfg.get("flip_augmentation", cfg.flip_augmentation))
+    cfg.rotation_augmentation_deg = float(
+        augment_cfg.get("rotation_augmentation_deg", cfg.rotation_augmentation_deg)
+    )
+    cfg.scale_augmentation = float(augment_cfg.get("scale_augmentation", cfg.scale_augmentation))
+    cfg.weight_decay = float(train_cfg.get("weight_decay", cfg.weight_decay))
+    cfg.heatmap_sigma_px = float(data_cfg.get("heatmap_sigma_px", cfg.heatmap_sigma_px))
+
     return cfg
 
 
 def read_lm_number(root: Path) -> int:
-    lm_path = root / "LM_number.txt"
     try:
-        with lm_path.open("r", encoding="utf-8") as f:
-            line = f.readline().strip()
-        n = int(line)
-        if n <= 0:
-            raise ValueError
-        return n
-    except Exception:
+        return hrnet_config_utils.read_num_keypoints()
+    except hrnet_config_utils.HRNetConfigError:
         return -1
 
 
@@ -360,6 +374,7 @@ def write_datasets_txt(
 
 def train_model(
     cfg: HRNetConfig,
+    train_cfg: Dict[str, Any],
     train_samples: List[Tuple[Path, Path, str]],
     val_samples: List[Tuple[Path, Path, str]],
     num_keypoints: int,
@@ -528,7 +543,8 @@ def train_model(
         lr=float(cfg.learning_rate),
         weight_decay=float(cfg.weight_decay),
     )
-    effective_max_epochs = 3 if debug else max(1, int(cfg.max_epochs))
+    max_epochs = int(train_cfg.get("max_epochs", cfg.max_epochs))
+    effective_max_epochs = 3 if debug else max(1, max_epochs)
     scheduler = MultiStepLR(
         optimizer,
         milestones=[int(effective_max_epochs * 0.5), int(effective_max_epochs * 0.75)],
@@ -767,12 +783,16 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     root = get_landmark_root()
     cfg_path = root / "config" / "hrnet_config.yaml"
-    cfg = load_yaml_config(cfg_path)
-
-    lm_number = read_lm_number(root)
-    if lm_number <= 0:
-        print("[ERR] LM_number.txt не найден или содержит неверное значение.")
+    try:
+        cfg_dict = hrnet_config_utils.load_hrnet_config()
+    except hrnet_config_utils.HRNetConfigError as exc:
+        print(f"[ERR] {exc}")
         return 1
+
+    cfg = load_yaml_config(cfg_path, cfg_dict=cfg_dict)
+    train_cfg = cfg_dict.get("train", {})
+
+    num_keypoints = hrnet_config_utils.get_num_keypoints(cfg_dict)
 
     base_dir = read_last_base(root)
     if base_dir is None:
@@ -810,9 +830,10 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     metrics = train_model(
         cfg,
+        train_cfg,
         train_samples,
         val_samples,
-        lm_number,
+        num_keypoints,
         run_id,
         root,
         log_path,

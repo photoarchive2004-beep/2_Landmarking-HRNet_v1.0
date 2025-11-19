@@ -1,23 +1,19 @@
-﻿# Default HRNet config for 2_Landmarking-HRNet_v1.0 (auto-created)
 model:
-  pretrained_weights: ""     # РїСѓС‚СЊ Рє РїСЂРµРґРѕР±СѓС‡РµРЅРЅС‹Рј РІРµСЃР°Рј РёР»Рё РїСѓСЃС‚Рѕ
-  model_type: "hrnet_w32"    # С‚РёРї РјРѕРґРµР»Рё
-  num_keypoints: 20          # С‡РёСЃР»Рѕ Р»Р°РЅРґРјР°СЂРєРѕРІ, РјРѕР¶РЅРѕ РїСЂР°РІРёС‚СЊ РІСЂСѓС‡РЅСѓСЋ
-
+  pretrained_weights: ''
+  model_type: hrnet_w32
+  num_keypoints: 20
 resize:
   enabled: true
   long_side: 1024
   keep_aspect_ratio: true
-
 train:
   train_val_split: 0.9
   max_epochs: 80
   batch_size: 8
   learning_rate: 0.0005
   weight_decay: 0.0001
-  num_workers: 8
+  num_workers: 12
   early_stop_patience: 10
-
 augment:
   flip_augmentation: true
   rotation_augmentation_deg: 15
@@ -30,10 +26,7 @@ augment:
     brightness: 0.1
     contrast: 0.1
     saturation: 0.05
-
 data:
   heatmap_sigma_px: 4
-
 infer:
   threshold: 0.2
-

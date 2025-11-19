@@ -193,7 +193,9 @@ class LandmarkDataset(Dataset):
         }
 
 
-def _collect_items(base_localities: Path, status_rows: List[Dict[str, str]]) -> List[Dict]:
+def _collect_items(
+    base_localities: Path, status_rows: List[Dict[str, str]], require_csv: bool = True
+) -> List[Dict]:
     items: List[Dict] = []
     for row in status_rows:
         if (row.get("status") or "").strip().upper() != "MANUAL":
@@ -204,7 +206,7 @@ def _collect_items(base_localities: Path, status_rows: List[Dict[str, str]]) -> 
             continue
         for img_path in sorted(png_dir.glob("*.png")):
             csv_path = img_path.with_suffix(".csv")
-            if not csv_path.exists():
+            if require_csv and not csv_path.exists():
                 continue
             items.append({"image_path": img_path, "csv_path": csv_path, "locality": locality})
     return items
@@ -227,7 +229,7 @@ def _read_status(base_localities: Path) -> List[Dict[str, str]]:
 
 def build_train_val_datasets(base_localities: Path, cfg: Dict) -> Tuple[Dataset, Dataset, Dict]:
     rows = _read_status(base_localities)
-    items = _collect_items(base_localities, rows)
+    items = _collect_items(base_localities, rows, require_csv=True)
     random.shuffle(items)
 
     split = float(cfg.get("train", {}).get("train_val_split", 0.9))

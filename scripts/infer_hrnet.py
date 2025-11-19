@@ -1,383 +1,142 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import argparse
-import csv
-import os
 import sys
-import time
-from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import List, Tuple
 
 import numpy as np
 from PIL import Image
 
-from scripts import hrnet_config_utils, hrnet_geom
-
-try:
+try:  # pragma: no cover - optional heavy dependency
     import torch
-    from torch import nn
+    from torchvision import transforms
 except ImportError:  # pragma: no cover
-    torch = None
-    nn = None  # type: ignore[assignment]
+    torch = None  # type: ignore[assignment]
+    transforms = None  # type: ignore[assignment]
 
-try:
-    # HRNet backbone from MMPose (используем, если установлен)
-    from mmpose.models.backbones import HRNet as MMPoseHRNet  # type: ignore
-except Exception as e:  # pragma: no cover
-    print("[WARN] Exception during import or setup (possibly MMPose HRNet):", repr(e))
-    MMPoseHRNet = None  # type: ignore
-
-try:
-    import yaml
-except ImportError:  # pragma: no cover
-    yaml = None
+from scripts import hrnet_config_utils, hrnet_geom
+from scripts.hrnet_dataset import _collect_items, _read_status
+from scripts.hrnet_model import HRNetW32GM
+from scripts.train_hrnet import heatmaps_to_keypoints, read_last_base
 
 
-@dataclass
-class HRNetConfig:
-    model_type: str = "hrnet_w32"
-    input_size: int = 256
-    resize_mode: str = "resize"
-    keep_aspect_ratio: bool = True
-    batch_size: int = 8
-    learning_rate: float = 5e-4
-    max_epochs: int = 100
-    train_val_split: float = 0.9
-    flip_augmentation: bool = False
-    rotation_augmentation_deg: float = 15.0
-    scale_augmentation: float = 0.3
-    weight_decay: float = 1e-4
-    heatmap_sigma_px: float = 2.5
-    raw_cfg: dict = field(default_factory=dict)
+def _log(msg: str) -> None:
+    print(msg)
 
 
-def get_landmark_root() -> Path:
-    return Path(__file__).resolve().parent.parent
-
-
-def load_yaml_config(cfg_path: Path) -> HRNetConfig:
-    cfg = HRNetConfig()
-    data: Dict = {}
-    try:
-        data = hrnet_config_utils.load_hrnet_config()
-    except Exception:
-        if cfg_path.is_file() and yaml is not None:
-            with cfg_path.open("r", encoding="utf-8") as f:
-                loaded = yaml.safe_load(f) or {}
-            if isinstance(loaded, dict):
-                data = loaded
-    cfg.raw_cfg = data
-
-    model_cfg = data.get("model", {}) if isinstance(data, dict) else {}
-    if "model_type" in model_cfg:
-        cfg.model_type = str(model_cfg["model_type"])
-    elif "model_type" in data:
-        cfg.model_type = str(data["model_type"])
-
-    resize_cfg = data.get("resize", {}) if isinstance(data, dict) else {}
-    if resize_cfg.get("enabled", False):
-        cfg.resize_mode = "resize"
-        cfg.input_size = int(resize_cfg.get("long_side", cfg.input_size))
-        cfg.keep_aspect_ratio = bool(resize_cfg.get("keep_aspect_ratio", cfg.keep_aspect_ratio))
-    elif "input_size" in data:
-        cfg.input_size = int(data.get("input_size", cfg.input_size))
-    else:
-        cfg.resize_mode = "original"
-
-    train_cfg = data.get("train", {}) if isinstance(data, dict) else {}
-    cfg.batch_size = int(train_cfg.get("batch_size", cfg.batch_size))
-    cfg.learning_rate = float(train_cfg.get("learning_rate", cfg.learning_rate))
-    cfg.max_epochs = int(train_cfg.get("max_epochs", cfg.max_epochs))
-    cfg.weight_decay = float(train_cfg.get("weight_decay", cfg.weight_decay))
-
-    data_cfg = data.get("data", {}) if isinstance(data, dict) else {}
-    cfg.heatmap_sigma_px = float(data_cfg.get("heatmap_sigma_px", cfg.heatmap_sigma_px))
-    return cfg
-
-
-def read_lm_number(root: Path) -> int:
-    lm_path = root / "LM_number.txt"
-    try:
-        with lm_path.open("r", encoding="utf-8") as f:
-            line = f.readline().strip()
-        n = int(line)
-        if n <= 0:
-            raise ValueError
-        return n
-    except Exception:
-        return -1
-
-
-def read_last_base(root: Path) -> Optional[Path]:
-    base_txt = root / "cfg" / "last_base.txt"
-    if not base_txt.is_file():
-        return None
-    txt = base_txt.read_text(encoding="utf-8").strip()
-    if not txt:
-        return None
-    base = Path(txt)
-    if not base.is_dir():
-        return None
-    return base
-
-
-def heatmaps_to_keypoints(heatmaps: "torch.Tensor") -> "torch.Tensor":
-    """
-    Из теплокарт получаем координаты максимумов.
-    """
-    B, K, H, W = heatmaps.shape
-    heatmaps_reshaped = heatmaps.view(B, K, -1)
-    idx = heatmaps_reshaped.argmax(dim=2)  # (B, K)
-    ys = (idx // W).float()
-    xs = (idx % W).float()
-    kps = torch.stack([xs, ys], dim=2)
-    return kps
-
-
-# Модель должна совпадать с train_hrnet.py
-if torch is not None:
-
-    class SimpleHRNet(nn.Module):
-        def __init__(self, num_keypoints: int) -> None:
-            super().__init__()
-            self.stem = nn.Sequential(
-                nn.Conv2d(3, 32, kernel_size=3, padding=1),
-                nn.BatchNorm2d(32),
-                nn.ReLU(inplace=True),
-                nn.Conv2d(32, 64, kernel_size=3, padding=1),
-                nn.BatchNorm2d(64),
-                nn.ReLU(inplace=True),
-            )
-            blocks = []
-            in_channels = 64
-            for _ in range(3):
-                block = nn.Sequential(
-                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
-                    nn.BatchNorm2d(in_channels),
-                    nn.ReLU(inplace=True),
-                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
-                    nn.BatchNorm2d(in_channels),
-                )
-                blocks.append(block)
-            self.blocks = nn.ModuleList(blocks)
-            self.relu = nn.ReLU(inplace=True)
-            self.head = nn.Conv2d(64, num_keypoints, kernel_size=1)
-
-        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
-            x = self.stem(x)
-            for block in self.blocks:
-                residual = x
-                out = block(x)
-                x = self.relu(out + residual)
-            heatmaps = self.head(x)
-            return heatmaps
-
-    class HRNetW32GM(nn.Module):
-        def __init__(self, num_keypoints: int) -> None:
-            super().__init__()
-            self.num_keypoints = int(num_keypoints)
-            self.use_mmpose = MMPoseHRNet is not None
-            if self.use_mmpose:
-                extra = {
-                    "stage1": dict(
-                        num_modules=1,
-                        num_branches=1,
-                        block="BOTTLENECK",
-                        num_blocks=(4,),
-                        num_channels=(64,),
-                    ),
-                    "stage2": dict(
-                        num_modules=1,
-                        num_branches=2,
-                        block="BASIC",
-                        num_blocks=(4, 4),
-                        num_channels=(32, 64),
-                    ),
-                    "stage3": dict(
-                        num_modules=4,
-                        num_branches=3,
-                        block="BASIC",
-                        num_blocks=(4, 4, 4),
-                        num_channels=(32, 64, 128),
-                    ),
-                    "stage4": dict(
-                        num_modules=3,
-                        num_branches=4,
-                        block="BASIC",
-                        num_blocks=(4, 4, 4, 4),
-                        num_channels=(32, 64, 128, 256),
-                    ),
-                }
-                self.backbone = MMPoseHRNet(extra=extra, in_channels=3)  # type: ignore[call-arg]
-                self.head = nn.Conv2d(32, self.num_keypoints, kernel_size=1)
-            else:
-                self.fallback = SimpleHRNet(num_keypoints)
-
-        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
-            if self.use_mmpose:
-                feats = self.backbone(x)
-                if isinstance(feats, (list, tuple)):
-                    feats0 = feats[0]
-                else:
-                    feats0 = feats
-                return self.head(feats0)
-            return self.fallback(x)
-
-else:
-
-    class SimpleHRNet:  # type: ignore[misc]
-        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
-            raise RuntimeError("PyTorch is required for SimpleHRNet but is not installed.")
-
-    class HRNetW32GM:  # type: ignore[misc]
-        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
-            raise RuntimeError("PyTorch is required for HRNetW32GM but is not installed.")
-
-
-def build_model_for_infer(cfg: HRNetConfig, num_keypoints: int) -> "nn.Module":
-    model_type = (cfg.model_type or "").lower()
-    if model_type.startswith("hrnet_w32"):
-        return HRNetW32GM(num_keypoints=num_keypoints)
-    return SimpleHRNet(num_keypoints=num_keypoints)
-
-
-def _write_dummy_csv(csv_path: Path, num_keypoints: int) -> None:
-    """
-    Записываем CSV в формате одной строки: x1,y1,x2,y2,... .
-    Используется в заглушках, если нет модели или torch.
-    """
-    with csv_path.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.writer(f)
-        row = []
-        for _ in range(num_keypoints):
-            row.extend([0.0, 0.0])
-        writer.writerow(row)
-
-
-def infer_for_locality(
-    root: Path,
-    base_dir: Path,
-    locality: str,
-    num_keypoints: int,
-    cfg: HRNetConfig,
-) -> None:
-    """
-    Автолейблинг одной локальности.
-    """
-    png_dir = base_dir / locality / "png"
-    if not png_dir.is_dir():
-        print(f"[ERR] Папка с изображениями не найдена: {png_dir}")
-        return
-
-    models_current = root / "models" / "current"
-    model_path = models_current / "hrnet_best.pth"
-
-    # Ветка без torch или без модели: честная заглушка
-    if torch is None or not model_path.is_file():
-        if torch is None:
-            print("[WARN] PyTorch не установлен. Создаём CSV с нулевыми координатами (заглушка).")
-        else:
-            print("[WARN] Файл модели models/current/hrnet_best.pth не найден. Создаём CSV с нулевыми координатами (заглушка).")
-
-        for img_path in sorted(png_dir.glob("*.png")):
-            csv_path = img_path.with_suffix(".csv")
-            _write_dummy_csv(csv_path, num_keypoints)
-        return
-
-    # Реальный инференс
-    assert torch is not None
+def _load_model(model_path: Path, num_keypoints: int) -> torch.nn.Module:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"[INFO] Загружаем модель для инференса: {model_path} (device={device})")
-
-    model = build_model_for_infer(cfg, num_keypoints)
+    model = HRNetW32GM(num_keypoints)
     state = torch.load(model_path, map_location=device)
-    if isinstance(state, dict) and "state_dict" in state:
-        state = state["state_dict"]
-    model.load_state_dict(state)
+    model.load_state_dict(state, strict=False)
     model.to(device)
     model.eval()
-
-    resize_cfg = cfg.raw_cfg.get("resize", {}) if cfg.raw_cfg else {}
-
-    for img_path in sorted(png_dir.glob("*.png")):
-        img = Image.open(img_path).convert("RGB")
-        img_resized, prep = hrnet_geom.resize_with_config(img, resize_cfg)
-
-        np_img = np.asarray(img_resized, dtype=np.float32) / 255.0
-        np_img = np.transpose(np_img, (2, 0, 1))  # CHW
-        tensor = torch.from_numpy(np_img).unsqueeze(0).to(device)
-
-        with torch.no_grad():
-            heatmaps = model(tensor)
-            kps_resized = heatmaps_to_keypoints(heatmaps)[0]
-            kps_resized = kps_resized * float(hrnet_geom.HEATMAP_DOWNSCALE)
-            kps_resized = kps_resized.cpu().numpy()
-
-        kps_orig = hrnet_geom.inverse_transform_keypoints(kps_resized, prep, skip_invalid=False)
-
-        # Запись CSV в формате одной строки: x1,y1,x2,y2,...
-        csv_path = img_path.with_suffix(".csv")
-        with csv_path.open("w", encoding="utf-8", newline="") as f:
-            writer = csv.writer(f)
-            row = []
-            for i in range(num_keypoints):
-                x = float(kps_orig[i, 0]) if i < len(kps_orig) else 0.0
-                y = float(kps_orig[i, 1]) if i < len(kps_orig) else 0.0
-                row.extend([x, y])
-            writer.writerow(row)
+    return model
 
 
-def main(argv: Optional[List[str]] = None) -> int:
-    """
-    Точка входа для действия 2) Autolabel locality with current model.
-    Внешний интерфейс не меняем, стараемся быть максимально совместимыми:
-    - база берётся из cfg/last_base.txt, если не передана явно;
-    - локальность берётся из аргумента --locality или переменной окружения GM_LOCALITY.
-    """
-    argv = list(sys.argv[1:] if argv is None else argv)
-    parser = argparse.ArgumentParser(description="Autolabel locality with current HRNet model")
-    parser.add_argument("--base", help="Базовая папка локальностей", default=None)
-    parser.add_argument("--locality", help="Имя локальности", default=None)
-    args, _unknown = parser.parse_known_args(argv)
+def _prepare_items(base_localities: Path, mode: str) -> List[dict]:
+    status_rows = _read_status(base_localities)
+    require_csv = mode == "debug"
+    items = _collect_items(base_localities, status_rows, require_csv=require_csv)
+    if mode == "debug":
+        items = items[: min(32, len(items))]
+    return items
 
-    root = get_landmark_root()
-    cfg_path = root / "config" / "hrnet_config.yaml"
-    cfg = load_yaml_config(cfg_path)
 
-    lm_number = read_lm_number(root)
-    if lm_number <= 0:
-        print("[ERR] LM_number.txt не найден или содержит неверное значение.")
+def _predict_coordinates(
+    model: torch.nn.Module,
+    image: Image.Image,
+    resize_cfg: dict,
+    threshold: float,
+) -> Tuple[np.ndarray, hrnet_geom.ResizePadResult]:
+    resized, prep = hrnet_geom.resize_with_config(image, resize_cfg)
+    tensor = transforms.ToTensor()(resized).unsqueeze(0)
+    device = next(model.parameters()).device
+    tensor = tensor.to(device)
+
+    with torch.no_grad():
+        heatmaps = model(tensor)
+        target_h = resized.height // hrnet_geom.HEATMAP_DOWNSCALE
+        target_w = resized.width // hrnet_geom.HEATMAP_DOWNSCALE
+        if tuple(heatmaps.shape[2:]) != (target_h, target_w):
+            heatmaps = torch.nn.functional.interpolate(
+                heatmaps,
+                size=(target_h, target_w),
+                mode="bilinear",
+                align_corners=False,
+            )
+        coords_hm = heatmaps_to_keypoints(heatmaps)
+        conf, _ = heatmaps.view(heatmaps.shape[0], heatmaps.shape[1], -1).max(dim=2)
+        coords_hm[conf < threshold] = -1.0
+
+    coords_resized = coords_hm.cpu().numpy() * float(hrnet_geom.HEATMAP_DOWNSCALE)
+    coords_orig = hrnet_geom.inverse_transform_keypoints(coords_resized[0], prep, skip_invalid=False)
+    return coords_orig, prep
+
+
+def _save_csv(csv_path: Path, coords: np.ndarray) -> None:
+    lines = [f"{float(x):.2f},{float(y):.2f}" for x, y in coords]
+    csv_path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def main(argv: List[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Inference for HRNet landmarking")
+    parser.add_argument(
+        "--mode",
+        choices=["debug", "all", "full"],
+        default="debug",
+        help="Inference mode: debug (small subset) or all/full dataset.",
+    )
+    args = parser.parse_args(argv)
+
+    root = hrnet_config_utils.PROJECT_ROOT
+    cfg = hrnet_config_utils.load_hrnet_config()
+    num_keypoints = hrnet_config_utils.read_num_keypoints()
+
+    base_dir = read_last_base(root)
+    if base_dir is None:
+        _log("[ERR] cfg/last_base.txt не найден или папка с локальностями отсутствует.")
         return 1
 
-    base_dir: Optional[Path]
-    if args.base:
-        base_dir = Path(args.base)
-    else:
-        base_dir = read_last_base(root)
-
-    if base_dir is None or not base_dir.is_dir():
-        print("[ERR] Базовая папка локальностей не определена или не существует.")
+    model_path = root / "models" / "current" / "hrnet_best.pth"
+    if not model_path.is_file():
+        _log(f"[ERR] Model file not found: {model_path}")
         return 1
 
-    locality = args.locality or os.environ.get("GM_LOCALITY", "").strip()
-    if not locality:
-        print("[ERR] Локальность не указана (нет --locality и GM_LOCALITY).")
+    if torch is None:
+        _log("[ERR] PyTorch is required for inference but is not installed.")
         return 1
 
-    print(f"[INFO] Autolabel locality: {locality}")
-    print(f"[INFO] Base dir: {base_dir}")
+    _log(f"Loading model from {model_path}")
+    model = _load_model(model_path, num_keypoints)
 
-    infer_for_locality(root, base_dir, locality, lm_number, cfg)
+    resize_cfg = cfg.get("resize", {})
+    infer_cfg = cfg.get("infer", {}) or {}
+    threshold = float(infer_cfg.get("threshold", 0.2))
 
-    print("[INFO] Autolabel finished for locality:", locality)
+    items = _prepare_items(base_dir, args.mode)
+    if not items:
+        _log("[ERR] No images found for inference.")
+        return 1
+
+    _log(f"Found {len(items)} images for mode {args.mode!r}")
+    for item in items:
+        img_path: Path = item["image_path"]
+        image = Image.open(img_path).convert("RGB")
+        coords, prep = _predict_coordinates(model, image, resize_cfg, threshold)
+        csv_path = img_path.with_suffix(".hrnet.csv")
+        _save_csv(csv_path, coords)
+        finite_mask = np.isfinite(coords).all(axis=1)
+        min_xy = coords[finite_mask].min(axis=0) if np.any(finite_mask) else np.array([-1.0, -1.0])
+        max_xy = coords[finite_mask].max(axis=0) if np.any(finite_mask) else np.array([-1.0, -1.0])
+        _log(
+            f"{img_path} -> {csv_path} | orig_size={prep.orig_size} resized={prep.resized_size} "
+            f"min={min_xy.tolist()} max={max_xy.tolist()}"
+        )
+
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
-
-
-
-

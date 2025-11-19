@@ -504,9 +504,23 @@ def train_model(
     model = HRNetW32GM(num_keypoints=num_keypoints)
     if getattr(model, "use_mmpose", False) is False:
         log("[WARN] MMPose HRNet недоступен, используется упрощённый fallback.")
+    if hasattr(model, "freeze_low_stages"):
+        log("Замораживаем Stage1/Stage2 перед transfer learning.")
+        model.freeze_low_stages()
+    else:
+        log("[WARN] freeze_low_stages() недоступен у модели, пропускаем заморозку.")
+
+    all_params = list(model.parameters())
+    trainable_params = [p for p in all_params if p.requires_grad]
+    if not trainable_params:
+        raise RuntimeError("Нет обучаемых параметров после заморозки HRNet.")
+    log(
+        "Trainable parameter tensors: "
+        f"{len(trainable_params)} / {len(all_params)} (после freeze_low_stages)."
+    )
 
     optimizer = torch.optim.Adam(
-        model.parameters(),
+        trainable_params,
         lr=float(cfg.learning_rate),
         weight_decay=float(cfg.weight_decay),
     )

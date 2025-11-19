@@ -151,6 +151,62 @@ if torch is not None:
                 f"Loaded ImageNet pretrained HRNet-W32 backbone weights (matched = {matched}, total = {total})"
             )
 
+        def freeze_low_stages(self, freeze_stem: bool = True) -> None:
+            """Freeze Stage1/Stage2 (и стем) для transfer learning."""
+
+            if not self.use_mmpose or self.backbone is None:
+                print("[WARN] Cannot freeze HRNet stages: backbone is unavailable.")
+                return
+
+            modules_to_freeze = []
+            if freeze_stem:
+                for attr_name in ("conv1", "bn1", "conv2", "bn2"):
+                    stem_module = getattr(self.backbone, attr_name, None)
+                    if stem_module is not None:
+                        modules_to_freeze.append(stem_module)
+
+            stage_attr_names = [
+                "layer1",  # stage1 residual blocks в реализации MMPose
+                "stage1",
+                "transition1",
+                "stage2",
+                "transition2",
+            ]
+            seen_ids = set()
+            for attr_name in stage_attr_names:
+                module = getattr(self.backbone, attr_name, None)
+                if module is None:
+                    continue
+                module_id = id(module)
+                if module_id not in seen_ids:
+                    modules_to_freeze.append(module)
+                    seen_ids.add(module_id)
+
+            frozen_tensors = 0
+            for module in modules_to_freeze:
+                for param in module.parameters():
+                    param.requires_grad = False
+                    frozen_tensors += 1
+                module.apply(self._set_batchnorm_eval)
+
+            if frozen_tensors:
+                print(
+                    f"[INFO] Frozen {frozen_tensors} parameter tensors in HRNet backbone (Stage1/Stage2)."
+                )
+            else:
+                print(
+                    "[WARN] freeze_low_stages() did not find matching modules. "
+                    "Check HRNet backbone structure."
+                )
+
+        @staticmethod
+        def _set_batchnorm_eval(module: nn.Module) -> None:
+            """Переводим BatchNorm замороженных блоков в eval-режим."""
+
+            bn_cls = getattr(nn.modules.batchnorm, "_BatchNorm", None)
+            if bn_cls is not None and isinstance(module, bn_cls):
+                module.eval()
+
 
 else:  # torch is None
 

@@ -28,9 +28,7 @@ def main() -> None:
     num_keypoints = hrnet_config_utils.read_num_keypoints()
     model = HRNetW32GM(num_keypoints=num_keypoints)
 
-    if not getattr(model, "use_mmpose", False):
-        print("[WARN] HRNet backbone from MMPose is unavailable; freeze test is skipped.")
-        return
+    print(f"Active backbone type: {model.backbone_type}")
 
     model.freeze_low_stages()
 

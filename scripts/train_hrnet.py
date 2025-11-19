@@ -366,6 +366,7 @@ def train_model(
     run_id: str,
     root: Path,
     log_path: Path,
+    debug: bool = False,
 ) -> Dict[str, Any]:
     """
     Основной цикл обучения. Пишет:
@@ -527,10 +528,10 @@ def train_model(
         lr=float(cfg.learning_rate),
         weight_decay=float(cfg.weight_decay),
     )
-    max_epochs = max(1, int(cfg.max_epochs))
+    effective_max_epochs = 3 if debug else max(1, int(cfg.max_epochs))
     scheduler = MultiStepLR(
         optimizer,
-        milestones=[int(max_epochs * 0.5), int(max_epochs * 0.75)],
+        milestones=[int(effective_max_epochs * 0.5), int(effective_max_epochs * 0.75)],
         gamma=0.1,
     )
     criterion = torch.nn.MSELoss()
@@ -549,7 +550,12 @@ def train_model(
     prev_lr = optimizer.param_groups[0]["lr"]
     log(f"[LR] epoch=0 lr={prev_lr:.6f}")
 
-    for epoch in range(max_epochs):
+    train_loss_start = None
+    train_loss_end = None
+    metric_start = None
+    metric_end = None
+
+    for epoch in range(effective_max_epochs):
         model.train()
         running_loss = 0.0
         num_batches = 0
@@ -590,21 +596,27 @@ def train_model(
             num_batches += 1
 
         avg_loss = running_loss / max(1, num_batches)
-        log(f"Epoch {epoch + 1}/{cfg.max_epochs} - train loss = {avg_loss:.6f}")
+        log(f"Epoch {epoch + 1}/{effective_max_epochs} - train loss = {avg_loss:.6f}")
+        if train_loss_start is None:
+            train_loss_start = avg_loss
+        train_loss_end = avg_loss
 
         # Валидация
         model.eval()
         all_pred = []
         all_gt = []
+        val_running_loss = 0.0
+        val_batches = 0
+
         with torch.no_grad():
             for imgs, kps in val_loader:
                 imgs = imgs.to(device)
                 kps = kps.to(device)
                 pred_heatmaps = model(imgs)
                 pred_kps = heatmaps_to_keypoints(pred_heatmaps)
+                _, _, H_hm, W_hm = pred_heatmaps.shape
                 # Переводим предсказанные координаты в ту же систему, что и gt
                 _, _, H_in, W_in = imgs.shape
-                _, _, H_hm, W_hm = pred_heatmaps.shape
                 if H_in != H_hm or W_in != W_hm:
                     scale_x = float(W_in) / float(W_hm)
                     scale_y = float(H_in) / float(H_hm)
@@ -613,6 +625,17 @@ def train_model(
                 all_pred.append(pred_kps.cpu())
                 all_gt.append(kps.cpu())
 
+                gt_heatmaps_val = keypoints_to_heatmaps(
+                    kps,
+                    H_hm,
+                    W_hm,
+                    sigma=float(getattr(cfg, "heatmap_sigma_px", 2.0)),
+                    device=device,
+                )
+                val_loss = criterion(pred_heatmaps, gt_heatmaps_val)
+                val_running_loss += val_loss.item()
+                val_batches += 1
+
         if all_pred and all_gt:
             pred_cat = torch.cat(all_pred, dim=0)
             gt_cat = torch.cat(all_gt, dim=0)
@@ -620,7 +643,11 @@ def train_model(
         else:
             pck = 0.0
 
-        log(f"Epoch {epoch + 1} - val PCK@R={pck:.4f}")
+        avg_val_loss = val_running_loss / max(1, val_batches)
+        log(f"Epoch {epoch + 1} - val PCK@R={pck:.4f} - val loss = {avg_val_loss:.6f}")
+        if metric_start is None:
+            metric_start = pck
+        metric_end = pck
 
         if pck >= best_pck:
             best_pck = pck
@@ -637,6 +664,19 @@ def train_model(
         if not math.isclose(current_lr, prev_lr, rel_tol=1e-9, abs_tol=1e-12):
             log(f"[LR] epoch={epoch + 1} lr={current_lr:.6f}")
             prev_lr = current_lr
+
+    if debug:
+        debug_loss_start = train_loss_start if train_loss_start is not None else 0.0
+        debug_loss_end = train_loss_end if train_loss_end is not None else 0.0
+        debug_metric_start = metric_start if metric_start is not None else 0.0
+        debug_metric_end = metric_end if metric_end is not None else 0.0
+        log(
+            "DEBUG TRAIN DONE: "
+            f"loss_start={debug_loss_start:.4f}, "
+            f"loss_end={debug_loss_end:.4f}, "
+            f"metric_start={debug_metric_start:.4f}, "
+            f"metric_end={debug_metric_end:.4f}"
+        )
 
     # Финальные метрики
     pck_percent = float(round(best_pck * 100))
@@ -709,12 +749,20 @@ def train_model(
 def main(argv: Optional[List[str]] = None) -> int:
     """
     Точка входа для действия 1) Train / Finetune model on MANUAL localities.
-    Никаких новых ключей/режимов не добавляем, только внутренняя реализация.
+    Основной флоу остаётся прежним, добавлен вспомогательный debug-режим.
     """
     argv = list(sys.argv[1:] if argv is None else argv)
     parser = argparse.ArgumentParser(description="Train HRNet model on MANUAL localities")
     # parse_known_args, чтобы не сломаться, если trainer_menu.py что-то передаёт
     parser.add_argument("--dummy", help="Не используется, только для совместимости", default=None)
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help=(
+            "Запустить обучение в debug-режиме: уменьшенный train-поднабор, "
+            "фиксированное количество эпох и подробные логи."
+        ),
+    )
     args, _unknown = parser.parse_known_args(argv)
 
     root = get_landmark_root()
@@ -743,6 +791,15 @@ def main(argv: Optional[List[str]] = None) -> int:
     train_samples = samples[:split_idx]
     val_samples = samples[split_idx:]
 
+    debug_mode = bool(getattr(args, "debug", False))
+    if debug_mode:
+        debug_train_limit = 32
+        train_samples = train_samples[:debug_train_limit]
+        print(
+            f"[DEBUG] Активирован debug-режим: используем {len(train_samples)} train-образцов "
+            f"(лимит {debug_train_limit}), эпохи будут сокращены."
+        )
+
     run_id = time.strftime("%Y%m%d_%H%M%S")
     logs_dir = root / "logs"
     logs_dir.mkdir(parents=True, exist_ok=True)
@@ -751,7 +808,16 @@ def main(argv: Optional[List[str]] = None) -> int:
     # По ТЗ: сохраняем списки датасета
     write_datasets_txt(root, run_id, train_samples, val_samples)
 
-    metrics = train_model(cfg, train_samples, val_samples, lm_number, run_id, root, log_path)
+    metrics = train_model(
+        cfg,
+        train_samples,
+        val_samples,
+        lm_number,
+        run_id,
+        root,
+        log_path,
+        debug=debug_mode,
+    )
 
     # Красивый вывод как в ТЗ
     n_train = metrics.get("n_train_images", 0)

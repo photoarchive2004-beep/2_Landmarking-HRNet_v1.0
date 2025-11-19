@@ -5,12 +5,14 @@ import csv
 import os
 import sys
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List, Tuple, Optional
+from typing import Dict, List, Optional
 
 import numpy as np
 from PIL import Image
+
+from scripts import hrnet_config_utils, hrnet_geom
 
 try:
     import torch
@@ -47,6 +49,7 @@ class HRNetConfig:
     scale_augmentation: float = 0.3
     weight_decay: float = 1e-4
     heatmap_sigma_px: float = 2.5
+    raw_cfg: dict = field(default_factory=dict)
 
 
 def get_landmark_root() -> Path:
@@ -55,13 +58,41 @@ def get_landmark_root() -> Path:
 
 def load_yaml_config(cfg_path: Path) -> HRNetConfig:
     cfg = HRNetConfig()
-    if not cfg_path.is_file() or yaml is None:
-        return cfg
-    with cfg_path.open("r", encoding="utf-8") as f:
-        data = yaml.safe_load(f) or {}
-    for field in cfg.__dataclass_fields__.keys():  # type: ignore[attr-defined]
-        if field in data:
-            setattr(cfg, field, data[field])
+    data: Dict = {}
+    try:
+        data = hrnet_config_utils.load_hrnet_config()
+    except Exception:
+        if cfg_path.is_file() and yaml is not None:
+            with cfg_path.open("r", encoding="utf-8") as f:
+                loaded = yaml.safe_load(f) or {}
+            if isinstance(loaded, dict):
+                data = loaded
+    cfg.raw_cfg = data
+
+    model_cfg = data.get("model", {}) if isinstance(data, dict) else {}
+    if "model_type" in model_cfg:
+        cfg.model_type = str(model_cfg["model_type"])
+    elif "model_type" in data:
+        cfg.model_type = str(data["model_type"])
+
+    resize_cfg = data.get("resize", {}) if isinstance(data, dict) else {}
+    if resize_cfg.get("enabled", False):
+        cfg.resize_mode = "resize"
+        cfg.input_size = int(resize_cfg.get("long_side", cfg.input_size))
+        cfg.keep_aspect_ratio = bool(resize_cfg.get("keep_aspect_ratio", cfg.keep_aspect_ratio))
+    elif "input_size" in data:
+        cfg.input_size = int(data.get("input_size", cfg.input_size))
+    else:
+        cfg.resize_mode = "original"
+
+    train_cfg = data.get("train", {}) if isinstance(data, dict) else {}
+    cfg.batch_size = int(train_cfg.get("batch_size", cfg.batch_size))
+    cfg.learning_rate = float(train_cfg.get("learning_rate", cfg.learning_rate))
+    cfg.max_epochs = int(train_cfg.get("max_epochs", cfg.max_epochs))
+    cfg.weight_decay = float(train_cfg.get("weight_decay", cfg.weight_decay))
+
+    data_cfg = data.get("data", {}) if isinstance(data, dict) else {}
+    cfg.heatmap_sigma_px = float(data_cfg.get("heatmap_sigma_px", cfg.heatmap_sigma_px))
     return cfg
 
 
@@ -89,34 +120,6 @@ def read_last_base(root: Path) -> Optional[Path]:
     if not base.is_dir():
         return None
     return base
-
-
-def _resize_and_pad(
-    img: Image.Image,
-    cfg: HRNetConfig,
-) -> Tuple[Image.Image, float, int, int]:
-    """
-    Ресайз с сохранением пропорций и паддингом до квадрата input_size x input_size.
-    Возвращает (новое_изображение, scale, offset_x, offset_y).
-    """
-    w, h = img.size
-    if cfg.resize_mode == "original" or cfg.input_size <= 0:
-        return img, 1.0, 0, 0
-
-    target = int(cfg.input_size)
-    if target <= 0:
-        return img, 1.0, 0, 0
-
-    scale = min(target / float(w), target / float(h))
-    new_w = max(1, int(round(w * scale)))
-    new_h = max(1, int(round(h * scale)))
-    resized = img.resize((new_w, new_h), Image.BILINEAR)
-
-    canvas = Image.new("RGB", (target, target), (0, 0, 0))
-    offset_x = (target - new_w) // 2
-    offset_y = (target - new_h) // 2
-    canvas.paste(resized, (offset_x, offset_y))
-    return canvas, scale, offset_x, offset_y
 
 
 def heatmaps_to_keypoints(heatmaps: "torch.Tensor") -> "torch.Tensor":
@@ -295,9 +298,11 @@ def infer_for_locality(
     model.to(device)
     model.eval()
 
+    resize_cfg = cfg.raw_cfg.get("resize", {}) if cfg.raw_cfg else {}
+
     for img_path in sorted(png_dir.glob("*.png")):
         img = Image.open(img_path).convert("RGB")
-        img_resized, scale, offset_x, offset_y = _resize_and_pad(img, cfg)
+        img_resized, prep = hrnet_geom.resize_with_config(img, resize_cfg)
 
         np_img = np.asarray(img_resized, dtype=np.float32) / 255.0
         np_img = np.transpose(np_img, (2, 0, 1))  # CHW
@@ -305,15 +310,11 @@ def infer_for_locality(
 
         with torch.no_grad():
             heatmaps = model(tensor)
-            kps_resized = heatmaps_to_keypoints(heatmaps)[0].cpu().numpy()  # (K, 2)
+            kps_resized = heatmaps_to_keypoints(heatmaps)[0]
+            kps_resized = kps_resized * float(hrnet_geom.HEATMAP_DOWNSCALE)
+            kps_resized = kps_resized.cpu().numpy()
 
-        # Переводим координаты обратно в систему исходного изображения
-        if scale > 0:
-            kps_orig = np.zeros_like(kps_resized, dtype=np.float32)
-            kps_orig[:, 0] = (kps_resized[:, 0] - float(offset_x)) / scale
-            kps_orig[:, 1] = (kps_resized[:, 1] - float(offset_y)) / scale
-        else:
-            kps_orig = kps_resized
+        kps_orig = hrnet_geom.inverse_transform_keypoints(kps_resized, prep, skip_invalid=False)
 
         # Запись CSV в формате одной строки: x1,y1,x2,y2,...
         csv_path = img_path.with_suffix(".csv")

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import math
 import random
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -13,15 +12,7 @@ from torch.utils.data import Dataset
 from torchvision.transforms import functional as TF
 
 from scripts import hrnet_config_utils
-
-
-@dataclass
-class PreprocessInfo:
-    scale: float
-    pad_x: int
-    pad_y: int
-    orig_size: Tuple[int, int]
-    resized_size: Tuple[int, int]
+from scripts import hrnet_geom
 
 
 def _load_keypoints(csv_path: Path, num_keypoints: int) -> np.ndarray:
@@ -46,30 +37,6 @@ def _load_keypoints(csv_path: Path, num_keypoints: int) -> np.ndarray:
         coords[idx, 0] = values[j]
         coords[idx, 1] = values[j + 1]
     return coords
-
-
-def _resize_image(image: Image.Image, resize_cfg: Dict) -> Tuple[Image.Image, PreprocessInfo]:
-    if not resize_cfg.get("enabled", False):
-        w, h = image.size
-        return image, PreprocessInfo(1.0, 0, 0, (w, h), (w, h))
-
-    long_side = int(resize_cfg.get("long_side", max(image.size)))
-    keep_aspect = bool(resize_cfg.get("keep_aspect_ratio", True))
-    w, h = image.size
-    scale = float(long_side) / float(max(w, h)) if max(w, h) > 0 else 1.0
-    new_w = max(1, int(round(w * scale)))
-    new_h = max(1, int(round(h * scale)))
-    resized = image.resize((new_w, new_h), Image.BILINEAR)
-
-    if keep_aspect:
-        canvas = Image.new("RGB", (long_side, long_side), (0, 0, 0))
-        pad_x = (long_side - new_w) // 2
-        pad_y = (long_side - new_h) // 2
-        canvas.paste(resized, (pad_x, pad_y))
-        return canvas, PreprocessInfo(scale, pad_x, pad_y, (w, h), (long_side, long_side))
-    return resized, PreprocessInfo(scale, 0, 0, (w, h), (new_w, new_h))
-
-
 def _apply_affine_to_points(points: torch.Tensor, angle_deg: float, scale: float, image_size: Tuple[int, int]):
     if points.numel() == 0:
         return points
@@ -133,11 +100,10 @@ class LandmarkDataset(Dataset):
     def __getitem__(self, idx: int) -> Dict:
         item = self.items[idx]
         image = Image.open(item["image_path"]).convert("RGB")
-        image, prep = _resize_image(image, self.resize_cfg)
+        image, prep = hrnet_geom.resize_with_config(image, self.resize_cfg)
 
         keypoints_np = _load_keypoints(item["csv_path"], self.num_keypoints)
-        keypoints_np[:, 0] = keypoints_np[:, 0] * prep.scale + prep.pad_x
-        keypoints_np[:, 1] = keypoints_np[:, 1] * prep.scale + prep.pad_y
+        keypoints_np = hrnet_geom.transform_keypoints(keypoints_np, prep, skip_invalid=True)
         visible = (keypoints_np[:, 0] >= 0) & (keypoints_np[:, 1] >= 0)
 
         image_tensor = TF.to_tensor(image)
@@ -148,7 +114,7 @@ class LandmarkDataset(Dataset):
             image_tensor, keypoints = _maybe_augment(image_tensor, keypoints, self.augment_cfg)
 
         _, H, W = image_tensor.shape
-        down = 4
+        down = hrnet_geom.HEATMAP_DOWNSCALE
         Hh = max(1, H // down)
         Wh = max(1, W // down)
         sigma = float(self.cfg.get("data", {}).get("heatmap_sigma_px", 4)) / down

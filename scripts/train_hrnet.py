@@ -387,10 +387,11 @@ if torch is not None:
         Если MMPose недоступен, используется SimpleHRNet.
         """
 
-        def __init__(self, num_keypoints: int) -> None:
+        def __init__(self, num_keypoints: int, load_imagenet_pretrained: bool = True) -> None:
             super().__init__()
             self.num_keypoints = int(num_keypoints)
             self.use_mmpose = MMPoseHRNet is not None
+            self._load_pretrained = bool(load_imagenet_pretrained)
             if self.use_mmpose:
                 extra = {
                     "stage1": dict(
@@ -423,6 +424,8 @@ if torch is not None:
                     ),
                 }
                 self.backbone = MMPoseHRNet(extra=extra, in_channels=3)  # type: ignore[call-arg]
+                if self._load_pretrained:
+                    self._load_imagenet_pretrained_backbone()
                 self.head = nn.Conv2d(32, self.num_keypoints, kernel_size=1)
             else:
                 self.fallback = SimpleHRNet(num_keypoints)
@@ -436,6 +439,29 @@ if torch is not None:
                     feats0 = feats
                 return self.head(feats0)
             return self.fallback(x)
+
+        def _load_imagenet_pretrained_backbone(self) -> None:
+            try:
+                import timm
+            except ImportError:  # pragma: no cover - timm required only for pretrained weights
+                print("[WARN] timm is not installed. Skipping ImageNet pretrained HRNet-W32 weights.")
+                return
+
+            timm_model = timm.create_model("hrnet_w32", pretrained=True)
+            timm_state = timm_model.state_dict()
+            backbone_state = self.backbone.state_dict()
+            partial_state = {}
+            matched = 0
+            for key, tensor in timm_state.items():
+                if key in backbone_state and backbone_state[key].shape == tensor.shape:
+                    partial_state[key] = tensor.to(dtype=backbone_state[key].dtype)
+                    matched += 1
+
+            total = len(backbone_state)
+            self.backbone.load_state_dict(partial_state, strict=False)
+            print(
+                f"Loaded ImageNet pretrained HRNet-W32 backbone weights (matched = {matched}, total = {total})"
+            )
 
 else:
 

@@ -25,16 +25,11 @@ except ImportError:  # pragma: no cover
     DataLoader = object  # type: ignore[assignment]
 
 try:
-    # HRNet backbone from MMPose (используем, если установлен)
-    from mmpose.models.backbones import HRNet as MMPoseHRNet  # type: ignore
-except Exception as e:  # pragma: no cover
-    print("[WARN] Exception during import or setup (possibly MMPose HRNet):", repr(e))
-    MMPoseHRNet = None  # type: ignore
-
-try:
     import yaml
 except ImportError:  # pragma: no cover
     yaml = None
+
+from scripts.hrnet_model import HRNetW32GM
 
 
 @dataclass
@@ -339,148 +334,6 @@ def compute_pck_at_r(
     return float(correct.sum().item()) / float(mask.sum().item())
 
 
-# Модели: простая сеть SimpleHRNet и HRNet-W32 (через MMPose)
-if torch is not None:
-
-    class SimpleHRNet(nn.Module):
-        """
-        Упрощённый бэкбон для расстановки ландмарок.
-        """
-
-        def __init__(self, num_keypoints: int) -> None:
-            super().__init__()
-            self.stem = nn.Sequential(
-                nn.Conv2d(3, 32, kernel_size=3, padding=1),
-                nn.BatchNorm2d(32),
-                nn.ReLU(inplace=True),
-                nn.Conv2d(32, 64, kernel_size=3, padding=1),
-                nn.BatchNorm2d(64),
-                nn.ReLU(inplace=True),
-            )
-            blocks = []
-            in_channels = 64
-            for _ in range(3):
-                block = nn.Sequential(
-                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
-                    nn.BatchNorm2d(in_channels),
-                    nn.ReLU(inplace=True),
-                    nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1),
-                    nn.BatchNorm2d(in_channels),
-                )
-                blocks.append(block)
-            self.blocks = nn.ModuleList(blocks)
-            self.relu = nn.ReLU(inplace=True)
-            self.head = nn.Conv2d(64, num_keypoints, kernel_size=1)
-
-        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
-            x = self.stem(x)
-            for block in self.blocks:
-                residual = x
-                out = block(x)
-                x = self.relu(out + residual)
-            heatmaps = self.head(x)
-            return heatmaps
-
-    class HRNetW32GM(nn.Module):
-        """
-        HRNet-W32 из MMPose + простой head для теплокарт.
-        Если MMPose недоступен, используется SimpleHRNet.
-        """
-
-        def __init__(self, num_keypoints: int, load_imagenet_pretrained: bool = True) -> None:
-            super().__init__()
-            self.num_keypoints = int(num_keypoints)
-            self.use_mmpose = MMPoseHRNet is not None
-            self._load_pretrained = bool(load_imagenet_pretrained)
-            if self.use_mmpose:
-                extra = {
-                    "stage1": dict(
-                        num_modules=1,
-                        num_branches=1,
-                        block="BOTTLENECK",
-                        num_blocks=(4,),
-                        num_channels=(64,),
-                    ),
-                    "stage2": dict(
-                        num_modules=1,
-                        num_branches=2,
-                        block="BASIC",
-                        num_blocks=(4, 4),
-                        num_channels=(32, 64),
-                    ),
-                    "stage3": dict(
-                        num_modules=4,
-                        num_branches=3,
-                        block="BASIC",
-                        num_blocks=(4, 4, 4),
-                        num_channels=(32, 64, 128),
-                    ),
-                    "stage4": dict(
-                        num_modules=3,
-                        num_branches=4,
-                        block="BASIC",
-                        num_blocks=(4, 4, 4, 4),
-                        num_channels=(32, 64, 128, 256),
-                    ),
-                }
-                self.backbone = MMPoseHRNet(extra=extra, in_channels=3)  # type: ignore[call-arg]
-                if self._load_pretrained:
-                    self._load_imagenet_pretrained_backbone()
-                self.head = nn.Conv2d(32, self.num_keypoints, kernel_size=1)
-            else:
-                self.fallback = SimpleHRNet(num_keypoints)
-
-        def forward(self, x: "torch.Tensor") -> "torch.Tensor":
-            if self.use_mmpose:
-                feats = self.backbone(x)
-                if isinstance(feats, (list, tuple)):
-                    feats0 = feats[0]
-                else:
-                    feats0 = feats
-                return self.head(feats0)
-            return self.fallback(x)
-
-        def _load_imagenet_pretrained_backbone(self) -> None:
-            try:
-                import timm
-            except ImportError:  # pragma: no cover - timm required only for pretrained weights
-                print("[WARN] timm is not installed. Skipping ImageNet pretrained HRNet-W32 weights.")
-                return
-
-            timm_model = timm.create_model("hrnet_w32", pretrained=True)
-            timm_state = timm_model.state_dict()
-            backbone_state = self.backbone.state_dict()
-            partial_state = {}
-            matched = 0
-            for key, tensor in timm_state.items():
-                if key in backbone_state and backbone_state[key].shape == tensor.shape:
-                    partial_state[key] = tensor.to(dtype=backbone_state[key].dtype)
-                    matched += 1
-
-            total = len(backbone_state)
-            self.backbone.load_state_dict(partial_state, strict=False)
-            print(
-                f"Loaded ImageNet pretrained HRNet-W32 backbone weights (matched = {matched}, total = {total})"
-            )
-
-else:
-
-    class SimpleHRNet:  # type: ignore[misc]
-        """
-        Заглушка, если torch не установлен.
-        """
-
-        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
-            raise RuntimeError("PyTorch is required for SimpleHRNet but is not installed.")
-
-    class HRNetW32GM:  # type: ignore[misc]
-        """
-        Заглушка, если torch не установлен.
-        """
-
-        def __init__(self, num_keypoints: int) -> None:  # pragma: no cover
-            raise RuntimeError("PyTorch is required for HRNetW32GM but is not installed.")
-
 
 def write_datasets_txt(
     root: Path,
@@ -641,14 +494,16 @@ def train_model(
     )
 
     model_type = (cfg.model_type or "").lower()
-    if model_type.startswith("hrnet_w32"):
-        log("Создаём модель HRNet-W32 (MMPose) для геометрической морфометрии.")
-        model = HRNetW32GM(num_keypoints=num_keypoints)
-        if getattr(model, "use_mmpose", False) is False:
-            log("MMPose HRNet недоступен, используется запасной вариант SimpleHRNet.")
-    else:
-        log("Создаём упрощённую модель SimpleHRNet (без MMPose).")
-        model = HRNetW32GM(num_keypoints=num_keypoints)
+    if not model_type.startswith("hrnet_w32"):
+        log(
+            f"[WARN] model_type={cfg.model_type!r} не поддерживается. "
+            "Используем HRNet-W32 по умолчанию."
+        )
+
+    log("Создаём модель HRNet-W32 (через MMPose, если он установлен).")
+    model = HRNetW32GM(num_keypoints=num_keypoints)
+    if getattr(model, "use_mmpose", False) is False:
+        log("[WARN] MMPose HRNet недоступен, используется упрощённый fallback.")
 
     optimizer = torch.optim.Adam(
         model.parameters(),

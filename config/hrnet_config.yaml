@@ -19,16 +19,17 @@ train:
   early_stop_patience: 10
 
 augment:
-  rotation_deg: 15
-  rotation_prob: 0.5
-  scale_min: 0.8
-  scale_max: 1.2
-  scale_prob: 0.5
-  brightness: 0.2
-  contrast: 0.2
-  color_prob: 0.3
-  horizontal_flip: false
-  vertical_flip: false
+  flip_augmentation: true
+  rotation_augmentation_deg: 15
+  rotation_augmentation_prob: 0.9
+  scale_augmentation: 0.3
+  scale_augmentation_prob: 0.8
+  color_jitter:
+    enabled: true
+    prob: 0.4
+    brightness: 0.1
+    contrast: 0.1
+    saturation: 0.05
 
 data:
   heatmap_sigma_px: 4

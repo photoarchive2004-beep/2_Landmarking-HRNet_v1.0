@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 import random
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 import numpy as np
 from PIL import Image
@@ -37,40 +37,93 @@ def _load_keypoints(csv_path: Path, num_keypoints: int) -> np.ndarray:
         coords[idx, 0] = values[j]
         coords[idx, 1] = values[j + 1]
     return coords
-def _apply_affine_to_points(points: torch.Tensor, angle_deg: float, scale: float, image_size: Tuple[int, int]):
+def _apply_affine_to_points(
+    points: torch.Tensor,
+    angle_deg: float,
+    scale: float,
+    image_size: Tuple[int, int],
+) -> torch.Tensor:
     if points.numel() == 0:
+        return points
+    valid_mask = (points[:, 0] >= 0) & (points[:, 1] >= 0)
+    if not torch.any(valid_mask):
         return points
     cx = image_size[0] / 2.0
     cy = image_size[1] / 2.0
     rad = math.radians(angle_deg)
-    rot = torch.tensor([[math.cos(rad), -math.sin(rad)], [math.sin(rad), math.cos(rad)]], dtype=torch.float32)
-    shifted = points - torch.tensor([cx, cy])
+    rot = torch.tensor(
+        [[math.cos(rad), -math.sin(rad)], [math.sin(rad), math.cos(rad)]], dtype=torch.float32
+    )
+    shifted = points[valid_mask] - torch.tensor([cx, cy])
     shifted = shifted @ rot.T * scale
-    return shifted + torch.tensor([cx, cy])
+    transformed = shifted + torch.tensor([cx, cy])
+    transformed[:, 0].clamp_(0.0, max(0.0, image_size[0] - 1))
+    transformed[:, 1].clamp_(0.0, max(0.0, image_size[1] - 1))
+    result = points.clone()
+    result[valid_mask] = transformed
+    return result
 
 
-def _maybe_augment(image: torch.Tensor, keypoints: torch.Tensor, cfg: Dict) -> Tuple[torch.Tensor, torch.Tensor]:
+def _maybe_augment(
+    image: torch.Tensor, keypoints: torch.Tensor, cfg: Dict
+) -> Tuple[torch.Tensor, torch.Tensor, Dict[str, Any]]:
     aug_cfg = cfg
     _, h, w = image.shape
-    # rotation + scale
-    if random.random() < aug_cfg.get("rotation_prob", 0.0):
-        angle = random.uniform(-float(aug_cfg.get("rotation_deg", 0.0)), float(aug_cfg.get("rotation_deg", 0.0)))
+    info: Dict[str, Any] = {
+        "horizontal_flip": False,
+        "rotation_deg": 0.0,
+        "scale_factor": 1.0,
+        "color_jitter": {"applied": False},
+    }
+
+    rot_prob = float(aug_cfg.get("rotation_augmentation_prob", aug_cfg.get("rotation_prob", 0.0)))
+    rot_max = float(aug_cfg.get("rotation_augmentation_deg", aug_cfg.get("rotation_deg", 0.0)))
+    if rot_max > 0.0 and random.random() < rot_prob:
+        angle = random.uniform(-rot_max, rot_max)
         image = TF.rotate(image, angle, fill=0)
         keypoints = _apply_affine_to_points(keypoints, angle, 1.0, (w, h))
-    if random.random() < aug_cfg.get("scale_prob", 0.0):
-        scale = random.uniform(float(aug_cfg.get("scale_min", 1.0)), float(aug_cfg.get("scale_max", 1.0)))
+        info["rotation_deg"] = angle
+
+    scale_margin = float(aug_cfg.get("scale_augmentation", aug_cfg.get("scale_min", 0.0)))
+    scale_prob = float(aug_cfg.get("scale_augmentation_prob", aug_cfg.get("scale_prob", 0.0)))
+    if scale_margin > 0.0 and random.random() < scale_prob:
+        scale_min = max(0.01, 1.0 - scale_margin)
+        scale_max = 1.0 + scale_margin
+        scale = random.uniform(scale_min, scale_max)
         image = TF.affine(image, angle=0.0, translate=[0, 0], scale=scale, shear=[0.0, 0.0], fill=0)
         keypoints = _apply_affine_to_points(keypoints, 0.0, scale, (w, h))
-    if random.random() < aug_cfg.get("color_prob", 0.0):
-        image = TF.adjust_brightness(image, 1.0 + float(aug_cfg.get("brightness", 0.0)))
-        image = TF.adjust_contrast(image, 1.0 + float(aug_cfg.get("contrast", 0.0)))
-    if aug_cfg.get("horizontal_flip", False) and random.random() < 0.5:
+        info["scale_factor"] = scale
+
+    flip_enabled = bool(aug_cfg.get("flip_augmentation", aug_cfg.get("horizontal_flip", False)))
+    if flip_enabled and random.random() < 0.5:
         image = TF.hflip(image)
-        keypoints[:, 0] = float(w - 1) - keypoints[:, 0]
-    if aug_cfg.get("vertical_flip", False) and random.random() < 0.5:
-        image = TF.vflip(image)
-        keypoints[:, 1] = float(h - 1) - keypoints[:, 1]
-    return image, keypoints
+        keypoints = keypoints.clone()
+        valid_mask = (keypoints[:, 0] >= 0) & (keypoints[:, 1] >= 0)
+        keypoints[valid_mask, 0] = float(w - 1) - keypoints[valid_mask, 0]
+        info["horizontal_flip"] = True
+
+    color_cfg = aug_cfg.get("color_jitter", {})
+    color_prob = float(color_cfg.get("prob", 0.0))
+    if color_cfg.get("enabled", False) and random.random() < color_prob:
+        brightness = float(color_cfg.get("brightness", 0.0))
+        contrast = float(color_cfg.get("contrast", 0.0))
+        saturation = float(color_cfg.get("saturation", 0.0))
+        cj_info: Dict[str, Any] = {"applied": True}
+        if brightness > 0:
+            factor = random.uniform(max(0.0, 1.0 - brightness), 1.0 + brightness)
+            image = TF.adjust_brightness(image, factor)
+            cj_info["brightness_factor"] = factor
+        if contrast > 0:
+            factor = random.uniform(max(0.0, 1.0 - contrast), 1.0 + contrast)
+            image = TF.adjust_contrast(image, factor)
+            cj_info["contrast_factor"] = factor
+        if saturation > 0:
+            factor = random.uniform(max(0.0, 1.0 - saturation), 1.0 + saturation)
+            image = TF.adjust_saturation(image, factor)
+            cj_info["saturation_factor"] = factor
+        info["color_jitter"] = cj_info
+
+    return image, keypoints, info
 
 
 def _build_heatmaps(keypoints: torch.Tensor, visible: torch.Tensor, height: int, width: int, sigma: float) -> torch.Tensor:
@@ -110,8 +163,9 @@ class LandmarkDataset(Dataset):
         keypoints = torch.tensor(keypoints_np, dtype=torch.float32)
         visible_tensor = torch.tensor(visible.astype(np.float32))
 
+        aug_info: Dict[str, Any] = {}
         if self.phase == "train":
-            image_tensor, keypoints = _maybe_augment(image_tensor, keypoints, self.augment_cfg)
+            image_tensor, keypoints, aug_info = _maybe_augment(image_tensor, keypoints, self.augment_cfg)
 
         _, H, W = image_tensor.shape
         down = hrnet_geom.HEATMAP_DOWNSCALE
@@ -134,6 +188,7 @@ class LandmarkDataset(Dataset):
                 "pad_x": prep.pad_x,
                 "pad_y": prep.pad_y,
                 "downscale": down,
+                "augmentations": aug_info,
             },
         }
 

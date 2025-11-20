@@ -1,84 +1,82 @@
-param(
-    [string]$VenvName = ".venv_hrnet",
-    [switch]$EnableGitSync
-)
+# 0_HRNET_SETUP_ENV.ps1
+# Настройка окружения для HRNet: установка mmpose/timm/opencv в .venv_lm
+# и проверка, что MMPose импортируется.
 
+param()
+
+Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-Set-Location -Path $ScriptDir
+# Перейти в корень проекта
+Set-Location "D:\GM\tools\2_Landmarking-HRNet_v1.0"
 
-$LogsDir = Join-Path $ScriptDir "logs"
-if (-not (Test-Path $LogsDir)) {
-    New-Item -ItemType Directory -Path $LogsDir | Out-Null
+# Логи
+if (-not (Test-Path ".\logs")) {
+    New-Item -ItemType Directory -Path ".\logs" | Out-Null
 }
-$Timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
-$TranscriptPath = Join-Path $LogsDir "setup_hrnet_env_$Timestamp.log"
-Start-Transcript -Path $TranscriptPath -Append | Out-Null
+$ts = Get-Date -Format "yyyyMMdd_HHmmss"
+$logPath = ".\logs\hrnet_setup_env_$ts.log"
 
-try {
-    Write-Host "=== HRNet environment setup ==="
+Start-Transcript -Path $logPath -Force
+Write-Host "=== HRNet: setup .venv_lm environment (mmpose/timm/opencv) ==="
+Write-Host "Project root: $(Get-Location)"
+Write-Host "Log file: $logPath"
+Write-Host ""
 
-    $VenvPath = Join-Path $ScriptDir $VenvName
-    $PythonExe = Join-Path $VenvPath "Scripts\python.exe"
-    $ActivateScript = Join-Path $VenvPath "Scripts\Activate.ps1"
-
-    if (-not (Test-Path $VenvPath)) {
-        Write-Host "[INFO] Creating virtual environment at $VenvPath"
-        $BasePython = $null
-        foreach ($Candidate in @("python", "py")) {
-            if (Get-Command $Candidate -ErrorAction SilentlyContinue) {
-                $BasePython = $Candidate
-                break
-            }
-        }
-        if (-not $BasePython) {
-            throw "Python interpreter not found in PATH."
-        }
-        & $BasePython -m venv $VenvPath
-    } else {
-        Write-Host "[INFO] Reusing existing virtual environment at $VenvPath"
-    }
-
-    if (-not (Test-Path $PythonExe)) {
-        throw "python.exe not found inside $VenvPath"
-    }
-
-    if (Test-Path $ActivateScript) {
-        Write-Host "[INFO] Activating virtual environment ..."
-        & $ActivateScript
-    } else {
-        Write-Host "[WARN] Activate.ps1 not found. Continuing without session activation."
-    }
-
-    Write-Host "[INFO] Upgrading pip/setuptools/wheel ..."
-    & $PythonExe -m pip install --upgrade pip setuptools wheel
-
-    Write-Host "[INFO] Installing core scientific stack ..."
-    & $PythonExe -m pip install numpy pillow opencv-python pandas scipy matplotlib pyyaml tqdm timm
-
-    Write-Host "[INFO] Installing PyTorch (CUDA 11.8 wheels) ..."
-    & $PythonExe -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
-
-    Write-Host "[INFO] Installing OpenMMLab packages (mmengine/mmcv/mmpose) ..."
-    & $PythonExe -m pip install mmengine mmcv mmpose
-
-    Write-Host "[INFO] Running scripts\\test_hrnet_import.py ..."
-    & $PythonExe .\scripts\test_hrnet_import.py
-    if ($LASTEXITCODE -ne 0) {
-        throw "test_hrnet_import.py exited with code $LASTEXITCODE"
-    }
-
-    if ($EnableGitSync) {
-        Write-Host "[INFO] Synchronizing changes with git ..."
-        git add 0_HRNET_SETUP_ENV.ps1 scripts/test_hrnet_import.py
-        git commit -m "Add HRNet env setup automation" --allow-empty
-        git push origin main
-    } else {
-        Write-Host "[INFO] Git sync skipped (pass -EnableGitSync to enable)."
-    }
+# Создать venv, если его ещё нет
+if (-not (Test-Path ".\.venv_lm")) {
+    Write-Host "[INFO] .venv_lm not found, creating virtualenv via 'py -3 -m venv .venv_lm' ..."
+    py -3 -m venv .venv_lm
 }
-finally {
-    Stop-Transcript | Out-Null
-    Write-Host "[INFO] Transcript saved to $TranscriptPath"
+
+$activatePath = ".\.venv_lm\Scripts\Activate.ps1"
+if (-not (Test-Path $activatePath)) {
+    Write-Error "[FATAL] Cannot find Activate script: $activatePath"
+    Stop-Transcript
+    exit 1
 }
+
+Write-Host "[INFO] Activating virtualenv .venv_lm ..."
+. $activatePath
+
+Write-Host "[INFO] Python in venv:" (Get-Command python).Source
+Write-Host ""
+
+# Обновить pip и поставить зависимости
+Write-Host "[STEP] Upgrading pip ..."
+python -m pip install --upgrade pip
+
+Write-Host "[STEP] Installing HRNet dependencies (mmpose, timm, opencv-python) ..."
+python -m pip install mmpose timm opencv-python
+
+Write-Host ""
+Write-Host "[STEP] Quick import test inside .venv_lm ..."
+python - << 'PYCODE'
+import importlib
+
+mods = ["mmpose", "timm", "cv2"]
+ok = True
+for name in mods:
+    try:
+        importlib.import_module(name)
+        print(f"[OK] Imported {name}")
+    except Exception as e:
+        ok = False
+        print(f"[FAIL] Cannot import {name}: {e!r}")
+
+if not ok:
+    raise SystemExit(1)
+
+print("[INFO] Basic imports are OK.")
+PYCODE
+
+Write-Host ""
+Write-Host "=== HRNet env setup DONE ==="
+
+# git: зафиксировать сам скрипт (если ещё не в репо)
+git status
+git add 0_HRNET_SETUP_ENV.ps1 | Out-Null
+git commit -m "HRNet: add env setup script for mmpose/timm" -ErrorAction SilentlyContinue | Out-Null
+git push origin main
+
+Stop-Transcript

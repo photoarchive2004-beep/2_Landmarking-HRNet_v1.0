@@ -1,15 +1,15 @@
 model:
   pretrained_weights: ''
   model_type: hrnet_w32
-  num_keypoints: 20
+  num_keypoints: 17
 resize:
   enabled: true
-  long_side: 1024
+  long_side: 896
   keep_aspect_ratio: true
 train:
   train_val_split: 0.9
-  max_epochs: 80
-  batch_size: 16
+  max_epochs: 150
+  batch_size: 6
   learning_rate: 0.0005
   weight_decay: 0.0001
   num_workers: 12

@@ -1,7 +1,7 @@
 locality,status,auto_quality,last_model_run,n_images,n_labeled,last_update
-arctic-eur_isetensis-Kipshenga_RU_25,MANUAL,,20251115_144035,16,16,2025-11-19 20:46:26
-arctic-eur_isetensis-Likhtosh-2_RU_25,MANUAL,,20251116_101421,22,22,2025-11-17 21:53:11
-balkh-alakol_Ayagoz_KZ_25,MANUAL,,,19,19,2025-11-14 18:12:09
+arctic-eur_isetensis-Kipshenga_RU_25,MANUAL,,20251115_144035,15,15,2025-11-20 22:03:42
+arctic-eur_isetensis-Likhtosh-2_RU_25,MANUAL,,20251116_101421,22,0,2025-11-20 20:57:45
+balkh-alakol_Ayagoz_KZ_25,MANUAL,,,19,19,2025-11-20 22:06:29
 balkh-alakol_Karakol_KZ_25,MANUAL,,,13,13,2025-11-14 18:12:09
 balkh-alakol_Lepsy_KZ_25,MANUAL,,,11,11,2025-11-14 18:12:09
 baltsea-east_isetensis-Allol_RU_25,MANUAL,46,20251117_221738,9,9,2025-11-19 16:47:23
@@ -12,7 +12,7 @@ baltsea-east_isetensis-Vydega_RU_25,MANUAL,,,25,25,2025-11-19 19:08:17
 don_Ptan_RU_25,MANUAL,,,23,23,2025-11-19 19:42:49
 ob-altay_Belokurikha_RU_25,MANUAL,,,11,11,2025-11-14 18:12:09
 ob-altay_Bol_Terekta_RU_25,MANUAL,,,15,15,2025-11-14 18:12:09
-ob-altay_Chaganka_RU_25,MANUAL,,,29,29,2025-11-14 18:12:09
+ob-altay_Chaganka_RU_25,MANUAL,,,29,29,2025-11-20 22:04:54
 ob-altay_Jumaly_RU_25,MANUAL,,,31,31,2025-11-19 20:58:05
 ob-altay_Kamenka_RU_25,MANUAL,,,11,11,2025-11-14 18:12:09
 ob-altay_Kan_RU_25,MANUAL,,,19,19,2025-11-19 21:03:11
@@ -30,7 +30,8 @@ ob-irtysh_Kendirlik_KZ_25,,,,24,0,2025-11-14 18:12:09
 ob-irtysh_Kurchum_KZ_25,,,,12,0,2025-11-14 18:12:09
 ob-irtysh_Sht-Terekty_KZ_25,,,,16,0,2025-11-14 18:12:09
 ob-irtysh_Tainty_KZ_25,,,,33,0,2025-11-14 18:12:09
-turk-west_abanticus-Abant_TR_25,MANUAL,,,10,10,2025-11-14 18:12:09
+test,MANUAL,,,3,0,2025-11-20 12:55:54
+turk-west_abanticus-Abant_TR_25,MANUAL,,,10,10,2025-11-20 22:15:46
 turk-west_kottelati-Uludere_TR_25,,,,21,0,2025-11-14 18:12:09
 turk-west_radeki-Buyuk_TR_25,MANUAL,,,16,16,2025-11-19 21:21:25
 turk-west_strandjae-Balabandere_TR_25,,,,17,0,2025-11-14 18:12:09

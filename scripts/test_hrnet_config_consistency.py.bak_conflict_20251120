@@ -1,0 +1,85 @@
+<<<<<<< HEAD
+﻿from __future__ import annotations
+
+"""Проверка согласованности LM_number.txt, hrnet_config.yaml и настроек train_hrnet."""
+
+from typing import Any, Dict
+
+from scripts import hrnet_config_utils
+
+
+def main() -> int:
+    print("=== HRNet config consistency check ===")
+
+    # 1. LM_number.txt
+    try:
+        n_txt = hrnet_config_utils.read_num_keypoints()
+    except Exception as e:  # noqa: BLE001
+        print("LM_number.txt error:", repr(e))
+        return 1
+
+    print(f"LM_number.txt num_keypoints: {n_txt}")
+
+    # 2. Конфиг
+    try:
+        cfg: Dict[str, Any] = hrnet_config_utils.load_hrnet_config()
+    except Exception as e:  # noqa: BLE001
+        print("hrnet_config.yaml error:", repr(e))
+        return 1
+
+    model_cfg = (cfg.get("model") or {})
+    train_cfg = (cfg.get("train") or {})
+
+    n_cfg = model_cfg.get("num_keypoints")
+    max_epochs = train_cfg.get("max_epochs")
+
+    print(f"config model.num_keypoints: {n_cfg}")
+    print(f"train.max_epochs: {max_epochs}")
+
+    if n_cfg != n_txt:
+        print("[WARN] LM_number.txt и config.model.num_keypoints не совпадают")
+
+    if max_epochs is None:
+        print("[WARN] train.max_epochs не задан в конфиге (используется дефолт в коде).")
+
+    print("=== DONE config consistency check ===")
+=======
+from __future__ import annotations
+
+import torch
+
+from scripts import hrnet_config_utils
+from scripts.hrnet_model import HRNetW32GM
+
+
+def main() -> int:
+    num_kpts_txt = hrnet_config_utils.read_num_keypoints()
+    cfg = hrnet_config_utils.load_hrnet_config()
+    num_kpts_cfg = cfg["model"]["num_keypoints"]
+    train_cfg = cfg.get("train", {})
+    max_epochs = train_cfg.get("max_epochs", 200)
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = HRNetW32GM(num_keypoints=num_kpts_cfg)
+    model = model.to(device)
+
+    output_channels = None
+    head = getattr(model, "head", None)
+    if head is not None:
+        output_channels = getattr(head, "out_channels", None)
+    if output_channels is None and hasattr(model, "fallback"):
+        fallback = getattr(model, "fallback", None)
+        if fallback is not None:
+            output_channels = getattr(getattr(fallback, "head", None), "out_channels", None)
+
+    print(f"LM_number.txt num_keypoints: {num_kpts_txt}")
+    print(f"config model.num_keypoints: {num_kpts_cfg}")
+    print(f"model output channels: {output_channels}")
+    print(f"train.max_epochs: {max_epochs}")
+
+>>>>>>> 134e43f2dbe166f8d5a2be60eec714c4d7dcfbd1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

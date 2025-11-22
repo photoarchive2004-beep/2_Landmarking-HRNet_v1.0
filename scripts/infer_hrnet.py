@@ -76,8 +76,12 @@ def _predict_coordinates(
 
 
 def _save_csv(csv_path: Path, coords: np.ndarray) -> None:
-    lines = [f"{float(x):.2f},{float(y):.2f}" for x, y in coords]
-    csv_path.write_text("\n".join(lines), encoding="utf-8")
+    """Сохраняем ландмарки в формате аннотатора:
+    одна строка: x1,y1,x2,y2,...,xN,yN
+    """
+    flat = np.asarray(coords, dtype=float).reshape(-1)
+    line = ",".join(f"{v:.2f}" for v in flat)
+    csv_path.write_text(line + "\n", encoding="utf-8")
 
 
 def main(argv: List[str] | None = None) -> int:
